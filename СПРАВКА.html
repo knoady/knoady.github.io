@@ -1,0 +1,728 @@
+<h1 id="-">Большое саммери по темам контрольной</h1>
+<p>Ниже — систематизированный конспект по всем темам, которые встречаются в демо-варианте и могут попасться в контрольной. Формат: теория → типовые вопросы → ловушки → примеры.</p>
+<hr>
+<h2 id="-1-">ТЕМА 1. Где вычисляется арифметика</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>Арифметические и логические операции выполняет <strong>АЛУ</strong> (арифметико-логическое устройство) — часть <strong>CPU</strong>.</li>
+<li>АЛУ работает с регистрами. Операнды загружаются в регистры, результат кладётся в регистр, обновляются флаги.</li>
+<li>Память (RAM, SSD, HDD) хранит данные, но не вычисляет.</li>
+<li>Исходный файл, текстовый редактор, файловая система, сетевой адаптер — к вычислению отношения не имеют.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Где вычисляется <code>7 + 5</code>? → <strong>В АЛУ внутри CPU.</strong></li>
+<li>Что делает АЛУ? → Сложение, вычитание, умножение, деление, AND/OR/XOR/NOT, сдвиги, сравнение.</li>
+<li>Откуда АЛУ берёт данные? → Из регистров.</li>
+<li>Куда кладёт результат? → В регистр.</li>
+<li>Что ещё обновляет? → Флаги (CF, OF, ZF, SF).</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>«В исходном файле» — нет, там только текст.</li>
+<li>«На SSD» — нет, SSD хранит.</li>
+<li>«В файловой системе» — нет, это способ организации файлов.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span>, [<span class="hljs-built_in">rbx</span> + <span class="hljs-number">4</span>]   <span class="hljs-comment">; загрузка из памяти в регистр</span>
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">5</span>           <span class="hljs-comment">; АЛУ: EAX = EAX + 5</span>
+<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rbx</span> + <span class="hljs-number">4</span>], <span class="hljs-built_in">eax</span>   <span class="hljs-comment">; запись обратно в память</span>
+</code></pre>
+<hr>
+<h2 id="-2-">ТЕМА 2. Адресация массивов</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>Адрес элемента массива: <code>base + index × sizeof(element)</code>.</li>
+<li>Нумерация с нуля.</li>
+<li><code>sizeof(int) = 4</code> (LP64), <code>sizeof(char) = 1</code>, <code>sizeof(long) = 8</code>, <code>sizeof(pointer) = 8</code>.</li>
+<li>Little-endian: младший байт по младшему адресу.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li><code>a[0]</code> по адресу 0x2000, элементы по 4 байта. Адрес <code>a[3]</code>? → <code>0x2000 + 3×4 = 0x200C</code>.</li>
+<li><code>a[0]</code> по адресу 0x1000, элементы по 1 байту. Адрес <code>a[5]</code>? → <code>0x1005</code>.</li>
+<li>Массив из 3 int начинается по 0x1000. Адреса элементов? → 0x1000, 0x1004, 0x1008. Размер массива — 12 байт.</li>
+<li><code>grade[i][j]</code> в массиве 16×4. Смещение? → <code>4i + j</code>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Считать по 1 байту вместо размера элемента.</li>
+<li>Забыть, что нумерация с нуля: <code>a[3]</code> — четвёртый элемент.</li>
+<li>Путать <code>a+1</code> (адрес следующего элемента) и <code>a[1]</code> (значение второго элемента).</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-c"><span class="hljs-keyword">int</span> a[<span class="hljs-number">5</span>];              <span class="hljs-comment">// 5 элементов по 4 байта = 20 байт</span>
+<span class="hljs-comment">// a[0] по 0x2000</span>
+<span class="hljs-comment">// a[1] по 0x2004</span>
+<span class="hljs-comment">// a[2] по 0x2008</span>
+<span class="hljs-comment">// a[3] по 0x200C</span>
+<span class="hljs-comment">// a[4] по 0x2010</span>
+</code></pre>
+<hr>
+<h2 id="-3-vs-">ТЕМА 3. Файл vs процесс</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><strong>Файл</strong> — последовательность байтов на накопителе. Может не запускаться.</li>
+<li><strong>Процесс</strong> — работающий экземпляр программы. Имеет состояние, ресурсы, PID, адресное пространство.</li>
+<li>Один файл можно запустить дважды → два процесса с разными PID.</li>
+<li>После завершения процесса файл остаётся на диске.</li>
+<li>Завершившийся процесс не получает процессорное время.</li>
+<li>Новый запуск не обязан получать тот же PID.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Что верно о файле и процессе? → Процесс завершился; файл можно запустить снова; файл и процесс — разные сущности.</li>
+<li>Файл обязательно удалён? → Нет.</li>
+<li>Процесс продолжает получать CPU? → Нет.</li>
+<li>Другой запуск получит тот же PID? → Не обязан.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>«Файл и процесс — одно и то же» — нет.</li>
+<li>«После завершения файл удаляется» — нет.</li>
+<li>«PID всегда одинаковый» — нет.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code>./<span class="hljs-function"><span class="hljs-keyword">program</span></span>   # процесс <span class="hljs-number">1</span>, PID <span class="hljs-number">1234</span>
+./<span class="hljs-function"><span class="hljs-keyword">program</span></span>   # процесс <span class="hljs-number">2</span>, PID <span class="hljs-number">5678</span>
+# файл <span class="hljs-function"><span class="hljs-keyword">program</span></span> остался на диске
+</code></pre><hr>
+<h2 id="-4-">ТЕМА 4. Стандартные потоки</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><strong>stdin</strong> = 0 — ввод.</li>
+<li><strong>stdout</strong> = 1 — обычный вывод (результат).</li>
+<li><strong>stderr</strong> = 2 — диагностика (ошибки).</li>
+<li>Перенаправления: <code>&lt;</code> (stdin), <code>&gt;</code> (stdout), <code>2&gt;</code> (stderr), <code>&gt;&gt;</code> (добавление), <code>|</code> (pipe).</li>
+<li><code>stderr</code> не совпадает с <code>stdout</code> автоматически.</li>
+<li><code>stdin</code> — не только клавиатура: может быть файл, канал, терминал.</li>
+<li><code>stderr</code> не заменяет код завершения.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>stdin соответствует дескриптору 0? → Да.</li>
+<li>stderr всегда совпадает с stdout? → Нет.</li>
+<li>stdin можно перенаправить? → Да.</li>
+<li>stdout для результата? → Да.</li>
+<li>stderr заменяет код завершения? → Нет.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать <code>&gt;</code> и <code>2&gt;</code>.</li>
+<li>Думать, что <code>|</code> объединяет stderr.</li>
+<li>Считать, что <code>stdin</code> — только клавиатура.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-bash">./<span class="hljs-keyword">program</span> &lt; <span class="hljs-keyword">input</span><span class="hljs-variable">.txt</span> &gt; <span class="hljs-keyword">output</span><span class="hljs-variable">.txt</span> <span class="hljs-number">2</span>&gt; errors<span class="hljs-variable">.txt</span>
+# stdin из <span class="hljs-keyword">input</span><span class="hljs-variable">.txt</span>, stdout в <span class="hljs-keyword">output</span><span class="hljs-variable">.txt</span>, stderr в errors<span class="hljs-variable">.txt</span>
+./producer | ./consumer
+# stdout producer → stdin consumer; stderr не объединяется
+</code></pre>
+<hr>
+<h2 id="-5-gcc">ТЕМА 5. Этапы сборки GCC</h2>
+<h3 id="-">Теория</h3>
+<p>Цепочка:</p>
+<ol>
+<li><strong>Препроцессор</strong> (<code>-E</code>): раскрывает <code>#include</code>, <code>#define</code>. Результат — <code>.i</code>.</li>
+<li><strong>Компилятор</strong> (<code>-S</code>): переводит C в ассемблер. Результат — <code>.s</code>.</li>
+<li><strong>Ассемблер</strong> (<code>-c</code>): переводит ассемблер в машинные байты. Результат — <code>.o</code> (объектный файл).</li>
+<li><strong>Линковщик</strong>: соединяет объектные файлы и библиотеки. Результат — исполняемый файл.</li>
+</ol>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Какой этап превращает <code>.c</code> в <code>.s</code>? → <strong>Компилятор</strong> (компиляция).</li>
+<li>Какой этап превращает <code>.s</code> в <code>.o</code>? → <strong>Ассемблер</strong>.</li>
+<li>Какой этап создаёт исполняемый файл? → <strong>Линковщик</strong>.</li>
+<li>Что делает препроцессор? → Раскрывает <code>#include</code> и <code>#define</code>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать компилятор и ассемблер.</li>
+<li>Думать, что <code>gcc</code> — один этап; на самом деле GCC вызывает несколько инструментов.</li>
+<li>Считать, что <code>.o</code> — готовая программа.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-bash"><span class="hljs-selector-tag">gcc</span> <span class="hljs-selector-tag">-E</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.c</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.i</span>    # препроцессор
+<span class="hljs-selector-tag">gcc</span> <span class="hljs-selector-tag">-S</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.i</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.s</span>    # компилятор
+<span class="hljs-selector-tag">gcc</span> <span class="hljs-selector-tag">-c</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.s</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.o</span>    # ассемблер
+<span class="hljs-selector-tag">gcc</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.o</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">program</span>      # линковщик
+</code></pre>
+<hr>
+<h2 id="-6-">ТЕМА 6. Стековая машина</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>Стек — структура LIFO (последним пришёл — первым вышел).</li>
+<li>Операции: <code>push</code> (положить), <code>pop</code> (снять).</li>
+<li>Арифметика: снять два операнда, выполнить операцию, положить результат.</li>
+<li>Пример: <code>push 4; push 7; add</code> → на стеке 11.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Кладут 4 и 7, заменяют суммой. Что сверху? → <strong>11</strong>.</li>
+<li>Кладут 10, 3, вычитают. Что сверху? → <strong>7</strong> (10 − 3).</li>
+<li>Кладут 2, 5, умножают. Что сверху? → <strong>10</strong>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Перепутать порядок операндов при вычитании.</li>
+<li>Забыть, что сумма заменяет два элемента одним.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code>push <span class="hljs-number">4</span>    <span class="hljs-comment">; стек: [4]</span>
+push <span class="hljs-number">7</span>    <span class="hljs-comment">; стек: [4, 7]</span>
+<span class="hljs-keyword">add </span>      <span class="hljs-comment">; стек: [11]</span>
+</code></pre><hr>
+<h2 id="-7-">ТЕМА 7. Аргументы командной строки</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><code>argc</code> — число аргументов (включая имя программы).</li>
+<li><code>argv</code> — массив строк.</li>
+<li><code>argv[0]</code> — имя программы.</li>
+<li><code>argv[1]</code>, <code>argv[2]</code>, … — содержательные аргументы.</li>
+<li><strong>Все аргументы — строки</strong>, даже если выглядят как числа.</li>
+<li>Программа сама должна преобразовать строку в число (<code>atoi</code>, <code>strtol</code>).</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li><code>./meter -q 8</code>. Первый аргумент? → <strong><code>-q</code>, строка</strong>.</li>
+<li><code>./program --size 12 &quot;two words&quot;</code>. Аргументы? → <code>--size</code>, <code>12</code>, <code>two words</code> — все строки.</li>
+<li>Сколько аргументов у <code>./prog a b c</code>? → <code>argc = 4</code> (имя + 3).</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Считать, что <code>8</code> — число. Нет, это строка <code>&quot;8&quot;</code>.</li>
+<li>Путать <code>argv[0]</code> (имя программы) и <code>argv[1]</code> (первый содержательный).</li>
+<li>Забыть, что <code>argc</code> включает имя программы.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span> </span>{
+    <span class="hljs-comment">// argc = 3</span>
+    <span class="hljs-comment">// argv[0] = "./meter"</span>
+    <span class="hljs-comment">// argv[1] = "-q"</span>
+    <span class="hljs-comment">// argv[2] = "8"</span>
+    <span class="hljs-keyword">int</span> n = atoi(argv[<span class="hljs-number">2</span>]);  <span class="hljs-comment">// преобразование строки в число</span>
+}
+</code></pre>
+<hr>
+<h2 id="-8-">ТЕМА 8. Линковка и объектные файлы</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><code>.o</code> — объектный файл, результат ассемблирования. Ещё не готовая программа.</li>
+<li>Линковщик соединяет несколько <code>.o</code> и библиотеки.</li>
+<li><code>gcc main.o stats.o -o meter</code> — линковка, результат <code>meter</code>.</li>
+<li><code>.o</code> файлы <strong>остаются на диске</strong> после линковки.</li>
+<li>Ошибка <code>undefined reference</code> — не передан нужный <code>.o</code> или библиотека.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li><code>gcc main.o stats.o -o meter</code>. Какой файл исполняемый? → <strong>meter</strong>.</li>
+<li>Что с <code>.o</code> файлами? → Остаются на диске, не удаляются.</li>
+<li>Что делает линковщик? → Соединяет объектные файлы и библиотеки.</li>
+<li><code>nm main.o</code> показывает <code>U sum</code> — что это? → Неопределённая ссылка, нужен <code>sum.o</code>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Думать, что <code>.o</code> — готовая программа.</li>
+<li>Считать, что линковщик удаляет <code>.o</code>.</li>
+<li>Путать <code>-c</code> (создать <code>.o</code>) и <code>-o</code> (задать имя результата).</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-bash"><span class="hljs-selector-tag">gcc</span> <span class="hljs-selector-tag">-c</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.c</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.o</span>     # объектный файл
+<span class="hljs-selector-tag">gcc</span> <span class="hljs-selector-tag">-c</span> <span class="hljs-selector-tag">sum</span><span class="hljs-selector-class">.c</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">sum</span><span class="hljs-selector-class">.o</span>       # объектный файл
+<span class="hljs-selector-tag">gcc</span> <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.o</span> <span class="hljs-selector-tag">sum</span><span class="hljs-selector-class">.o</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">program</span> # линковка
+# <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.o</span> и <span class="hljs-selector-tag">sum</span><span class="hljs-selector-class">.o</span> остались на диске
+</code></pre>
+<hr>
+<h2 id="-9-git">ТЕМА 9. Git</h2>
+<h3 id="-">Теория</h3>
+<p>Три области:</p>
+<ol>
+<li><strong>Рабочий каталог</strong> — текущие файлы.</li>
+<li><strong>Индекс</strong> (staging area) — что войдёт в следующий коммит.</li>
+<li><strong>Репозиторий</strong> — история коммитов.</li>
+</ol>
+<p>Команды:</p>
+<ul>
+<li><code>git init</code> — создать репозиторий.</li>
+<li><code>git status</code> — состояние.</li>
+<li><code>git add file</code> — записать в индекс.</li>
+<li><code>git commit -m &quot;...&quot;</code> — создать коммит из индекса.</li>
+<li><code>git diff</code> — изменения рабочего файла относительно индекса.</li>
+<li><code>git diff --cached</code> — изменения индекса относительно последнего коммита.</li>
+<li><code>git log --oneline</code> — история.</li>
+<li><code>git restore file</code> — вернуть из индекса (уничтожает правки).</li>
+<li><code>git rm --cached file</code> — убрать из индекса, оставить на диске.</li>
+<li><code>.gitignore</code> — шаблоны игнорирования.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Незакоммиченная правка в <code>notes.txt</code>. Как посмотреть? → <code>git diff notes.txt</code>.</li>
+<li>Как записать в индекс? → <code>git add notes.txt</code>.</li>
+<li>Чем <code>git diff</code> отличается от <code>git diff --cached</code>? → Первый — рабочий файл vs индекс; второй — индекс vs последний коммит.</li>
+<li>Что делает <code>git rm --cached</code>? → Убирает из индекса, оставляет на диске.</li>
+<li>Что делает <code>git restore</code>? → Возвращает рабочую версию из индекса, уничтожает правки.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать <code>add</code> и <code>commit</code>. <code>add</code> → индекс, <code>commit</code> → история.</li>
+<li>Считать, что <code>.gitignore</code> удаляет файлы. Нет, только игнорирует.</li>
+<li>Думать, что <code>git restore</code> сохраняет правки. Нет, уничтожает.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-bash">git <span class="hljs-keyword">diff </span>notes.txt        <span class="hljs-comment"># посмотреть правку</span>
+git <span class="hljs-keyword">add </span>notes.txt         <span class="hljs-comment"># записать в индекс</span>
+git <span class="hljs-keyword">diff </span>--<span class="hljs-keyword">cached </span>        <span class="hljs-comment"># проверить, что в индексе</span>
+git commit -m <span class="hljs-string">"Update"</span>    <span class="hljs-comment"># создать коммит</span>
+git log -<span class="hljs-number">1</span> --oneline      <span class="hljs-comment"># посмотреть коммит</span>
+</code></pre>
+<hr>
+<h2 id="-10-gdb">ТЕМА 10. GDB</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><code>break file:line</code> — точка останова.</li>
+<li><code>run</code> — запуск.</li>
+<li><code>next</code> — выполнить строку, не заходя в функции, остановиться на следующей.</li>
+<li><code>step</code> — зайти внутрь функции.</li>
+<li><code>finish</code> — завершить текущую функцию.</li>
+<li><code>print expr</code> — значение выражения.</li>
+<li><code>watch var</code> — остановка при изменении.</li>
+<li><code>display var</code> — показывать значение при остановках.</li>
+<li><code>backtrace</code> — стек вызовов.</li>
+<li><code>frame n</code> — выбрать кадр.</li>
+<li><code>x/8xb &amp;var</code> — 8 байт в hex.</li>
+<li><code>continue</code> — продолжить.</li>
+<li><code>quit</code> — выход.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Выполнить строку и остановиться на следующей? → <code>next</code>.</li>
+<li>Зайти внутрь функции? → <code>step</code>.</li>
+<li>Завершить функцию? → <code>finish</code>.</li>
+<li>Остановиться при изменении переменной? → <code>watch</code>.</li>
+<li>Показать стек вызовов? → <code>backtrace</code>.</li>
+<li>Прочитать 8 байт памяти? → <code>x/8xb &amp;var</code>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать <code>next</code> и <code>step</code>.</li>
+<li>Читать неинициализированную переменную.</li>
+<li>Пытаться читать локальную переменную после завершения функции.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code>(gdb) <span class="hljs-keyword">break</span> demo.c:6
+(gdb) run
+(gdb) next
+(gdb) print product
+(gdb) <span class="hljs-keyword">continue</span>
+</code></pre><hr>
+<h2 id="-11-">ТЕМА 11. Коды возврата и процессы</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><code>return 0</code> в <code>main</code> — успех.</li>
+<li>Ненулевой код — ошибка/иной исход.</li>
+<li><code>echo $?</code> — код завершения последней команды.</li>
+<li><code>$?</code> меняется после следующей команды.</li>
+<li><code>fork()</code> — создаёт дочерний процесс.</li>
+<li><code>waitpid()</code> — родитель ждёт и получает статус ребёнка.</li>
+<li>Код ребёнка доступен родителю через <code>waitpid</code>, а не через <code>$?</code>.</li>
+<li><code>$?</code> показывает код <strong>родителя</strong>, а не ребёнка.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Ребёнок завершился с 7, родитель — с 0. Что покажет <code>echo $?</code>? → <strong>0</strong>.</li>
+<li>Где код ребёнка? → Внутри родителя, через <code>waitpid</code>.</li>
+<li>Что означает код 0? → Успех.</li>
+<li>Что означает ненулевой код? → Ошибка/иной исход.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Думать, что <code>$?</code> показывает код ребёнка.</li>
+<li>Забыть, что <code>$?</code> меняется после следующей команды.</li>
+<li>Путать статус программы и статус дочернего процесса.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-c">pid_t pid = fork();
+<span class="hljs-keyword">if</span> (pid == <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">exit</span>(<span class="hljs-number">7</span>);  <span class="hljs-regexp">//</span> ребёнок
+} <span class="hljs-keyword">else</span> {
+    int status;
+    waitpid(pid, &amp;status, <span class="hljs-number">0</span>);
+    <span class="hljs-regexp">//</span> WEXITSTATUS(status) == <span class="hljs-number">7</span>
+    return <span class="hljs-number">0</span>;  <span class="hljs-regexp">//</span> родитель
+}
+<span class="hljs-regexp">//</span> echo $? покажет <span class="hljs-number">0</span> (код родителя)
+</code></pre>
+<hr>
+<h2 id="-12-bios-">ТЕМА 12. BIOS, прерывания, диски</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>BIOS после сброса CPU: <code>CS:IP = 0xF000:0xFFF0</code> → физический <code>0xFFFF0</code>.</li>
+<li>BIOS читает первый сектор по <code>0000:7C00</code>.</li>
+<li>Загрузчик читает остальные секторы в <code>1000:0000</code>.</li>
+<li><code>INT 13h</code> — дисковые сервисы:<ul>
+<li><code>AH=02h</code> — чтение CHS.</li>
+<li><code>AH=03h</code> — запись CHS.</li>
+<li><code>AH=42h</code> — чтение LBA через DAP.</li>
+<li><code>AH=43h</code> — запись LBA через DAP.</li>
+</ul>
+</li>
+<li><code>DL=00h</code> — дискета, <code>DL=80h</code> — первый HDD.</li>
+<li><code>CF=0</code> — успех, <code>CF=1</code> — ошибка.</li>
+<li>LBA → смещение: <code>LBA × 512</code>.</li>
+<li>LBA 3: первый байт 1536 = 0x600, последний 2047 = 0x7FF.</li>
+<li>Сектор 512 байт.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Куда BIOS читает загрузочный сектор? → <code>0000:7C00</code>.</li>
+<li>Куда загрузчик читает журнал? → <code>1000:0000</code>.</li>
+<li>LBA 3: смещение первого байта? → 0x600.</li>
+<li>LBA 3: смещение последнего байта? → 0x7FF.</li>
+<li>LBA 4: первый байт? → 4×512 = 2048 = 0x800.</li>
+<li>Флаг ошибки после INT 13h? → CF=1.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать <code>0000:7C00</code> (загрузочный сектор) и <code>1000:0000</code> (буфер журнала).</li>
+<li>Забыть, что LBA нумеруется с нуля.</li>
+<li>Считать последний байт как <code>LBA × 512</code>, а не <code>LBA × 512 + 511</code>.</li>
+<li>Путать <code>CF</code> и <code>ZF</code>.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code>LBA 3, сектор<span class="hljs-number"> 512 </span>байт:
+  первый байт:<span class="hljs-number"> 3 </span>×<span class="hljs-number"> 512 </span>=<span class="hljs-number"> 1536 </span>= 0x600
+  последний:  <span class="hljs-number"> 1536 </span>+<span class="hljs-number"> 511 </span>=<span class="hljs-number"> 2047 </span>= 0x7FF
+</code></pre><hr>
+<h2 id="-13-int-vs-irq">ТЕМА 13. INT vs IRQ</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><strong>INT</strong> — программное прерывание, инициирует программа.</li>
+<li><strong>IRQ</strong> — аппаратное прерывание, инициирует устройство.</li>
+<li>INT 10h — видео, INT 13h — диск, INT 16h — клавиатура BIOS.</li>
+<li>IRQ1 → INT 09h — клавиатура PS/2.</li>
+<li>IVT — таблица векторов, 4 байта на вектор, по адресу <code>0000:0000</code>.</li>
+<li>Вектор 09h — по смещению <code>9 × 4 = 36 = 0x24</code>.</li>
+<li>После IRQ1 нужно послать EOI в PIC (<code>out 0x20, 0x20</code>).</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Чем INT отличается от IRQ? → INT инициирует программа, IRQ — устройство.</li>
+<li>Куда переходит CPU по IRQ1? → IVT[09h] → обработчик.</li>
+<li>Что такое EOI? → Подтверждение завершения прерывания для PIC.</li>
+<li>Что будет, если забыть EOI? → PIC заблокирует следующие прерывания.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Думать, что INT 16h — аппаратное прерывание. Нет, программное.</li>
+<li>Путать INT 09h (IRQ1) и INT 16h (BIOS-клавиатура).</li>
+<li>Забыть EOI.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-asm"><span class="hljs-symbol">irq1:</span>
+    <span class="hljs-keyword">push</span> <span class="hljs-built_in">ax</span>
+    <span class="hljs-keyword">push</span> <span class="hljs-built_in">ds</span>
+    <span class="hljs-keyword">in</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0x60</span>      <span class="hljs-comment">; читать скан-код</span>
+    <span class="hljs-comment">; ... очередь ...</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0x20</span>
+    <span class="hljs-keyword">out</span> <span class="hljs-number">0x20</span>, <span class="hljs-built_in">al</span>     <span class="hljs-comment">; EOI</span>
+    <span class="hljs-keyword">pop</span> <span class="hljs-built_in">ds</span>
+    <span class="hljs-keyword">pop</span> <span class="hljs-built_in">ax</span>
+    <span class="hljs-keyword">iret</span>
+</code></pre>
+<hr>
+<h2 id="-14-vga">ТЕМА 14. VGA</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>Видеопамять: <code>B800:0000</code> = <code>0xB8000</code>.</li>
+<li>Одна позиция = 2 байта: символ + атрибут.</li>
+<li>Формула: <code>offset = 160 × row + 2 × col</code>.</li>
+<li>Атрибут: <code>16 × фон + цвет</code>.</li>
+<li>Бит 7 — мигание, биты 6–4 — фон, биты 3–0 — символ.</li>
+<li>Цвета: 0 — чёрный, 1 — синий, 2 — зелёный, 4 — красный, 7 — светло-серый, A — ярко-зелёный, E — жёлтый, F — белый.</li>
+<li><code>stosw</code> пишет <code>AX</code> в <code>ES:DI</code>, <code>DI += 2</code>.</li>
+<li><code>lodsb</code> читает из <code>DS:SI</code> в <code>AL</code>, <code>SI += 1</code>.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Смещение для строки 3, столбца 10? → <code>160×3 + 2×10 = 500</code>.</li>
+<li>Атрибут «жёлтый на синем»? → <code>16×1 + 14 = 30 = 0x1E</code>.</li>
+<li>Атрибут «белый на красном»? → <code>16×4 + 15 = 79 = 0x4F</code>.</li>
+<li>Атрибут «ярко-зелёный на чёрном»? → <code>16×0 + 10 = 0x0A</code>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать <code>BX = 256×row + col</code> (для BIOS) и <code>offset = 160×row + 2×col</code> (для VGA).</li>
+<li>Забыть, что строка и столбец с нуля.</li>
+<li>Путать ASCII-код и числовое значение.</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code class="lang-asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>, <span class="hljs-number">0xb800</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">es</span>, <span class="hljs-built_in">ax</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">di</span>, <span class="hljs-number">160</span>*<span class="hljs-number">2</span> + <span class="hljs-number">2</span>*<span class="hljs-number">5</span>   <span class="hljs-comment">; строка 2, столбец 5</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-string">'A'</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-number">ah</span>, <span class="hljs-number">0x0A</span>          <span class="hljs-comment">; ярко-зелёный на чёрном</span>
+<span class="hljs-keyword">stosw</span>
+</code></pre>
+<hr>
+<h2 id="-15-">ТЕМА 15. Массив оценок и среднее</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>Массив 16×4 = 64 байта.</li>
+<li>Адрес <code>grade[i][j]</code> = <code>grades + 4i + j</code>.</li>
+<li><code>FFh</code> — «не выставлена», <code>00h</code> — выставленный ноль.</li>
+<li>Среднее только по выставленным: <code>sum / n</code>.</li>
+<li>Сотые без float: <code>(100 × sum + n/2) / n</code>, только при <code>n &gt; 0</code>.</li>
+<li>При <code>n = 0</code> — нет среднего, деление пропускается.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Смещение <code>grade[4][2]</code>? → <code>4×4 + 2 = 18 = 0x12</code>.</li>
+<li>Оценки <code>0, 1, 1, FF</code>. Среднее? → <code>(100×2 + 1) / 3 = 67</code> сотых = 0.67.</li>
+<li>При <code>n = 0</code>? → Нет среднего.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Включать <code>FFh</code> в сумму.</li>
+<li>Забыть, что <code>00h</code> — допустимая оценка.</li>
+<li>Делить на 4 вместо <code>n</code> (числа выставленных).</li>
+</ul>
+<h3 id="-">Пример</h3>
+<pre><code>Оценки:<span class="hljs-number"> 00 </span>0A FF FF
+sum =<span class="hljs-number"> 0 </span>+<span class="hljs-number"> 10 </span>= 10
+n = 2
+среднее = 10/2 = 5.00
+сотые = (100×10 + 1) /<span class="hljs-number"> 2 </span>= 1001/2 = 500
+</code></pre><hr>
+<h2 id="-16-gr16">ТЕМА 16. Сектор GR16</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>Байты 0–3: <code>GR16</code>.</li>
+<li>Байты 4–7: версия 1, 16 студентов, 4 работы.</li>
+<li>Байты 8–71: 64 оценки.</li>
+<li>Байты 72–73: контрольная сумма байтов 0–71.</li>
+<li>Байты 74–511: нули.</li>
+<li>Читается с LBA 1 через INT 13h.</li>
+<li>Перед заменой RAM: проверка сигнатуры, версии, суммы, диапазонов.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Где сигнатура? → Байты 0–3.</li>
+<li>Где оценки? → Байты 8–71.</li>
+<li>Где контрольная сумма? → Байты 72–73.</li>
+<li>Размер сектора? → 512 байт.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать смещения полей.</li>
+<li>Забыть про контрольную сумму.</li>
+<li>Считать, что сектор 1024 байта.</li>
+</ul>
+<hr>
+<h2 id="-17-">ТЕМА 17. Очередь событий</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li>Кольцевая очередь в RAM.</li>
+<li><code>qhead</code> — куда пишет обработчик.</li>
+<li><code>qtail</code> — откуда читает основной цикл.</li>
+<li>Пусто: <code>qhead == qtail</code>.</li>
+<li>Полно: следующая позиция <code>qhead == qtail</code>.</li>
+<li>64 позиции → максимум 63 события.</li>
+<li>Обработчик IRQ1 не рисует экран, только кладёт в очередь.</li>
+<li>Основной цикл забирает и обрабатывает.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Сколько событий вмещает очередь? → 63 (одна позиция резервируется).</li>
+<li>Когда очередь пуста? → <code>qhead == qtail</code>.</li>
+<li>Что делает обработчик? → Читает порт 60h, кладёт в очередь, EOI, iret.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Думать, что 64 позиции = 64 события.</li>
+<li>Путать <code>qhead</code> и <code>qtail</code>.</li>
+<li>Считать, что обработчик рисует экран.</li>
+</ul>
+<hr>
+<h2 id="-18-real-mode-">ТЕМА 18. Real mode и адресация</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><code>physical = 16 × segment + offset</code>.</li>
+<li><code>1000:0006</code> → <code>0x10006</code>.</li>
+<li><code>B800:0000</code> → <code>0xB8000</code>.</li>
+<li><code>0000:7C00</code> → <code>0x7C00</code>.</li>
+<li><code>F000:FFF0</code> → <code>0xFFFF0</code>.</li>
+<li>Сегментные регистры: <code>CS</code>, <code>DS</code>, <code>SS</code>, <code>ES</code>.</li>
+<li><code>CS:IP</code> — код, <code>DS:SI</code> — данные, <code>SS:SP</code> — стек, <code>ES:DI</code> — назначение.</li>
+<li>Сегментный регистр нельзя загрузить immediate.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Физический адрес <code>1000:0006</code>? → <code>0x10006</code>.</li>
+<li>Физический адрес <code>B800:0000</code>? → <code>0xB8000</code>.</li>
+<li>Формула? → <code>16 × segment + offset</code>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Забыть умножить сегмент на 16.</li>
+<li>Путать сегмент и смещение.</li>
+<li>Пытаться загрузить <code>ES</code> immediate.</li>
+</ul>
+<hr>
+<h2 id="-19-nasm-">ТЕМА 19. NASM-директивы</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><code>bits 16</code> — 16-битный код.</li>
+<li><code>org 0x7C00</code> — начальный адрес.</li>
+<li><code>db</code>, <code>dw</code>, <code>dd</code>, <code>dq</code> — 1/2/4/8 байт.</li>
+<li><code>times</code> — повторение.</li>
+<li><code>equ</code> — константа.</li>
+<li><code>times 510 - ($ - $$) db 0</code> — дополнить до 510 байт.</li>
+<li><code>dw 0xAA55</code> — сигнатура загрузочного сектора.</li>
+<li>Директивы — для ассемблера, не для CPU.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Что такое директива? → Указание ассемблеру.</li>
+<li>Чем отличается от инструкции? → Инструкция для CPU, директива для ассемблера.</li>
+<li>Что делает <code>times</code>? → Повторяет.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Думать, что директива выполняется CPU.</li>
+<li>Путать <code>db</code> и <code>dw</code>.</li>
+</ul>
+<hr>
+<h2 id="-20-com1-ps-2">ТЕМА 20. COM1 и PS/2</h2>
+<h3 id="-">Теория</h3>
+<ul>
+<li><strong>PS/2</strong> — клавиатура, порты <code>60h</code> (данные) и <code>64h</code> (статус), IRQ1 → INT 09h.</li>
+<li><strong>COM1</strong> — последовательный порт, <code>0x3F8</code> (данные), <code>0x3FD</code> (статус), диагностика.</li>
+<li>В QEMU: <code>-serial stdio</code> → COM1 в терминал.</li>
+<li>COM1: <code>BOOT STAGE</code>, <code>READY</code>, <code>SAVED</code>, <code>LOADED</code>, <code>BAD_CHECKSUM</code>, <code>NO_DISK</code>.</li>
+<li>PS/2: скан-коды, <code>A</code>=0x1E, <code>0</code>=0x0B, <code>Backspace</code>=0x0E.</li>
+</ul>
+<h3 id="-">Типовые вопросы</h3>
+<ul>
+<li>Порты PS/2? → <code>60h</code>, <code>64h</code>.</li>
+<li>Адрес COM1? → <code>0x3F8</code>.</li>
+<li>Куда идёт <code>SAVED</code>? → COM1.</li>
+<li>Скан-код <code>A</code>? → <code>0x1E</code>.</li>
+</ul>
+<h3 id="-">Ловушки</h3>
+<ul>
+<li>Путать PS/2 и COM1.</li>
+<li>Считать, что <code>SAVED</code> идёт на VGA.</li>
+<li>Путать порты <code>60h</code> и <code>0x3F8</code>.</li>
+</ul>
+<hr>
+<h2 id="-">СВОДНАЯ ШПАРГАЛКА</h2>
+<table>
+<thead>
+<tr>
+<th>Тема</th>
+<th>Ключевое</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>АЛУ</td>
+<td>Вычисляет, внутри CPU</td>
+</tr>
+<tr>
+<td>Адрес a[i]</td>
+<td><code>base + i × sizeof</code></td>
+</tr>
+<tr>
+<td>Файл vs процесс</td>
+<td>Файл на диске, процесс работает</td>
+</tr>
+<tr>
+<td>stdin/stdout/stderr</td>
+<td>0, 1, 2</td>
+</tr>
+<tr>
+<td>GCC</td>
+<td>Препроцессор → компилятор → ассемблер → линковщик</td>
+</tr>
+<tr>
+<td>Стек</td>
+<td>LIFO, 4+7=11</td>
+</tr>
+<tr>
+<td>argv</td>
+<td>Все строки, argv[1] — первый</td>
+</tr>
+<tr>
+<td>Линковка</td>
+<td>.o остаются, meter — результат</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>add → индекс, commit → история</td>
+</tr>
+<tr>
+<td>GDB</td>
+<td>next, step, finish, watch</td>
+</tr>
+<tr>
+<td>Коды возврата</td>
+<td>$? — родителя, не ребёнка</td>
+</tr>
+<tr>
+<td>BIOS</td>
+<td>0xFFFF0 → 0x7C00 → 1000:0000</td>
+</tr>
+<tr>
+<td>INT 13h</td>
+<td>AH=42h/43h, DL=80h, CF</td>
+</tr>
+<tr>
+<td>INT vs IRQ</td>
+<td>Программа vs устройство</td>
+</tr>
+<tr>
+<td>VGA</td>
+<td>B800, offset = 160×row + 2×col, атрибут = 16×фон + цвет</td>
+</tr>
+<tr>
+<td>Оценки</td>
+<td>FF — пропуск, 00 — ноль</td>
+</tr>
+<tr>
+<td>Среднее</td>
+<td>(100×sum + n/2)/n</td>
+</tr>
+<tr>
+<td>GR16</td>
+<td>Сигнатура, версии, 64 оценки, сумма</td>
+</tr>
+<tr>
+<td>Очередь</td>
+<td>64 позиции, 63 события</td>
+</tr>
+<tr>
+<td>Real mode</td>
+<td>16×segment + offset</td>
+</tr>
+<tr>
+<td>NASM</td>
+<td>Директивы для ассемблера</td>
+</tr>
+<tr>
+<td>PS/2</td>
+<td>60h/64h, IRQ1 → INT 09h</td>
+</tr>
+<tr>
+<td>COM1</td>
+<td>0x3F8, диагностика</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Если хочешь, могу:</p>
+<ul>
+<li>сделать по этой шпаргалке ещё один вариант теста,</li>
+<li>разобрать любую тему подробнее,</li>
+<li>дать задачи на расчёт (адреса, VGA, среднее, LBA).</li>
+</ul>
+
