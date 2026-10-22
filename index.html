@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Шпаргалка по Мат. Анализу — Подготовка к КР</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- KaTeX for Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Настройки для формул KaTeX и адаптивности */
+    .katex-display {
+      margin: 0.5em 0 !important;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    .katex {
+      font-size: 1.05em;
+    }
+    /* Ультра-компактный режим ("Шпора-режим") */
+    body.compact-mode {
+      font-size: 13px;
+    }
+    body.compact-mode .katex {
+      font-size: 0.96em;
+    }
+    body.compact-mode .card-pad {
+      padding: 0.75rem !important;
+    }
+    body.compact-mode .section-gap {
+      gap: 0.75rem !important;
+    }
+    /* Стили для печати */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11px !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-break-inside {
+        break-inside: avoid;
+      }
+      details {
+        display: block !important;
+      }
+      details > summary {
+        display: none !important;
+      }
+      .card-box {
+        border: 1px solid #cccccc !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin-bottom: 8px !important;
+      }
+    }
+    /* Тонкий скроллбар для формул */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.4);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-200 selection:bg-indigo-500 selection:text-white">
+
+  <!-- ВЕРХНЯЯ ПАНЕЛЬ НАВИГАЦИИ И УПРАВЛЕНИЯ -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-white/85 dark:bg-slate-900/85 border-b border-slate-200 dark:border-slate-800 no-print">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex flex-col gap-2.5">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <!-- Заголовок -->
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold shadow-sm">
+            ∑
+          </div>
+          <div>
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight leading-none">
+              Мат. Анализ: Шпаргалка к КР
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Вся теория + формулы (фото 6–7) + гайд по рекуррентным (фото 3–5) + разбор КР (фото 1–2)
+            </p>
+          </div>
+        </div>
+
+        <!-- Поиск и кнопки режимов -->
+        <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+          <div class="relative">
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Поиск (Бернулли, Вейерштрасс, №7...)"
+              class="w-48 sm:w-64 pl-8 pr-3 py-1.5 text-xs sm:text-sm rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+            >
+            <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+
+          <button id="toggleSolutionsBtn" onclick="toggleAllSolutions()" class="px-2.5 py-1.5 text-xs font-semibold rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition">
+            Развернуть все решения
+          </button>
+
+          <button id="compactBtn" onclick="toggleCompactMode()" class="px-2.5 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Уплотнить карточки для телефона">
+            Шпора-режим
+          </button>
+
+          <button onclick="window.print()" class="px-2.5 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Печать или сохранение в PDF">
+            Печать / PDF
+          </button>
+
+          <button id="themeBtn" onclick="toggleTheme()" class="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Переключить тему">
+            <span id="themeIcon">☀️</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Быстрая навигация по структуре КР -->
+      <nav class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs font-medium">
+        <a href="#sec-theory" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 whitespace-nowrap hover:bg-emerald-500/20 transition">0. Определения и Теория</a>
+        <a href="#sec-task1" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white transition whitespace-nowrap">№1. Индукция + Бернулли</a>
+        <a href="#sec-task2" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white transition whitespace-nowrap">№2. Бином Ньютона и $C_n^k$</a>
+        <a href="#sec-task345" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white transition whitespace-nowrap">№3–5. Асимптотика и Пределы</a>
+        <a href="#sec-task6" class="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 whitespace-nowrap hover:bg-amber-500/20 transition">№6 + Фото 6 (Эталоны и Ряды)</a>
+        <a href="#sec-task7" class="px-2.5 py-1 rounded-lg bg-rose-500/10 text-rose-700 dark:text-rose-300 border border-rose-500/20 whitespace-nowrap hover:bg-rose-500/20 transition">№7 + Фото 3–5 (Рекуррентные)</a>
+        <a href="#sec-task8" class="px-2.5 py-1 rounded-lg bg-violet-500/10 text-violet-700 dark:text-violet-300 border border-violet-500/20 whitespace-nowrap hover:bg-violet-500/20 transition">№8 + Фото 7 (Замечательные пределы)</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 py-5 space-y-6">
+
+    <!-- =====================================================================
+         РАЗДЕЛ 0: БАЗОВАЯ ТЕОРИЯ И ОПРЕДЕЛЕНИЯ ПОСЛЕДОВАТЕЛЬНОСТЕЙ
+         ===================================================================== -->
+    <section id="sec-theory" class="searchable-section scroll-mt-28">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+          База и Определения
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold">Теория пределов последовательностей</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 section-gap">
+        <!-- 1. Определение предела последовательности -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">1. Определение предела последовательности</h3>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">$\lim_{n\to\infty} x_n = a$</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-2">
+            Число $a \in \mathbb{R}$ называется <strong>пределом последовательности</strong> $(x_n)$, если для любого сколь угодно малого $\varepsilon > 0$ существует номер $N(\varepsilon) \in \mathbb{N}$ такой, что для всех $n > N(\varepsilon)$ выполняется неравенство $|x_n - a| < \varepsilon$:
+          </p>
+          <div class="p-2.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/70 dark:border-emerald-800/50 text-center">
+            $$\lim_{n\to\infty} x_n = a \iff \forall \varepsilon > 0 \ \exists N(\varepsilon) \in \mathbb{N} \ \forall n > N: \ |x_n - a| < \varepsilon$$
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">
+            <strong>Геометрический смысл:</strong> в любой $\varepsilon$-окрестности $(a-\varepsilon; a+\varepsilon)$ точки $a$ содержатся все члены последовательности, начиная с некоторого номера $N+1$ (вне окрестности — лишь конечное число членов).
+          </p>
+        </div>
+
+        <!-- 2. Сходимость и расходимость -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">2. Сходимость и расходимость</h3>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">$a \in \mathbb{R}$ vs $\pm\infty$</span>
+          </div>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+            <li class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+              <strong class="text-emerald-600 dark:text-emerald-400">Сходящаяся последовательность:</strong> последовательность, которая имеет <em>конечный</em> предел $a \in \mathbb{R}$ ($\exists \lim_{n\to\infty} x_n = a, \ |a| < \infty$).
+            </li>
+            <li class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+              <strong class="text-rose-600 dark:text-rose-400">Расходящаяся последовательность:</strong> последовательность, которая <em>не имеет конечного предела</em> (её предел равен $+\infty$, $-\infty$, $\infty$ или вообще не существует, как у $(-1)^n$).
+            </li>
+          </ul>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">
+            <strong>Важные свойства сходящихся:</strong> предел единственен; всякая сходящаяся последовательность <strong>ограничена</strong> ($\exists C > 0 \ \forall n: |x_n| \le C$). Обратное неверно: $(-1)^n$ ограничена, но расходится!
+          </p>
+        </div>
+
+        <!-- 3. Теорема Вейерштрасса -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">3. Теорема Вейерштрасса</h3>
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400">Ключ к №7</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-2">
+            Всякая <strong>монотонная и ограниченная</strong> последовательность сходится (имеет конечный предел):
+          </p>
+          <div class="space-y-1.5 text-xs">
+            <div class="p-2 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/70 dark:border-amber-800/50">
+              1) Если $(x_n)$ <strong>не убывает</strong> ($x_{n+1} \ge x_n$) и <strong>ограничена сверху</strong> ($x_n \le M$), то:
+              $$\exists \lim_{n\to\infty} x_n = \sup_{n\in\mathbb{N}} \{x_n\} \le M$$
+            </div>
+            <div class="p-2 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/70 dark:border-amber-800/50">
+              2) Если $(x_n)$ <strong>не возрастает</strong> ($x_{n+1} \le x_n$) и <strong>ограничена снизу</strong> ($x_n \ge m$), то:
+              $$\exists \lim_{n\to\infty} x_n = \inf_{n\in\mathbb{N}} \{x_n\} \ge m$$
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Бесконечно малые (б.м.) последовательности -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">4. Бесконечно малая (б.м.)</h3>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">$\lim \alpha_n = 0$</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-2">
+            Последовательность $(\alpha_n)$ называется <strong>бесконечно малой (б.м.)</strong>, если её предел равен нулю:
+          </p>
+          <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-center mb-2">
+            $$\lim_{n\to\infty} \alpha_n = 0 \iff \forall \varepsilon > 0 \ \exists N(\varepsilon)\in\mathbb{N} \ \forall n > N: \ |\alpha_n| < \varepsilon$$
+          </div>
+          <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-1 list-disc pl-4">
+            <li><strong>Связь с пределом:</strong> $\lim_{n\to\infty} x_n = a \iff x_n = a + \alpha_n$, где $\alpha_n$ — б.м.</li>
+            <li><strong>Супер-свойство (для $\cos(n!)$ и $\sin n$):</strong> произведение <em>б.м.</em> последовательности на <em>ограниченную</em> есть <strong>б.м.</strong> последовательность ($\frac{\cos(n!)}{n} \to 0$).</li>
+          </ul>
+        </div>
+
+        <!-- 5. Бесконечно большие (б.б.) последовательности -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside lg:col-span-2">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">5. Бесконечно большая (б.б.) последовательность и связь с б.м.</h3>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">$\lim x_n = \infty$</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
+            <div>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-2">
+                Последовательность $(x_n)$ называется <strong>бесконечно большой (б.б.)</strong>, если для любого сколь угодно большого $M > 0$ существует номер $N(M)\in\mathbb{N}$ такой, что для всех $n > N$:
+              </p>
+              <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-center">
+                $$\lim_{n\to\infty} x_n = \infty \iff \forall M > 0 \ \exists N\in\mathbb{N} \ \forall n > N: \ |x_n| > M$$
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/70 dark:border-indigo-800/50 text-xs space-y-1.5">
+              <div class="font-bold text-indigo-700 dark:text-indigo-300">Частные случаи знака и теорема о связи б.б. и б.м.:</div>
+              <div>• $\lim x_n = +\infty \iff \forall M > 0 \ \exists N \ \forall n > N: \ x_n > M$</div>
+              <div>• $\lim x_n = -\infty \iff \forall M > 0 \ \exists N \ \forall n > N: \ x_n < -M$</div>
+              <div class="pt-1 border-t border-indigo-200 dark:border-indigo-800/60 font-medium">
+                <strong>Теорема о связи:</strong> Если $(x_n)$ — б.б. ($\forall n: x_n \neq 0$), то $\left(\frac{1}{x_n}\right)$ — б.м. И наоборот: если $(\alpha_n)$ — б.м. ($\alpha_n \neq 0$), то $\left(\frac{1}{\alpha_n}\right)$ — б.б.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ЗАДАНИЕ 1 КР: МЕТОД МАТЕМАТИЧЕСКОЙ ИНДУКЦИИ (ММИ) И НЕРАВЕНСТВО БЕРНУЛЛИ
+         ===================================================================== -->
+    <section id="sec-task1" class="searchable-section scroll-mt-28">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30">
+          Задание №1 КР
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold">Метод математической индукции (ММИ) и неравенство Бернулли</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 section-gap">
+        <!-- Краткие шаги ММИ + Неравенство Бернулли -->
+        <div class="lg:col-span-6 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside space-y-3">
+          <h3 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm flex items-center justify-between">
+            <span>Алгоритм доказательства по ММИ (4 шага)</span>
+            <span class="text-xs font-mono text-slate-400">$P(1) \land (P(k)\Rightarrow P(k+1))$</span>
+          </h3>
+
+          <ol class="space-y-2 text-xs sm:text-sm">
+            <li class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border-l-4 border-indigo-500">
+              <strong>1. База индукции ($n = 1$ или $n = n_0$):</strong> подставляем $n = 1$ в левую и правую части утверждения $P(1)$ и проверяем, что равенство/неравенство верно.
+            </li>
+            <li class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border-l-4 border-indigo-500">
+              <strong>2. Предположение индукции ($n = k$):</strong> пишем фразу: <em>«Предположим, что утверждение $P(k)$ верно при некотором натуральном $n = k$»</em> (и выписываем само равенство для $k$).
+            </li>
+            <li class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border-l-4 border-indigo-500">
+              <strong>3. Индукционный шаг ($n = k + 1$):</strong> доказываем верность $P(k+1)$, <strong>обязательно используя</strong> предположение $P(k)$.
+              <span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                • Для сумм: заменяем сумму первых $k$ слагаемых по предположению и прибавляем $(k+1)$-е слагаемое.<br>
+                • Для делимости/неравенств: выделяем часть из $P(k)$ и оцениваем хвост.
+              </span>
+            </li>
+            <li class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border-l-4 border-emerald-500">
+              <strong>4. Вывод:</strong> <em>«По принципу математической индукции утверждение верно для всех $n \in \mathbb{N}$. Ч.т.д.»</em>
+            </li>
+          </ol>
+
+          <!-- Неравенство Бернулли -->
+          <div class="p-3.5 rounded-xl bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border border-indigo-500/30">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-indigo-700 dark:text-indigo-300 text-sm">Неравенство Бернулли</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-700 dark:text-indigo-200">Важная формула</span>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-300">
+              Для любого вещественного $x \ge -1$ и любого натурального $n \in \mathbb{N}$:
+            </p>
+            <div class="text-center my-1">
+              $$(1 + x)^n \ge 1 + nx$$
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">
+              *При $x \neq 0$ и $n \ge 2$ неравенство строгое: $(1+x)^n > 1 + nx$. Доказывается по ММИ: $(1+x)^{k+1} = (1+x)^k(1+x) \ge (1+kx)(1+x) = 1 + (k+1)x + kx^2 \ge 1 + (k+1)x$.
+            </p>
+          </div>
+        </div>
+
+        <!-- Разбор Задания №1 из КР (Фото 1 и 2) -->
+        <div class="lg:col-span-6 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Эталон из КР (Фото 1)</span>
+              <span class="text-xs text-slate-400">Задание №1</span>
+            </div>
+            <p class="text-xs sm:text-sm font-medium mb-2">
+              Докажите методом математической индукции, что для всех натуральных $n$ справедливо равенство:
+            </p>
+            <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center mb-3">
+              $$1 \cdot 1 + 3 \cdot 3 + 5 \cdot 3^2 + \dots + (2n - 1) \cdot 3^{n-1} = (n - 1)3^n + 1$$
+            </div>
+
+            <details open class="solution-details group">
+              <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+                <span class="group-open:rotate-90 transition-transform">▶</span> Пошаговое чистовое оформление для КР
+              </summary>
+              <div class="space-y-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+                <div>
+                  <strong>1) База индукции ($n = 1$):</strong><br>
+                  Левая часть: $(2\cdot 1 - 1)\cdot 3^{1-1} = 1 \cdot 3^0 = 1$.<br>
+                  Правая часть: $(1 - 1)\cdot 3^1 + 1 = 0 + 1 = 1$.<br>
+                  $1 = 1$ — база верна.
+                </div>
+                <div>
+                  <strong>2) Предположение индукции ($n = k$):</strong><br>
+                  Пусть при $n = k$ равенство верно:
+                  $$1\cdot 1 + 3\cdot 3 + \dots + (2k - 1)\cdot 3^{k-1} = (k - 1)3^k + 1$$
+                </div>
+                <div>
+                  <strong>3) Шаг индукции ($n = k + 1$):</strong><br>
+                  Докажем, что при $n = k+1$ сумма равна $((k+1)-1)3^{k+1} + 1 = k\cdot 3^{k+1} + 1$.<br>
+                  Запишем левую часть для $n = k+1$, выделив сумму первых $k$ слагаемых:
+                  $$\underbrace{1\cdot 1 + 3\cdot 3 + \dots + (2k-1)3^{k-1}}_{\text{по предположению } = (k-1)3^k + 1} + (2(k+1)-1)3^{(k+1)-1}$$
+                  $$= (k - 1)3^k + 1 + (2k + 1)3^k = 3^k \cdot (k - 1 + 2k + 1) + 1$$
+                  $$= 3^k \cdot (3k) + 1 = k \cdot 3^{k+1} + 1$$
+                  Получили в точности правую часть при $n = k + 1$.
+                </div>
+                <div class="text-emerald-600 dark:text-emerald-400 font-semibold">
+                  <strong>4) Вывод:</strong> По принципу ММИ равенство верно для любого $n \in \mathbb{N}$. Ч.т.д.
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ЗАДАНИЕ 2 КР: БИНОМ НЬЮТОНА И СОЧЕТАНИЯ C ИЗ n ПО k
+         ===================================================================== -->
+    <section id="sec-task2" class="searchable-section scroll-mt-28">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30">
+          Задание №2 КР
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold">Бином Ньютона и число сочетаний $C_n^k$</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 section-gap">
+        <!-- Формулы Бинома и C_n^k -->
+        <div class="lg:col-span-6 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside space-y-3">
+          <h3 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm">Формулы $C_n^k$ и Бинома Ньютона</h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
+              <div class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-1">Число сочетаний из $n$ по $k$:</div>
+              $$C_n^k = \binom{n}{k} = \frac{n!}{k!(n-k)!}$$
+              <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                Практический счёт: $\frac{n(n-1)\dots(n-k+1)}{1\cdot 2 \dots k}$
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
+              <div class="font-bold text-slate-500 dark:text-slate-400 mb-1">Свойства $C_n^k$:</div>
+              <div>• $C_n^0 = C_n^n = 1, \quad C_n^1 = n$</div>
+              <div>• $C_n^k = C_n^{n-k}$ (симметрия)</div>
+              <div>• $C_n^k + C_n^{k+1} = C_{n+1}^{k+1}$ (Паскаль)</div>
+              <div>• $\sum_{k=0}^n C_n^k = 2^n$</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/70 dark:border-indigo-800/50">
+            <div class="text-xs font-bold text-indigo-700 dark:text-indigo-300 mb-1">Формула бинома Ньютона:</div>
+            $$(a + b)^n = \sum_{k=0}^{n} C_n^k \, a^{n-k} \, b^k = C_n^0 a^n + C_n^1 a^{n-1}b + \dots + C_n^n b^n$$
+            <div class="mt-2 pt-2 border-t border-indigo-200/60 dark:border-indigo-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+              <span class="font-bold text-rose-600 dark:text-rose-400">Общий $(k+1)$-й член разложения:</span>
+              <span class="font-mono bg-white dark:bg-slate-900 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800">
+                $T_{k+1} = C_n^k \, a^{n-k} \, b^k \quad (k = 0, 1, \dots, n)$
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Разбор Задания №2 из КР (Фото 1 и 2) -->
+        <div class="lg:col-span-6 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Эталон из КР (Фото 1)</span>
+            <span class="text-xs text-slate-400">Задание №2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium mb-2">
+            Найдите член разложения бинома, содержащий $x^4$:
+          </p>
+          <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center mb-3">
+            $$\left(\sqrt{x} + \sqrt[3]{x}\right)^9$$
+          </div>
+
+          <details open class="solution-details group">
+            <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+              <span class="group-open:rotate-90 transition-transform">▶</span> Пошаговое решение
+            </summary>
+            <div class="space-y-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+              <div>
+                <strong>1) Запишем корни в виде степеней:</strong> $\sqrt{x} = x^{1/2}$, $\sqrt[3]{x} = x^{1/3}$, $n = 9$.
+              </div>
+              <div>
+                <strong>2) Составим общий член разложения $T_{k+1}$:</strong>
+                $$T_{k+1} = C_9^k \cdot \left(x^{1/2}\right)^{9-k} \cdot \left(x^{1/3}\right)^k = C_9^k \cdot x^{\frac{9-k}{2} + \frac{k}{3}} = C_9^k \cdot x^{\frac{27 - 3k + 2k}{6}} = C_9^k \cdot x^{\frac{27-k}{6}}$$
+              </div>
+              <div>
+                <strong>3) Найдём $k$, при котором степень $x$ равна $4$:</strong>
+                $$\frac{27 - k}{6} = 4 \implies 27 - k = 24 \implies k = 3$$
+              </div>
+              <div>
+                <strong>4) Вычислим биномиальный коэффициент $C_9^3$:</strong>
+                $$C_9^3 = \frac{9!}{3!\cdot 6!} = \frac{9 \cdot 8 \cdot 7}{3 \cdot 2 \cdot 1} = 3 \cdot 4 \cdot 7 = 84$$
+              </div>
+              <div class="text-emerald-600 dark:text-emerald-400 font-bold">
+                Ответ: $T_4 = 84x^4$ (или коэффициент равен $84$).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ЗАДАНИЯ 3, 4, 5 (а, б) КР: АСИМПТОТИКА, РАЦИОНАЛЬНЫЕ И ИРРАЦИОНАЛЬНЫЕ ПРЕДЕЛЫ
+         ===================================================================== -->
+    <section id="sec-task345" class="searchable-section scroll-mt-28">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30">
+          Задания №3, №4, №5 (а, б) КР
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold">Асимптотика, сопряженные выражения и пределы дробей</h2>
+      </div>
+
+      <!-- Шпаргалка по методам раскрытия неопределенностей ∞/∞ и ∞ - ∞ -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 section-gap">
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <h3 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-2">Формулы домножения на сопряженное ($\infty - \infty$)</h3>
+          <div class="space-y-2 text-xs">
+            <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+              <strong>Квадратные корни ($a^2 - b^2$):</strong>
+              $$\sqrt{A} - B = \frac{A - B^2}{\sqrt{A} + B}$$
+            </div>
+            <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+              <strong>Кубические корни ($a^3 - b^3$):</strong>
+              $$\sqrt[3]{A} - B = \frac{A - B^3}{\sqrt[3]{A^2} + B\sqrt[3]{A} + B^2}$$
+            </div>
+            <div class="p-2 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/60">
+              <strong>Корни 4-й степени ($a^4 - b^4$, для Задания №3!):</strong>
+              $$a - b = \frac{a^4 - b^4}{a^3 + a^2b + ab^2 + b^3} = \frac{a^4 - b^4}{(a+b)(a^2+b^2)}$$
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 block mt-1">
+                Лайфхак: если $a \sim n$ и $b = n$, то знаменатель $a^3 + a^2b + ab^2 + b^3 \sim n^3 + n^3 + n^3 + n^3 = 4n^3$.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <h3 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-2">Отношение многочленов ($\frac{\infty}{\infty}$) и разность дробей</h3>
+          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 text-xs mb-2">
+            При $n \to \infty$ оставляем только старшие степени в числителе и знаменателе (или делим числитель и знаменатель на старшую степень $n^{\max}$):
+            $$\lim_{n\to\infty} \frac{a_p n^p + \dots + a_0}{b_q n^q + \dots + b_0} = \begin{cases} \frac{a_p}{b_q}, & p = q \\ 0, & p < q \\ \pm\infty, & p > q \end{cases}$$
+          </div>
+          <div class="p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/70 dark:border-amber-800/50 text-xs">
+            <strong>Ловушка в №5а (разность двух дробей $\infty - \infty$):</strong><br>
+            Сначала проверь, не сокращается ли одна из дробей на $n$! Затем приведи к общему знаменателю — старшие степени взаимно уничтожатся, и останется стандартный предел отношения многочленов.
+          </div>
+        </div>
+      </div>
+
+      <!-- Разбор Заданий №3, №4, №5а, №5б из КР -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 section-gap">
+        <!-- Задание №3 -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Задание №3 КР (Фото 1)</span>
+            <span class="text-xs font-mono text-slate-400">Корень 4-й степени</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium mb-1">
+            Найдите предел последовательности (или её главную часть):
+          </p>
+          <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center mb-2">
+            $$\lim_{n\to\infty} \left(\sqrt[4]{n^4 + 5n^2 - 2 + \cos(n!)} - n\right)$$
+          </div>
+          <details open class="solution-details group">
+            <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+              <span class="group-open:rotate-90 transition-transform">▶</span> Решение (предел и асимптотика)
+            </summary>
+            <div class="text-xs space-y-1.5 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+              <div>
+                Пусть $a = \sqrt[4]{n^4 + 5n^2 - 2 + \cos(n!)}$ и $b = n$. Домножим на сопряженное по формуле $a - b = \frac{a^4 - b^4}{a^3 + a^2b + ab^2 + b^3}$:
+              </div>
+              <div>
+                Числитель: $a^4 - b^4 = (n^4 + 5n^2 - 2 + \cos(n!)) - n^4 = 5n^2 - 2 + \cos(n!)$.
+              </div>
+              <div>
+                Знаменатель при $n\to\infty$: так как $a = n\sqrt[4]{1 + \frac{5}{n^2} + \dots} \sim n$, каждое из 4 слагаемых ($a^3, a^2b, ab^2, b^3$) эквивалентно $n^3$, значит знаменатель $\sim 4n^3$.
+              </div>
+              <div>
+                Тогда общий член последовательности:
+                $$x_n = \frac{5n^2 - 2 + \cos(n!)}{a^3 + a^2b + ab^2 + b^3} \sim \frac{5n^2}{4n^3} = \frac{5}{4n} \to 0$$
+                (так как $|\cos(n!)| \le 1$ — ограниченная величина).
+              </div>
+              <div class="text-emerald-600 dark:text-emerald-400 font-bold pt-1">
+                Ответ: Предел равен $0$; главная часть (асимптотика) равна $\frac{5}{4n}$.
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Задание №4 и №5б -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Задание №4 КР (Фото 1)</span>
+              <span class="text-xs font-mono text-slate-400">Рациональная дробь</span>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-xs text-center">
+              $$\lim_{n\to\infty} \frac{2n^3 + 3n}{4n^3 - n^2 + 5} = \lim_{n\to\infty} \frac{n^3\left(2 + \frac{3}{n^2}\right)}{n^3\left(4 - \frac{1}{n} + \frac{5}{n^3}\right)} = \frac{2}{4} = \mathbf{\frac{1}{2}}$$
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Задание №5б КР (Фото 1–2)</span>
+              <span class="text-xs font-mono text-slate-400">Два корня</span>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-xs text-center mb-2">
+              $$\lim_{n\to\infty} \frac{\sqrt{n^2+6n}-n}{\sqrt{n^2+10n}-n}$$
+            </div>
+            <details open class="solution-details group">
+              <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-1">
+                <span class="group-open:rotate-90 transition-transform">▶</span> Решение №5б
+              </summary>
+              <div class="text-xs bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700/70">
+                Домножаем и числитель, и знаменатель на их сопряжённые выражения:
+                $$\lim_{n\to\infty} \frac{(n^2+6n-n^2)(\sqrt{n^2+10n}+n)}{(n^2+10n-n^2)(\sqrt{n^2+6n}+n)} = \lim_{n\to\infty} \frac{6\cancel{n} \cdot \cancel{n}(\sqrt{1+10/n}+1)}{10\cancel{n} \cdot \cancel{n}(\sqrt{1+6/n}+1)} = \frac{6 \cdot 2}{10 \cdot 2} = \mathbf{\frac{3}{5}}$$
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Задание №5а -->
+        <div class="md:col-span-2 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Задание №5а КР (Фото 1–2)</span>
+            <span class="text-xs font-mono text-slate-400">Неопределенность $\infty - \infty$</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+            <div class="md:col-span-4 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center">
+              $$\lim_{n\to\infty} \left(\frac{2n^3+1}{n^2+1} - \frac{2n^3+n^2}{n^2+n}\right)$$
+            </div>
+            <div class="md:col-span-8 text-xs bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+              <strong>Решение:</strong> Заметим, что во второй дроби сокращается $n$: $\frac{2n^3+n^2}{n^2+n} = \frac{n(2n^2+n)}{n(n+1)} = \frac{2n^2+n}{n+1}$. Приводим к общему знаменателю:
+              $$\lim_{n\to\infty} \frac{(2n^3+1)(n+1) - (2n^2+n)(n^2+1)}{(n^2+1)(n+1)} = \lim_{n\to\infty} \frac{(2n^4 + 2n^3 + n + 1) - (2n^4 + n^3 + 2n^2 + n)}{n^3 + n^2 + n + 1} = \lim_{n\to\infty} \frac{n^3 - 2n^2 + 1}{n^3 + n^2 + n + 1} = \mathbf{1}$$
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ЗАДАНИЕ 6 КР + ФОТО 6: ЭТАЛОННЫЕ ПРЕДЕЛЫ, ОБОБЩЕНИЯ И СХОДИМОСТЬ РЯДА
+         ===================================================================== -->
+    <section id="sec-task6" class="searchable-section scroll-mt-28">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+          Задание №6 КР + Фото 6
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold">Формулы с Фото 6 (с обобщениями) и сходимость ряда</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 section-gap">
+        <!-- Все формулы с ФОТО 6 -->
+        <div class="lg:col-span-7 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-amber-300/60 dark:border-amber-700/50 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-amber-600 dark:text-amber-400 text-sm">Все пределы с Фото 6 + обобщения</h3>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-700 dark:text-amber-300">Фото 6</span>
+          </div>
+
+          <div class="space-y-2.5 text-xs sm:text-sm">
+            <!-- (a) -->
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold text-amber-600 dark:text-amber-400 mb-1">(a) Геометрическая последовательность $a_n = q^n, \ q \in \mathbb{R}$:</div>
+              $$\lim_{n\to\infty} q^n = \begin{cases} 0, & \text{если } |q| < 1 \quad (\text{б.м.}) \\ 1, & \text{если } q = 1 \\ +\infty, & \text{если } q > 1 \quad (\text{б.б.}) \\ \text{не существует}, & \text{если } q \le -1 \quad (\text{расходится}) \end{cases}$$
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <!-- (b) -->
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
+                <div class="font-bold text-amber-600 dark:text-amber-400 mb-1">(b) Корень из константы ($a > 0$):</div>
+                $$a_n = \sqrt[n]{a} \implies \lim_{n\to\infty} \sqrt[n]{a} = 1$$
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 block">Док-во: через неравенство Бернулли.</span>
+              </div>
+
+              <!-- (c) -->
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
+                <div class="font-bold text-amber-600 dark:text-amber-400 mb-1">(c) Корень $n$-й степени из $n$:</div>
+                $$a_n = \sqrt[n]{n} \implies \lim_{n\to\infty} \sqrt[n]{n} = 1$$
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 block">Следствие: $\lim \sqrt[n]{n^k} = 1$, $\lim \sqrt[n]{P_k(n)} = 1$.</span>
+              </div>
+            </div>
+
+            <!-- (d) -->
+            <div class="p-2.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/25 border border-amber-200/70 dark:border-amber-800/50">
+              <div class="font-bold text-amber-700 dark:text-amber-300 mb-1">(d) $a_n = \dfrac{n^2}{2^n}$ + обобщение (степень против показательной):</div>
+              $$\lim_{n\to\infty} \frac{n^2}{2^n} = 0 \quad \Longrightarrow \quad \mathbf{\text{Обобщение:}} \ \lim_{n\to\infty} \frac{n^k}{q^n} = 0 \quad (\forall k \in \mathbb{R}, \ \forall q > 1)$$
+              <span class="text-[11px] text-slate-600 dark:text-slate-400 block">Показательная функция $q^n$ ($q>1$) при $n\to\infty$ растет быстрее любой степени $n^k$.</span>
+            </div>
+
+            <!-- (e) -->
+            <div class="p-2.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/25 border border-amber-200/70 dark:border-amber-800/50">
+              <div class="font-bold text-amber-700 dark:text-amber-300 mb-1">(e) $a_n = \dfrac{2^n}{n!}$ + обобщение (показательная против факториала):</div>
+              $$\lim_{n\to\infty} \frac{2^n}{n!} = 0 \quad \Longrightarrow \quad \mathbf{\text{Обобщение:}} \ \lim_{n\to\infty} \frac{q^n}{n!} = 0 \quad (\forall q \in \mathbb{R})$$
+              <span class="text-[11px] text-slate-600 dark:text-slate-400 block">Факториал $n!$ растет быстрее любой показательной функции $q^n$. Иерархия роста: $\ln^\alpha n \ll n^k \ll q^n \ll n! \ll n^n$.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Разбор Задания №6 из КР (Фото 1–2) -->
+        <div class="lg:col-span-5 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Задание №6 КР (Фото 1–2)</span>
+              <span class="text-xs text-slate-400">Сходимость ряда</span>
+            </div>
+            <p class="text-xs sm:text-sm font-medium mb-2">
+              Исследуйте на сходимость ряд с общим членом (по 2-му признаку сравнения / асимптотике):
+            </p>
+            <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center mb-3">
+              $$a_n = \sqrt{\frac{5^n + 2^n + 3n}{3n^3 - 2n}}$$
+            </div>
+
+            <!-- Справка по признакам -->
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-xs mb-3 space-y-1">
+              <div><strong>1) Необходимый признак сходимости ряда $\sum a_n$:</strong> если ряд сходится, то $\lim_{n\to\infty} a_n = 0$. Если $\lim_{n\to\infty} a_n \neq 0 \implies$ ряд <strong>расходится</strong>!</div>
+              <div><strong>2) 2-й (предельный) признак сравнения:</strong> если $a_n, b_n > 0$ и $\lim_{n\to\infty} \frac{a_n}{b_n} = c \in (0; +\infty)$, то ряды $\sum a_n$ и $\sum b_n$ сходятся или расходятся одновременно (эталон Дирихле $\sum \frac{1}{n^p}$ сходится при $p > 1$, расходится при $p \le 1$).</div>
+            </div>
+
+            <details open class="solution-details group">
+              <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+                <span class="group-open:rotate-90 transition-transform">▶</span> Решение Задания №6
+              </summary>
+              <div class="text-xs space-y-1.5 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+                <div>
+                  <strong>1) Выделим главную часть $b_n$ при $n \to \infty$:</strong><br>
+                  В числителе под корнем доминирует показательная функция $5^n$ (т.к. $2^n/5^n \to 0$ и $3n/5^n \to 0$), в знаменателе доминирует $3n^3$:
+                  $$a_n \sim b_n = \sqrt{\frac{5^n}{3n^3}} = \frac{(\sqrt{5})^n}{\sqrt{3}\cdot n^{3/2}} \quad \left(\lim_{n\to\infty} \frac{a_n}{b_n} = 1\right)$$
+                </div>
+                <div>
+                  <strong>2) Найдём предел общего члена (по формуле (d) с Фото 6):</strong><br>
+                  Так как основание $\sqrt{5} > 1$, показательная функция растет быстрее степенной $n^{3/2}$:
+                  $$\lim_{n\to\infty} a_n = \lim_{n\to\infty} \frac{(\sqrt{5})^n}{\sqrt{3}\, n^{3/2}} = +\infty \neq 0$$
+                  (Если сравнивать по 2-му признаку с расходящимся рядом $b_n = \frac{1}{n}$: $\lim \frac{a_n}{1/n} = +\infty \implies$ ряд $a_n$ тем более расходится).
+                </div>
+                <div class="text-rose-600 dark:text-rose-400 font-bold">
+                  Ответ: Ряд расходится (не выполнен даже необходимый признак сходимости: $\lim_{n\to\infty} a_n = \infty \neq 0$).
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ЗАДАНИЕ 7 КР + БУМАЖНЫЙ ГАЙД (ФОТО 3, 4, 5): РЕКУРРЕНТНЫЕ ПОСЛЕДОВАТЕЛЬНОСТИ
+         ===================================================================== -->
+    <section id="sec-task7" class="searchable-section scroll-mt-28">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30">
+          Задание №7 КР + Фото 3, 4, 5
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold">Гайд по рекуррентным последовательностям (по рукописному конспекту)</h2>
+      </div>
+
+      <!-- Пошаговый алгоритм с Фото 3, 4, 5 -->
+      <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border-2 border-rose-500/30 shadow-sm mb-4 print-break-inside">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <h3 class="font-extrabold text-rose-600 dark:text-rose-400 text-sm sm:text-base">
+            Универсальный алгоритм нахождения предела рекуррентной последовательности: «1) Ограниченность → 2) Монотонность → 3) Предел ВСЁ!»
+          </h3>
+          <span class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-300">По фото 3, 4, 5</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs sm:text-sm">
+          <!-- Шаг 0: Черновик -->
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-dashed border-slate-300 dark:border-slate-700">
+            <div class="font-bold text-slate-700 dark:text-slate-200 mb-1">Шаг 0. Черновик (ищем кандидата $c$)</div>
+            <p class="text-xs text-slate-600 dark:text-slate-300">
+              Приравниваем $x_{n+1} = x_n = c$, решаем уравнение $c = f(c)$ и по логике (считаем $x_1, x_2$, смотрим куда движется последовательность и какого она знака) выбираем нужный корень $c$.
+              <span class="block mt-1 italic text-slate-500">Это черновик — понимаем границы отрезка $[x_1; c]$ или $[c; x_1]$!</span>
+            </p>
+          </div>
+
+          <!-- Шаг 1: Ограниченность по ММИ -->
+          <div class="p-3 rounded-xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/50">
+            <div class="font-bold text-rose-700 dark:text-rose-300 mb-1">1) По ММИ доказываем ограниченность</div>
+            <p class="text-xs text-slate-600 dark:text-slate-300">
+              Пишем: <em>«Докажем по индукции, что $x_n \in [m; M]$»</em> (где границы — это $x_1$ и кандидат $c$).<br>
+              • <strong>База:</strong> $x_1 \in [m; M]$ $\checkmark$<br>
+              • <strong>Шаг:</strong> пусть верно для $x_n$ ($m \le x_n \le M$). Оцениваем выражение для $x_{n+1} = f(x_n)$ и получаем $m \le x_{n+1} \le M$. Ура, ч.т.д.!
+            </p>
+          </div>
+
+          <!-- Шаг 2: Монотонность -->
+          <div class="p-3 rounded-xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/50">
+            <div class="font-bold text-rose-700 dark:text-rose-300 mb-1">2) Доказываем монотонность (2 варианта)</div>
+            <p class="text-xs text-slate-600 dark:text-slate-300">
+              Выбираем, что удобнее анализировать, опираясь на уже доказанный интервал $x_n \in [m; M]$:<br>
+              • <strong>Вариант 1 (разность):</strong> $x_{n+1} - x_n \ge 0$ (растет) или $\le 0$ (убывает).<br>
+              • <strong>Вариант 2 (деление):</strong> $\frac{x_{n+1}}{x_n} \ge 1$ или $\le 1$ (при $x_n > 0$).
+            </p>
+          </div>
+
+          <!-- Шаг 3: Теорема Вейерштрасса и предел -->
+          <div class="p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/25 border border-emerald-200 dark:border-emerald-800/50">
+            <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">3) Находим предел (Т. Вейерштрасса)</div>
+            <p class="text-xs text-slate-600 dark:text-slate-300">
+              Пишем: <em>«Монотонна + ограничена $\implies$ по т. Вейерштрасса предел $\exists$ и конечен: $\lim_{n\to\infty} x_n = a$»</em>.<br>
+              Переходим к пределу (как на фото 4–5):<br>
+              $x_n \to a$ и $x_{n+1} = f(x_n) \to f(a)$ — они должны быть равны $\implies$ решаем $a = f(a)$ и отбираем корень из $[m; M]$.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 ПОЛНЫХ ПРИМЕРА: Демка 1 (Фото 3-4), Демка 2 (Фото 4-5) и Задача №7 из КР (Фото 2) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 section-gap">
+        <!-- ПРИМЕР 1: Демка с корнем (Фото 3 и 4) -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400">Демка №1 (Фото 3–4)</span>
+            <span class="text-xs font-mono text-slate-400">Корень</span>
+          </div>
+          <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center text-xs mb-2">
+            $$x_1 = 3, \quad x_{n+1} = \sqrt{2 + 3x_n}$$
+          </div>
+          <details open class="solution-details group">
+            <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+              <span class="group-open:rotate-90 transition-transform">▶</span> Полный конспект с Фото 3–4
+            </summary>
+            <div class="text-xs space-y-2 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+              <div>
+                <strong>0) Черновик:</strong> $\sqrt{2+3c}=c \implies c^2-3c-2=0 \implies c = \frac{3\pm\sqrt{17}}{2}$. С учетом $x_1 = 3$ и того, что последовательность растет ($x_2 = \sqrt{11} \approx 3{,}31 > 3$), выбираем $c = \frac{3+\sqrt{17}}{2}$.
+              </div>
+              <div>
+                <strong>1) Ограниченность по ММИ:</strong> докажем, что $x_n \in \left[3; \frac{3+\sqrt{17}}{2}\right]$.<br>
+                • <em>База:</em> $x_1 = 3 \in \left[3; \frac{3+\sqrt{17}}{2}\right]$ $\checkmark$<br>
+                • <em>Шаг:</em> пусть $3 \le x_n \le \frac{3+\sqrt{17}}{2}$. Тогда:
+                $$9 \le 3x_n \le \frac{9+3\sqrt{17}}{2} \implies \underbrace{\sqrt{11}}_{>3} \le \sqrt{3x_n+2} \le \sqrt{\frac{13+3\sqrt{17}}{2}} = \frac{3+\sqrt{17}}{2}$$
+                Значит $x_{n+1} \in \left[3; \frac{3+\sqrt{17}}{2}\right]$, ура, ч.т.д.!
+              </div>
+              <div>
+                <strong>2) Монотонность (разностью + методом интервалов):</strong>
+                $$x_{n+1} - x_n = \sqrt{2+3x_n} - x_n = \frac{-x_n^2 + 3x_n + 2}{\sqrt{2+3x_n} + x_n} \ge 0$$
+                т.к. корни числителя $\frac{3-\sqrt{17}}{2}$ и $\frac{3+\sqrt{17}}{2}$, парабола ветвями вниз ($- \ [+] \ -$), и весь наш отрезок $\left[3; \frac{3+\sqrt{17}}{2}\right]$ лежит в зоне «$+$». Значит, не убывает!
+              </div>
+              <div class="text-emerald-600 dark:text-emerald-400 font-semibold">
+                <strong>3) Предел:</strong> Монотонна + ограничена $\implies$ по т. Вейерштрасса $\exists \lim x_n = a$. Из $a = \sqrt{2+3a}$ получаем $a = \frac{3+\sqrt{17}}{2}$ (корень $\frac{3-\sqrt{17}}{2} < 0$ не подходит).
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- ПРИМЕР 2: Демка с дробью (Фото 4 и 5) -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400">Демка №2 с консы (Фото 4–5)</span>
+            <span class="text-xs font-mono text-slate-400">Дробь</span>
+          </div>
+          <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center text-xs mb-2">
+            $$a_1 = \frac{1}{2}, \quad a_{n+1} = \frac{1}{2 - a_n}$$
+          </div>
+          <details open class="solution-details group">
+            <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+              <span class="group-open:rotate-90 transition-transform">▶</span> Полный конспект с Фото 4–5
+            </summary>
+            <div class="text-xs space-y-2 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+              <div>
+                <strong>0) Черновик:</strong> $c = \frac{1}{2-c} \implies 2c - c^2 = 1 \implies (c-1)^2 = 0 \implies c = 1$. Выбираем интервал $\left[\frac{1}{2}; 1\right]$.
+              </div>
+              <div>
+                <strong>1) Ограниченность по ММИ:</strong> докажем, что $a_n \in \left[\frac{1}{2}; 1\right]$.<br>
+                • <em>База:</em> $a_1 = \frac{1}{2} \in \left[\frac{1}{2}; 1\right]$ $\checkmark$<br>
+                • <em>Шаг:</em> пусть $\frac{1}{2} \le a_n \le 1$. Тогда:
+                $$-1 \le -a_n \le -\frac{1}{2} \implies 1 \le 2 - a_n \le \frac{3}{2}$$
+                $$1 \ge \frac{1}{2 - a_n} \ge \frac{2}{3} \in \left[\frac{1}{2}; 1\right] \implies a_{n+1} \in \left[\frac{1}{2}; 1\right] \ \checkmark$$
+              </div>
+              <div>
+                <strong>2) Монотонность:</strong>
+                $$a_{n+1} - a_n = \frac{1}{2 - a_n} - a_n = \frac{1 - 2a_n + a_n^2}{2 - a_n} = \frac{(a_n - 1)^2}{2 - a_n} \ge 0$$
+                так как числитель $(a_n-1)^2 \ge 0$, а знаменатель $2 - a_n \ge 1 > 0$. Последовательность возрастает!
+              </div>
+              <div class="text-emerald-600 dark:text-emerald-400 font-semibold">
+                <strong>3) Предел:</strong> По т. Вейерштрасса предел существует. Так как $a_n \to a$ и $a_{n+1} = \frac{1}{2-a_n} \to \frac{1}{2-a}$, получаем $a = \frac{1}{2-a} \implies \mathbf{a = 1}$.
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- ПРИМЕР 3: ЗАДАНИЕ №7 ИЗ КР (Фото 2) -->
+        <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border-2 border-emerald-500/40 shadow-sm print-break-inside">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300">Задание №7 из КР (Фото 2)</span>
+            <span class="text-xs font-mono text-slate-400">Готовый ответ</span>
+          </div>
+          <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center text-xs mb-2">
+            $$x_1 = 4, \quad x_{n+1} = \frac{3x_n + 2}{x_n + 2}$$
+          </div>
+          <details open class="solution-details group">
+            <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+              <span class="group-open:rotate-90 transition-transform">▶</span> Решение №7 строго по вашему алгоритму
+            </summary>
+            <div class="text-xs space-y-2 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+              <div>
+                <strong>0) Черновик:</strong> $c = \frac{3c+2}{c+2} \implies c^2 + 2c = 3c + 2 \implies c^2 - c - 2 = 0 \implies c = 2$ или $c = -1$. Т.к. $x_1 = 4 > 0$, все $x_n > 0$, выбираем $c = 2$. Последовательность убывает от $4$ к $2 \implies$ отрезок $[2; 4]$.
+              </div>
+              <div>
+                <strong>1) Ограниченность по ММИ:</strong> докажем, что $x_n \in [2; 4]$.<br>
+                Выделим целую часть: $x_{n+1} = \frac{3(x_n+2)-4}{x_n+2} = 3 - \frac{4}{x_n+2}$.<br>
+                • <em>База:</em> $x_1 = 4 \in [2; 4]$ $\checkmark$<br>
+                • <em>Шаг:</em> пусть $2 \le x_n \le 4$. Тогда:
+                $$4 \le x_n + 2 \le 6 \implies 1 \ge \frac{4}{x_n+2} \ge \frac{2}{3} \implies 2 \le 3 - \frac{4}{x_n+2} \le \frac{7}{3} < 4$$
+                Значит $x_{n+1} \in [2; 4]$. Ч.т.д.!
+              </div>
+              <div>
+                <strong>2) Монотонность:</strong>
+                $$x_{n+1} - x_n = \frac{3x_n + 2}{x_n + 2} - x_n = \frac{-x_n^2 + x_n + 2}{x_n + 2} = -\frac{(x_n - 2)(x_n + 1)}{x_n + 2} \le 0$$
+                так как при $x_n \in [2; 4]$ имеем $x_n - 2 \ge 0$, $x_n + 1 > 0$, $x_n + 2 > 0$. Последовательность не возрастает (убывает).
+              </div>
+              <div class="text-emerald-600 dark:text-emerald-400 font-bold">
+                <strong>3) Предел:</strong> По т. Вейерштрасса $\exists \lim_{n\to\infty} x_n = a \in [2; 4]$. Из $a = \frac{3a+2}{a+2} \implies a^2 - a - 2 = 0$. Так как $a \in [2; 4]$, корень $a = -1$ не подходит. Ответ: $\lim_{n\to\infty} x_n = 2$.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ЗАДАНИЕ 8 И 5в КР + ФОТО 7: ЗАМЕЧАТЕЛЬНЫЕ ПРЕДЕЛЫ
+         ===================================================================== -->
+    <section id="sec-task8" class="searchable-section scroll-mt-28">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-violet-500/15 text-violet-600 dark:text-violet-400 border border-violet-500/30">
+          Задания №8 и №5в КР + Фото 7
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold">Замечательные пределы и все формулы с Фото 7</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 section-gap">
+        <!-- Формулы замечательных пределов + Фото 7 -->
+        <div class="lg:col-span-6 card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-violet-300/60 dark:border-violet-700/50 shadow-sm print-break-inside space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-violet-600 dark:text-violet-400 text-sm">1-й и 2-й замечательные пределы + Фото 7</h3>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-violet-500/15 text-violet-700 dark:text-violet-300">Фото 7</span>
+          </div>
+
+          <!-- 1-й и классический 2-й -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold text-violet-600 dark:text-violet-400 mb-1">1-й замечательный ($\alpha_n \to 0$):</div>
+              $$\lim_{n\to\infty} \frac{\sin \alpha_n}{\alpha_n} = 1, \quad \lim_{n\to\infty} \frac{\tan \alpha_n}{\alpha_n} = 1$$
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold text-violet-600 dark:text-violet-400 mb-1">2-й замечательный ($\alpha_n \to 0$):</div>
+              $$\lim_{n\to\infty} \left(1 + \frac{1}{n}\right)^n = e, \quad \lim_{\alpha_n\to 0} (1+\alpha_n)^{\frac{1}{\alpha_n}} = e$$
+            </div>
+          </div>
+
+          <!-- Точная таблица формул с Фото 7 -->
+          <div class="p-3 rounded-xl bg-violet-50/70 dark:bg-violet-950/30 border border-violet-200/70 dark:border-violet-800/60 text-xs sm:text-sm">
+            <div class="font-bold text-violet-700 dark:text-violet-300 mb-1 text-center">Все готовые формулы с Фото 7:</div>
+            $$\lim_{n\to\infty} \left(1 - \frac{1}{n}\right)^n = \frac{1}{e} = e^{-1}$$
+            $$\lim_{n\to\infty} \left(1 + \frac{1}{kn}\right)^n = e^{1/k}, \qquad \lim_{n\to\infty} \left(1 - \frac{1}{kn}\right)^n = e^{-1/k}$$
+            $$\lim_{n\to\infty} \left(1 + \frac{k}{n}\right)^n = e^k, \qquad \lim_{n\to\infty} \left(1 - \frac{k}{n}\right)^n = e^{-k}$$
+            $$\lim_{n\to\infty} \left(1 + \frac{p}{n}\right)^n = e^p, \quad p \in \mathbb{Q} \ (\text{и } \mathbb{R})$$
+          </div>
+
+          <!-- Универсальный приём для 1^{\infty} -->
+          <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-xs">
+            <div class="font-bold text-slate-700 dark:text-slate-200 mb-1">Универсальный приём для неопределенности $\left[1^\infty\right]$:</div>
+            Если $\alpha_n \to 0$ и $\beta_n \to \infty$, то выделяем единицу в основании $(U_n)^{\beta_n} = (1 + (U_n - 1))^{\beta_n}$:
+            $$\lim_{n\to\infty} (1 + \alpha_n)^{\beta_n} = \lim_{n\to\infty} \left((1 + \alpha_n)^{\frac{1}{\alpha_n}}\right)^{\alpha_n \cdot \beta_n} = e^{\lim_{n\to\infty} (\alpha_n \cdot \beta_n)}$$
+          </div>
+        </div>
+
+        <!-- Разбор Заданий №5в и №8 из КР (Фото 1–2) -->
+        <div class="lg:col-span-6 space-y-4">
+          <!-- Задание №5в -->
+          <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Задание №5в КР (Фото 1–2)</span>
+              <span class="text-xs font-mono text-slate-400">2-й замеч. + $\sqrt[n]{a}$</span>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center text-xs mb-2">
+              $$\lim_{n\to\infty} \left(\left(\frac{5n - 3}{5n}\right)^{5n - 2} + \sqrt[n]{3}\right)$$
+            </div>
+            <details open class="solution-details group">
+              <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-1">
+                <span class="group-open:rotate-90 transition-transform">▶</span> Решение №5в
+              </summary>
+              <div class="text-xs space-y-1 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+                <div>
+                  1) Первое слагаемое: $\left(\frac{5n-3}{5n}\right)^{5n-2} = \left(1 - \frac{3}{5n}\right)^{5n} \cdot \left(1 - \frac{3}{5n}\right)^{-2}$.<br>
+                  По формуле со 2-м замечательным пределом: $\lim \frac{-3}{5n} \cdot (5n-2) = -3 \implies \lim \left(1 - \frac{3}{5n}\right)^{5n-2} = e^{-3}$.
+                </div>
+                <div>
+                  2) Второе слагаемое (по формуле (b) с Фото 6): $\lim_{n\to\infty} \sqrt[n]{3} = 1$.
+                </div>
+                <div class="text-emerald-600 dark:text-emerald-400 font-bold">
+                  Ответ: $e^{-3} + 1 = \frac{1}{e^3} + 1$.
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- Задание №8 -->
+          <div class="card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Задание №8 КР (Фото 2)</span>
+              <span class="text-xs font-mono text-slate-400">Степень $n^2$</span>
+            </div>
+            <p class="text-xs sm:text-sm font-medium mb-1.5">
+              Вычислите предел со вторым замечательным пределом:
+            </p>
+            <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-center text-xs mb-2">
+              $$\lim_{n\to\infty} \frac{\left(1 + \frac{3}{n}\right)^{n^2}}{\left(1 + \frac{3}{n+1}\right)^{n^2}}$$
+            </div>
+            <details open class="solution-details group">
+              <summary class="cursor-pointer select-none text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 mb-1">
+                <span class="group-open:rotate-90 transition-transform">▶</span> Подробное решение №8 (объединение под одну степень $n^2$)
+              </summary>
+              <div class="text-xs space-y-1.5 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70">
+                <div>
+                  <strong>Важно:</strong> Нельзя переходить к пределу по частям в числителе и знаменателе (там $(e^3)^n / (e^3)^n = \infty/\infty$)! Объединим дробь под общий показатель степени $n^2$:
+                </div>
+                <div>
+                  $$\frac{1 + \frac{3}{n}}{1 + \frac{3}{n+1}} = \frac{\frac{n+3}{n}}{\frac{n+4}{n+1}} = \frac{(n+3)(n+1)}{n(n+4)} = \frac{n^2 + 4n + 3}{n^2 + 4n} = 1 + \frac{3}{n^2 + 4n}$$
+                </div>
+                <div>
+                  Теперь возводим в степень $n^2$ и применяем второй замечательный предел:
+                  $$\lim_{n\to\infty} \left(1 + \frac{3}{n^2 + 4n}\right)^{n^2} = \lim_{n\to\infty} \left[\left(1 + \frac{3}{n^2 + 4n}\right)^{\frac{n^2+4n}{3}}\right]^{\frac{3n^2}{n^2+4n}} = e^{\lim_{n\to\infty} \frac{3n^2}{n^2+4n}} = \mathbf{e^3}$$
+                </div>
+                <div class="text-emerald-600 dark:text-emerald-400 font-bold">
+                  Ответ: $e^3$.
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СВОДНАЯ ТАБЛИЦА ОТВЕТОВ ДЛЯ САМОПРОВЕРКИ НА КР -->
+    <section class="searchable-section card-box card-pad bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm print-break-inside">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-sm sm:text-base font-bold text-indigo-600 dark:text-indigo-400">
+          Экспресс-таблица ответов ко всем задачам варианта КР (Фото 1–2)
+        </h2>
+        <span class="text-xs text-slate-400">Быстрая сверка</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№1 (ММИ):</span> шаг $+ (2k+1)3^k = k\cdot 3^{k+1}+1$
+        </div>
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№2 (Бином):</span> $k=3, \ T_4 = 84x^4$
+        </div>
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№3 (Корень 4 ст.):</span> $\lim = 0$ ($\sim \frac{5}{4n}$)
+        </div>
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№4 (Дробь):</span> $\frac{2}{4} = \frac{1}{2}$
+        </div>
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№5а, 5б, 5в:</span> а) $1$; б) $\frac{3}{5}$; в) $e^{-3} + 1$
+        </div>
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№6 (Ряд):</span> Расходится ($a_n \to \infty \neq 0$)
+        </div>
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№7 (Рекурр.):</span> $x_n \in [2;4]$, убывает, $\lim = 2$
+        </div>
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70">
+          <span class="font-bold text-indigo-500">№8 (2-й замеч.):</span> $\left(1+\frac{3}{n^2+4n}\right)^{n^2} \to e^3$
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Инициализация рендеринга математических формул KaTeX после загрузки страницы
+    window.onload = function () {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    };
+
+    // Переключение темной и светлой темы
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const iconEl = document.getElementById('themeIcon');
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        iconEl.textContent = '🌙';
+      } else {
+        htmlEl.classList.add('dark');
+        iconEl.textContent = '☀️';
+      }
+    }
+
+    // Переключение компактного режима ("Шпора-режим")
+    function toggleCompactMode() {
+      document.body.classList.toggle('compact-mode');
+      const btn = document.getElementById('compactBtn');
+      if (document.body.classList.contains('compact-mode')) {
+        btn.classList.add('bg-indigo-600', 'text-white');
+      } else {
+        btn.classList.remove('bg-indigo-600', 'text-white');
+      }
+    }
+
+    // Свернуть / развернуть все пошаговые решения
+    let allOpen = true;
+    function toggleAllSolutions() {
+      allOpen = !allOpen;
+      const detailsList = document.querySelectorAll('.solution-details');
+      detailsList.forEach(d => {
+        if (allOpen) {
+          d.setAttribute('open', '');
+        } else {
+          d.removeAttribute('open');
+        }
+      });
+      const btn = document.getElementById('toggleSolutionsBtn');
+      btn.textContent = allOpen ? 'Свернуть все решения' : 'Развернуть все решения';
+    }
+
+    // Живой поиск по секциям и карточкам шпаргалки
+    document.getElementById('searchInput').addEventListener('input', function (e) {
+      const query = e.target.value.trim().toLowerCase();
+      const sections = document.querySelectorAll('.searchable-section');
+
+      sections.forEach(sec => {
+        const text = sec.innerText.toLowerCase();
+        if (!query || text.includes(query)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
