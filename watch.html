@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Первый коллоквиум по математическому анализу</title>
+    <style>
+        :root {
+            --bg-color: #fbfbfc;
+            --text-color: #333332;
+            --heading-color: #111111;
+            --accent-color: #555555;
+            --theorem-bg: #f2f2f3;
+            --table-border: #dddddd;
+            --hr-color: #eaeaea;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #000000; /* Для OLED экранов часов лучше чистый черный */
+                --text-color: #e0e0e0;
+                --heading-color: #ffffff;
+                --accent-color: #999999;
+                --theorem-bg: #1c1c1e;
+                --table-border: #333333;
+                --hr-color: #222222;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            font-size: 17px;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0 auto;
+            max-width: 100%; 
+            padding: 15px; /* Уменьшены отступы для часов */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 {
+            color: var(--heading-color);
+            line-height: 1.2;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+        }
+
+        h1 { font-size: 1.8em; border-bottom: 1px solid var(--hr-color); padding-bottom: 8px; margin-top: 0; }
+        h2 { font-size: 1.4em; }
+        h3 { font-size: 1.2em; }
+
+        p, ul, ol { margin-bottom: 1em; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 0.4em; }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--hr-color);
+            margin: 2em 0;
+        }
+
+        .theorem {
+            background-color: var(--theorem-bg);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .theorem strong { color: var(--heading-color); }
+
+        .proof {
+            margin: 15px 0 15px 15px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid var(--table-border);
+            padding: 6px;
+            text-align: center;
+        }
+        th { background-color: var(--theorem-bg); }
+
+        .math {
+            font-family: "Times New Roman", Times, serif;
+            white-space: nowrap;
+            font-style: italic;
+        }
+        .math.block {
+            display: block;
+            text-align: center;
+            margin: 0.5em 0;
+            white-space: normal; /* Чтобы длинные формулы переносились на часах */
+            word-break: break-word;
+        }
+        .math sup, .math sub { font-style: normal; }
+        
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.1em;
+            text-align: center;
+            font-size: 0.85em;
+            line-height: 1.1;
+            font-style: normal;
+        }
+        .frac > span { display: block; padding: 0 0.1em; }
+        .frac .bottom { border-top: 1px solid var(--text-color); }
+
+        /* Специальные стили для адаптации под большие экраны, чтобы на десктопе тоже смотрелось ок */
+        @media (min-width: 600px) {
+            body { max-width: 760px; padding: 40px 20px; font-size: 19px; line-height: 1.75; }
+            h1 { font-size: 2.2em; }
+            .theorem { padding: 18px 25px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Теги article и header критически важны для Apple Watch, чтобы он понял, что это текст для чтения -->
+    <article>
+        <header>
+            <h1>Первый коллоквиум</h1>
+        </header>
+
+        <section>
+            <h2>№1 Высказывания, предикаты и логические операции</h2>
+            <ul>
+                <li><strong>Высказывание</strong> — выражение, про которое можно сказать, истинно оно или ложно.</li>
+                <li><strong><span class="math">n</span>-местный предикат</strong> — утверждение, зависящее от переменных, которое становится высказыванием при подстановке любых значений переменных.</li>
+            </ul>
+            
+            <h3>Логические операции</h3>
+            <table>
+                <tr><th>A</th><th>B</th><th>A ∧ B</th><th>A ∨ B</th><th>A ⇒ B</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+            
+            <p><strong>Кванторы:</strong> ∀ — для любого, ∃ — существует.</p>
+            <p>Построение отрицания к высказыванию с кванторами:</p>
+            <ul>
+                <li class="math">¬(∀ x P(x)) ⇔ ∃ x ¬ P(x)</li>
+                <li class="math">¬(∃ x P(x)) ⇔ ∀ x ¬ P(x)</li>
+                <li class="math">¬(A ∧ B) ⇔ ¬ A ∨ ¬ B</li>
+                <li class="math">¬(A ∨ B) ⇔ ¬ A ∧ ¬ B</li>
+                <li class="math">¬(A ⇒ B) ⇔ A ∧ ¬ B</li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>№2 Метод индукции (ММИ)</h2>
+            <p>Пусть <span class="math">P(n)</span> — предикат, где <span class="math">n ∈ ℕ</span>. Если истинны: (1) база <span class="math">P(1)</span> и (2) переход <span class="math">P(k) ⇒ P(k+1)</span>, то <span class="math">∀ n ∈ ℕ P(n)</span> истинно.</p>
+            
+            <div class="theorem">
+                <strong>Неравенство Бернулли:</strong> <span class="math">∀ n ∈ ℕ, ∀ x ≥ -1: (1+x)<sup>n</sup> ≥ 1+nx</span>.
+            </div>
+            <div class="proof">
+                <p>Доказательство по ПМИ:</p>
+                <ul>
+                    <li><strong>База:</strong> При <span class="math">n=1</span>, <span class="math">∀ x ≥ -1: (1+x)<sup>1</sup> ≥ 1+1·x</span> — верно.</li>
+                    <li><strong>Переход:</strong> Предположим, что <span class="math">P(k)</span> истинно. Хотим доказать <span class="math">P(k+1)</span>: <span class="math">(1+x)<sup>k+1</sup> ≥ 1+(k+1)x</span>.</li>
+                    <li><span class="math block">(1+x)<sup>k+1</sup> = (1+x)<sup>k</sup> · (1+x) ≥ (1+kx)(1+x) = 1+(k+1)x+kx<sup>2</sup></span></li>
+                    <li>Поскольку <span class="math">kx<sup>2</sup> ≥ 0</span>, получаем <span class="math">(1+x)<sup>k+1</sup> ≥ 1+(k+1)x</span>. Переход верен.</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>№3 и №4 Комбинаторика</h2>
+            <p><strong>Правило произведения:</strong> если первый объект выбирается <span class="math">m</span> способами, а второй <span class="math">k</span> способами, то пару можно выбрать <span class="math">m · k</span> способами.</p>
+            
+            <ul>
+                <li><strong>Перестановка</strong> — упорядоченный набор из <span class="math">n</span> элементов. <br><span class="math">P<sub>n</sub> = n(n-1)… 2 · 1 = n!</span></li>
+                <li><strong>Размещение</strong> из <span class="math">n</span> по <span class="math">k</span> — упорядоченный выбор. <br><span class="math">A<sub>n</sub><sup>k</sup> = <span class="frac"><span>n!</span><span class="bottom">(n-k)!</span></span></span></li>
+                <li><strong>Сочетание</strong> из <span class="math">n</span> по <span class="math">k</span> — неупорядоченный выбор. <br><span class="math">C<sub>n</sub><sup>k</sup> = <span class="frac"><span>n!</span><span class="bottom">k!(n-k)!</span></span></span></li>
+            </ul>
+            
+            <div class="theorem">
+                <strong>Бином Ньютона:</strong> <span class="math">(a+b)<sup>n</sup> = ∑<sub>k=0</sub><sup>n</sup> C<sub>n</sub><sup>k</sup> a<sup>k</sup> b<sup>n-k</sup></span>.
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>№4 Предел последовательности</h2>
+            <p><span class="math">ε</span>-окрестность точки <span class="math">a ∈ ℝ</span> при <span class="math">ε > 0</span>: <span class="math">U<sub>ε</sub>(a) = (a-ε, a+ε)</span>.</p>
+            
+            <div class="theorem">
+                <strong>Предел:</strong> <span class="math">a</span> — предел последовательности <span class="math">(a<sub>n</sub>)</span>, если <span class="math">∀ ε > 0 ∃ N ∀ n > N : |a<sub>n</sub> - a| < ε</span>.
+            </div>
+            
+            <div class="theorem">
+                Сходящаяся последовательность имеет только один предел и она ограничена.
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>№5 и №6 Типы последовательностей</h2>
+            <ul>
+                <li><strong>Бесконечно малая (б.м.):</strong> <span class="math">a<sub>n</sub> → 0 ⇔ ∀ ε > 0 ∃ N ∀ n > N : |a<sub>n</sub>| < ε</span>.</li>
+                <li><strong>Бесконечно большая (б.б.):</strong> <span class="math">a<sub>n</sub> → ∞ ⇔ ∀ M > 0 ∃ N ∀ n > N : |a<sub>n</sub>| > M</span>.</li>
+                <li><strong>Ограниченная:</strong> <span class="math">∃ C > 0 ∀ n : |c<sub>n</sub>| ≤ C</span>.</li>
+                <li><strong>Отделимая от нуля:</strong> <span class="math">∃ δ > 0 ∀ n : |c<sub>n</sub>| ≥ δ</span>.</li>
+            </ul>
+            <p>Свойства: <span class="math">1 / (б.м.) = б.б.</span> и <span class="math">1 / (б.б.) = б.м.</span></p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Свойства пределов</h2>
+            <p>Пусть <span class="math">a<sub>n</sub> → a</span>, <span class="math">b<sub>n</sub> → b</span>. Тогда:</p>
+            <ol>
+                <li class="math">a<sub>n</sub> ± b<sub>n</sub> → a ± b</li>
+                <li class="math">a<sub>n</sub> · b<sub>n</sub> → a · b</li>
+                <li class="math">a<sub>n</sub> / b<sub>n</sub> → a / b (при b<sub>n</sub> ≠ 0, b ≠ 0)</li>
+            </ol>
+            
+            <div class="theorem">
+                <strong>О двух милиционерах:</strong> Если <span class="math">a<sub>n</sub> ≤ b<sub>n</sub> ≤ c<sub>n</sub></span> и <span class="math">a<sub>n</sub> → a, c<sub>n</sub> → a</span>, то <span class="math">b<sub>n</sub> → a</span>.
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>№8 Аксиома непрерывности</h2>
+            <div class="theorem">
+                <strong>Аксиома непрерывности:</strong> Если <span class="math">A, B ⊂ ℝ</span> не пусты и <span class="math">∀ a ∈ A, ∀ b ∈ B : a ≤ b</span>, то <span class="math">∃ c ∈ ℝ ∀ a ∈ A ∀ b ∈ B : a ≤ c ≤ b</span>.
+            </div>
+            <div class="theorem">
+                <strong>Теорема Вейерштрасса:</strong> Если <span class="math">(a<sub>n</sub>)</span> возрастает и ограничена сверху, то она сходится.
+            </div>
+        </section>
+        
+        <hr>
+
+        <section>
+            <h2>№14 Предел функции в точке</h2>
+            <ul>
+                <li><strong>По Коши:</strong> <span class="math">lim<sub>x→x<sub>0</sub></sub> f(x) = a ⇔ ∀ ε > 0 ∃ δ > 0 ∀ x : 0 < |x-x<sub>0</sub>| < δ ⇒ |f(x)-a| < ε</span>.</li>
+                <li><strong>По Гейне:</strong> <span class="math">lim<sub>x→x<sub>0</sub></sub> f(x) = a ⇔ ∀ (x<sub>n</sub>)</span>, если <span class="math">x<sub>n</sub> → x<sub>0</sub> (x<sub>n</sub> ≠ x<sub>0</sub>)</span>, то <span class="math">f(x<sub>n</sub>) → a</span>.</li>
+            </ul>
+        </section>
+
+        <hr>
+        
+        <section>
+            <h2>№17 Первый замечательный предел</h2>
+            <div class="theorem">
+                <span class="math block">lim<sub>x→0</sub> <span class="frac"><span>sin x</span><span class="bottom">x</span></span> = 1</span>
+            </div>
+        </section>
+    </article>
+</body>
+</html>
