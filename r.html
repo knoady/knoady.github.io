@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Первый коллоквиум по математическому анализу</title>
+    <style>
+        /* Базовые настройки для режима чтения */
+        :root {
+            --bg-color: #fbfbfc;
+            --text-color: #333332;
+            --heading-color: #111111;
+            --accent-color: #555555;
+            --theorem-bg: #f2f2f3;
+            --table-border: #dddddd;
+            --hr-color: #eaeaea;
+        }
+
+        /* Автоматический темный режим */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a1a1c;
+                --text-color: #d1d1d1;
+                --heading-color: #eeeeee;
+                --accent-color: #999999;
+                --theorem-bg: #252528;
+                --table-border: #444444;
+                --hr-color: #333333;
+            }
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.75;
+            font-size: 19px;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0 auto;
+            max-width: 760px; /* Оптимальная длина строки для чтения */
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--heading-color);
+            line-height: 1.3;
+            margin-top: 2em;
+            margin-bottom: 0.8em;
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.2em; border-bottom: 2px solid var(--hr-color); padding-bottom: 10px; margin-top: 0; }
+        h2 { font-size: 1.6em; }
+        h3 { font-size: 1.3em; }
+
+        p, ul, ol { margin-bottom: 1.2em; }
+        
+        ul, ol { padding-left: 25px; }
+        li { margin-bottom: 0.5em; }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--hr-color);
+            margin: 3em 0;
+        }
+
+        /* Оформление теорем и определений */
+        .theorem {
+            background-color: var(--theorem-bg);
+            padding: 18px 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            margin: 25px 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .theorem strong {
+            color: var(--heading-color);
+            font-weight: 600;
+        }
+
+        /* Оформление доказательств */
+        .proof {
+            margin: 20px 0 25px 25px;
+            font-style: italic;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+        
+        .proof strong { font-style: normal; }
+
+        /* Таблицы */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 500px;
+            margin: 25px 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 16px;
+        }
+        th, td {
+            border: 1px solid var(--table-border);
+            padding: 10px 15px;
+            text-align: center;
+        }
+        th {
+            background-color: var(--theorem-bg);
+            font-weight: 600;
+        }
+
+        /* Формулы (без скриптов) */
+        .math {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            white-space: nowrap;
+            font-style: italic;
+            letter-spacing: 0.02em;
+        }
+        .math.block {
+            display: block;
+            text-align: center;
+            margin: 1em 0;
+            font-size: 1.1em;
+        }
+        .math sup, .math sub {
+            font-style: normal;
+        }
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.2em;
+            text-align: center;
+            font-size: 0.9em;
+            line-height: 1.2;
+            font-style: normal;
+        }
+        .frac > span { display: block; padding: 0 0.2em; }
+        .frac .bottom { border-top: 1px solid var(--text-color); }
+    </style>
+</head>
+<body>
+    <h1>Первый коллоквиум</h1>
+
+    <section>
+        <h2>№1 Высказывания, предикаты и логические операции</h2>
+        <ul>
+            <li><strong>Высказывание</strong> — выражение, про которое можно сказать, истинно оно или ложно.</li>
+            <li><strong><span class="math">n</span>-местный предикат</strong> — утверждение, зависящее от переменных, которое становится высказыванием при подстановке любых значений переменных.</li>
+        </ul>
+        
+        <h3>Логические операции</h3>
+        <table>
+            <tr><th>A</th><th>B</th><th>A ∧ B</th><th>A ∨ B</th><th>A ⇒ B</th></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+        </table>
+        
+        <p><strong>Кванторы:</strong> ∀ — для любого, ∃ — существует.</p>
+        <p>Построение отрицания к высказыванию с кванторами:</p>
+        <ul>
+            <li class="math">¬(∀ x P(x)) ⇔ ∃ x ¬ P(x)</li>
+            <li class="math">¬(∃ x P(x)) ⇔ ∀ x ¬ P(x)</li>
+            <li class="math">¬(A ∧ B) ⇔ ¬ A ∨ ¬ B</li>
+            <li class="math">¬(A ∨ B) ⇔ ¬ A ∧ ¬ B</li>
+            <li class="math">¬(A ⇒ B) ⇔ A ∧ ¬ B</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№2 Метод математической индукции (ММИ)</h2>
+        <p>Пусть <span class="math">P(n)</span> — предикат, где <span class="math">n ∈ ℕ</span>. Если истинны: (1) база <span class="math">P(1)</span> и (2) переход <span class="math">P(k) ⇒ P(k+1)</span>, то <span class="math">∀ n ∈ ℕ P(n)</span> истинно.</p>
+        
+        <div class="theorem">
+            <strong>Неравенство Бернулли:</strong> <span class="math">∀ n ∈ ℕ, ∀ x ≥ -1: (1+x)<sup>n</sup> ≥ 1+nx</span>.
+        </div>
+        <div class="proof">
+            <p>Доказательство по ПМИ:</p>
+            <ul>
+                <li><strong>База:</strong> При <span class="math">n=1</span>, <span class="math">∀ x ≥ -1: (1+x)<sup>1</sup> ≥ 1+1·x</span> — верно.</li>
+                <li><strong>Переход:</strong> Предположим, что <span class="math">P(k)</span> истинно, то есть <span class="math">(1+x)<sup>k</sup> ≥ 1+kx</span>. Хотим доказать <span class="math">P(k+1)</span>: <span class="math">(1+x)<sup>k+1</sup> ≥ 1+(k+1)x</span>.</li>
+                <li><span class="math block">(1+x)<sup>k+1</sup> = (1+x)<sup>k</sup> · (1+x) ≥ (1+kx)(1+x) = 1+(k+1)x+kx<sup>2</sup></span></li>
+                <li>Поскольку <span class="math">kx<sup>2</sup> ≥ 0</span>, получаем <span class="math">(1+x)<sup>k+1</sup> ≥ 1+(k+1)x</span>. Переход верен.</li>
+            </ul>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№3 и №4 Перестановки, размещения и сочетания</h2>
+        <p><strong>Правило произведения:</strong> если первый объект выбирается <span class="math">m</span> способами, а после этого второй <span class="math">k</span> способами, то пару можно выбрать <span class="math">m · k</span> способами.</p>
+        
+        <ul>
+            <li><strong>Перестановка</strong> — упорядоченный набор из <span class="math">n</span> различных элементов. <br>Формула: <span class="math">P<sub>n</sub> = n(n-1)… 2 · 1 = n!</span></li>
+            <li><strong>Размещение</strong> из <span class="math">n</span> по <span class="math">k</span> (<span class="math">k ≤ n</span>) — упорядоченный набор <span class="math">k</span> различных элементов из <span class="math">n</span>-элементного множества. <br>Формула: <span class="math">A<sub>n</sub><sup>k</sup> = <span class="frac"><span>n!</span><span class="bottom">(n-k)!</span></span></span></li>
+            <li><strong>Сочетание</strong> из <span class="math">n</span> по <span class="math">k</span> — неупорядоченный выбор <span class="math">k</span> элементов (<span class="math">k</span>-элементное подмножество). <br>Формула: <span class="math">C<sub>n</sub><sup>k</sup> = <span class="frac"><span>A<sub>n</sub><sup>k</sup></span><span class="bottom">k!</span></span> = <span class="frac"><span>n!</span><span class="bottom">k!(n-k)!</span></span></span></li>
+        </ul>
+        
+        <p>Полезные свойства:</p>
+        <ul>
+            <li class="math">C<sub>n</sub><sup>k</sup> = C<sub>n</sub><sup>n-k</sup></li>
+            <li class="math">C<sub>n</sub><sup>k</sup> + C<sub>n</sub><sup>k-1</sup> = C<sub>n+1</sub><sup>k</sup> (правило Паскаля)</li>
+        </ul>
+        
+        <div class="theorem">
+            <strong>Бином Ньютона:</strong> <span class="math">(a+b)<sup>n</sup> = ∑<sub>k=0</sub><sup>n</sup> C<sub>n</sub><sup>k</sup> a<sup>k</sup> b<sup>n-k</sup></span>.
+        </div>
+        <div class="proof">
+            <p>Доказательство (в общем виде): <span class="math block">(a+b)<sup>n</sup> = (a+b)(a+b)…(a+b) = a<sup>n</sup> + C<sub>n</sub><sup>1</sup> a<sup>n-1</sup>b + … + C<sub>n</sub><sup>k</sup> a<sup>n-k</sup>b<sup>k</sup> + … + C<sub>n</sub><sup>n</sup> b<sup>n</sup></span></p>
+            <p>Замечание: <span class="math">C<sub>n</sub><sup>n</sup> = C<sub>n</sub><sup>0</sup> = 1</span>, так как <span class="math">0! = 1</span>.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№4 Понятие последовательности и предела</h2>
+        <p><strong>Последовательность</strong> — набор вещественных чисел, пронумерованный натуральными индексами.</p>
+        <p><span class="math">ε</span>-окрестность точки <span class="math">a ∈ ℝ</span> при <span class="math">ε > 0</span>: <span class="math">U<sub>ε</sub>(a) = (a-ε, a+ε)</span>.</p>
+        
+        <div class="theorem">
+            <strong>Предел последовательности:</strong> <span class="math">a</span> — предел последовательности <span class="math">(a<sub>n</sub>)</span>, если <span class="math">∀ ε > 0 ∃ N=N(ε) ∀ n > N : |a<sub>n</sub> - a| < ε</span>.
+        </div>
+        <p>Это равносильно <span class="math">a-ε < a<sub>n</sub> < a+ε</span>.</p>
+
+        <div class="theorem">
+            <strong>Единственность предела:</strong> Сходящаяся последовательность имеет только один предел.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Пусть <span class="math">a<sub>n</sub> → a</span> и <span class="math">a<sub>n</sub> → b</span>. Возьмем <span class="math">ε = |a-b| / 3 > 0</span>. Найдутся <span class="math">N<sub>1</sub></span> и <span class="math">N<sub>2</sub></span>, при <span class="math">n > max(N<sub>1</sub>, N<sub>2</sub>)</span> имеем <span class="math">|a<sub>n</sub>-a| < ε</span> и <span class="math">|a<sub>n</sub>-b| < ε</span>. По неравенству треугольника:</p>
+            <p class="math block">|a-b| ≤ |a-a<sub>n</sub>| + |a<sub>n</sub>-b| < 2ε = (2/3)|a-b|</p>
+            <p>Противоречие, так как <span class="math">|a-b| > 0</span>.</p>
+        </div>
+        
+        <div class="theorem">
+            Сходящаяся последовательность ограничена.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Пусть <span class="math">a<sub>n</sub> → a</span>. Для <span class="math">ε = 1</span> найдется <span class="math">N</span>: <span class="math">∀ n > N : |a<sub>n</sub> - a| < 1</span>, откуда <span class="math">|a<sub>n</sub>| < |a| + 1</span>. Положим <span class="math">C = max{|a<sub>1</sub>|, …, |a<sub>N</sub>|, |a|+1}</span>. Тогда <span class="math">|a<sub>n</sub>| ≤ C</span> при всех <span class="math">n</span>.</p>
+            <p>Обратное неверно: <span class="math">(-1)<sup>n</sup></span> ограничена, но не сходится.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№5 и №6 Бесконечно малые, бесконечно большие и отделимые от нуля</h2>
+        <ul>
+            <li><strong>Бесконечно малая (б.м.):</strong> <span class="math">a<sub>n</sub> → 0 ⇔ ∀ ε > 0 ∃ N ∀ n > N : |a<sub>n</sub>| < ε</span>.</li>
+            <li><strong>Бесконечно большая (б.б.):</strong> <span class="math">a<sub>n</sub> → ∞ ⇔ ∀ M > 0 ∃ N ∀ n > N : |a<sub>n</sub>| > M</span>.</li>
+            <li><strong>Ограниченная:</strong> <span class="math">∃ C > 0 ∀ n : |c<sub>n</sub>| ≤ C</span>.</li>
+            <li><strong>Отделимая от нуля:</strong> <span class="math">∃ δ > 0 ∀ n : |c<sub>n</sub>| ≥ δ</span>.</li>
+        </ul>
+        <p>Свойства: <span class="math">1 / (б.м.) = б.б.</span> и <span class="math">1 / (б.б.) = б.м.</span></p>
+        
+        <div class="theorem">
+            Последовательность <span class="math">(c<sub>n</sub>)</span> ограничена ⇔ <span class="math">(1/c<sub>n</sub>)</span> отделима от нуля.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Пусть <span class="math">c<sub>n</sub> ≠ 0</span>. Для положительных чисел <span class="math">|c<sub>n</sub>| ≤ C ⇔ |1/c<sub>n</sub>| ≥ 1/C</span>. Если <span class="math">|c<sub>n</sub>| ≤ C</span> при всех <span class="math">n</span>, то <span class="math">δ = 1/C</span> подходит. Если <span class="math">|1/c<sub>n</sub>| ≥ δ</span> при всех <span class="math">n</span>, то <span class="math">C = 1/δ</span> подходит.</p>
+        </div>
+
+        <div class="theorem">
+            Если <span class="math">a<sub>n</sub> → a ≠ 0</span>, то <span class="math">∃ N ∀ n > N : |a<sub>n</sub>| > |a|/2</span>. Если к тому же все <span class="math">a<sub>n</sub> ≠ 0</span>, то <span class="math">(a<sub>n</sub>)</span> отделима от нуля.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Возьмем <span class="math">ε = |a|/2 > 0</span>. <span class="math">∃ N ∀ n > N : |a<sub>n</sub> - a| < |a|/2</span>. Тогда <span class="math">|a<sub>n</sub>| ≥ |a| - |a - a<sub>n</sub>| > |a|/2</span>. Для всех членов <span class="math">δ = min{|a<sub>1</sub>|, …, |a<sub>N</sub>|, |a|/2} > 0</span>.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Арифметические свойства предела</h2>
+        <p>Пусть <span class="math">a<sub>n</sub> → a</span>, <span class="math">b<sub>n</sub> → b</span>. Тогда:</p>
+        <ol>
+            <li class="math">a<sub>n</sub> ± b<sub>n</sub> → a ± b</li>
+            <li class="math">a<sub>n</sub> · b<sub>n</sub> → a · b</li>
+            <li class="math">a<sub>n</sub> / b<sub>n</sub> → a / b (при b<sub>n</sub> ≠ 0, b ≠ 0)</li>
+        </ol>
+        <div class="proof">
+            <p>Доказательство: Пусть <span class="math">a<sub>n</sub> = a + α<sub>n</sub></span>, <span class="math">b<sub>n</sub> = b + β<sub>n</sub></span>, где <span class="math">α<sub>n</sub>, β<sub>n</sub></span> — бесконечно малые.</p>
+            <p>Для суммы: <span class="math">|(a<sub>n</sub>+b<sub>n</sub>) - (a+b)| ≤ |a<sub>n</sub>-a| + |b<sub>n</sub>-b|</span>. Сумма двух б.м. есть б.м.</p>
+            <p>Для произведения: <span class="math">a<sub>n</sub>b<sub>n</sub> - ab = (a+α<sub>n</sub>)(b+β<sub>n</sub>) - ab = aβ<sub>n</sub> + bα<sub>n</sub> + α<sub>n</sub>β<sub>n</sub></span>. Каждое слагаемое — б.м., их сумма — б.м.</p>
+            <p>Для частного: <span class="math">a<sub>n</sub>/b<sub>n</sub> - a/b = (1/b) · (1/b<sub>n</sub>) · (bα<sub>n</sub> - aβ<sub>n</sub>)</span>. Скобка — б.м., <span class="math">1/b<sub>n</sub></span> ограничена (так как <span class="math">(b<sub>n</sub>)</span> отделима от нуля), ограниченная на б.м. = б.м.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№7 Предельный переход в неравенствах и теорема о двух милиционерах</h2>
+        <div class="theorem">
+            <strong>Предельный переход:</strong> Если <span class="math">a<sub>n</sub> → a</span>, <span class="math">b<sub>n</sub> → b</span> и <span class="math">∀ n : a<sub>n</sub> ≥ b<sub>n</sub></span>, то <span class="math">a ≥ b</span>.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Предположим, что <span class="math">a < b</span>. Возьмем <span class="math">ε<sub>0</sub> = (b-a)/3 > 0</span>. Окрестности <span class="math">U<sub>ε<sub>0</sub></sub>(a)</span> и <span class="math">U<sub>ε<sub>0</sub></sub>(b)</span> не пересекаются, <span class="math">U<sub>ε<sub>0</sub></sub>(a)</span> строго левее <span class="math">U<sub>ε<sub>0</sub></sub>(b)</span>, следовательно <span class="math">a<sub>n</sub> < b<sub>n</sub></span>. Противоречие.</p>
+        </div>
+
+        <div class="theorem">
+            <strong>О двух милиционерах:</strong> Если <span class="math">a<sub>n</sub> ≤ b<sub>n</sub> ≤ c<sub>n</sub></span> при <span class="math">n ≥ N<sub>0</sub></span> и <span class="math">a<sub>n</sub> → a, c<sub>n</sub> → a</span>, то <span class="math">b<sub>n</sub> → a</span>.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Для <span class="math">ε > 0</span> найдутся <span class="math">N<sub>1</sub>, N<sub>2</sub></span>: <span class="math">a-ε < a<sub>n</sub></span> и <span class="math">c<sub>n</sub> < a+ε</span>. При <span class="math">n > max(N<sub>0</sub>, N<sub>1</sub>, N<sub>2</sub>)</span> имеем <span class="math">a-ε < a<sub>n</sub> ≤ b<sub>n</sub> ≤ c<sub>n</sub> < a+ε</span>, то есть <span class="math">|b<sub>n</sub> - a| < ε</span>.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№8 Ограниченные подмножества и аксиома непрерывности</h2>
+        <p><span class="math">A ⊂ ℝ</span> ограничено сверху, если <span class="math">∃ c ∈ ℝ ∀ a ∈ A : a ≤ c</span>.</p>
+        <p><span class="math">A ⊂ ℝ</span> ограничено снизу, если <span class="math">∃ c ∈ ℝ ∀ a ∈ A : a ≥ c</span>.</p>
+        
+        <div class="theorem">
+            <strong>Аксиома непрерывности (полноты):</strong> Если <span class="math">A, B ⊂ ℝ</span> (<span class="math">A ≠ ∅, B ≠ ∅</span>) и <span class="math">∀ a ∈ A, ∀ b ∈ B : a ≤ b</span>, то <span class="math">∃ c ∈ ℝ ∀ a ∈ A ∀ b ∈ B : a ≤ c ≤ b</span>.
+        </div>
+
+        <p><strong>Верхняя грань</strong> множества <span class="math">A</span> — любое <span class="math">c</span>, для которого <span class="math">∀ a ∈ A : a ≤ c</span>. <strong>Точная верхняя грань (sup A)</strong> — наименьшая из верхних граней.</p>
+
+        <div class="theorem">
+            Непустое ограниченное сверху множество имеет супремум.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Пусть <span class="math">B</span> — множество всех верхних граней <span class="math">A</span> (<span class="math">B ≠ ∅</span>, так как <span class="math">A</span> ограничено сверху). По аксиоме непрерывности <span class="math">∃ c: a ≤ c ≤ b</span>. Так как <span class="math">a ≤ c</span>, <span class="math">c</span> — верхняя грань. Так как <span class="math">c ≤ b</span> для <span class="math">∀ b ∈ B</span>, <span class="math">c</span> — наименьшая верхняя грань. Значит <span class="math">c = sup A</span>.</p>
+        </div>
+
+        <div class="theorem">
+            <strong>Теорема Вейерштрасса:</strong> Если <span class="math">(a<sub>n</sub>)</span> возрастает и ограничена сверху, то она сходится.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Пусть <span class="math">A = {a<sub>1</sub>, a<sub>2</sub>, …}</span> ограничено сверху. <span class="math">∃ a = sup A</span>. Проверим, что <span class="math">a<sub>n</sub> → a</span>. <span class="math">a</span> — верхняя грань, <span class="math">a<sub>n</sub> ≤ a</span>. Для <span class="math">ε > 0</span>, число <span class="math">a-ε</span> не является верхней гранью, значит <span class="math">∃ N : a<sub>N</sub> > a-ε</span>. Так как последовательность не убывает, при <span class="math">n > N : a-ε < a<sub>N</sub> ≤ a<sub>n</sub> ≤ a < a+ε</span>, следовательно <span class="math">|a<sub>n</sub> - a| < ε</span>.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№10 Сходимость последовательности <span class="math">(1 + 1/n)<sup>n</sup></span></h2>
+        <div class="theorem">
+            <span class="math">lim<sub>n→∞</sub> (1 + 1/n)<sup>n</sup> = e ≈ 2.71</span>.
+        </div>
+        <div class="proof">
+            <p>(1) Докажем возрастание: Сравним <span class="math">a<sub>n+1</sub></span> и <span class="math">a<sub>n</sub></span>. <span class="math block">a<sub>n+1</sub> / a<sub>n</sub> = … = (n+2)(n<sup>2</sup>+n+1) / (n+1)<sup>3</sup> = (n<sup>3</sup>+3n<sup>2</sup>+3n+2) / (n<sup>3</sup>+3n<sup>2</sup>+3n+1) > 1</span></p>
+            <p>(2) Докажем ограниченность сверху: По биному Ньютона <span class="math block">(1 + 1/n)<sup>n</sup> ≤ 1 + 1 + 1/2! + … + 1/n! ≤ 1 + 1 + 1/(1·2) + … + 1/((n-1)n) = 3 - 1/n < 3</span></p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Подпоследовательности и теорема Больцано-Вейерштрасса</h2>
+        <p><strong>Подпоследовательность:</strong> <span class="math">b<sub>k</sub> = a<sub>n<sub>k</sub></sub></span>, где <span class="math">n<sub>1</sub> < n<sub>2</sub> < …</span>. Если <span class="math">a<sub>n</sub> → a</span>, то любая <span class="math">a<sub>n<sub>k</sub></sub> → a</span>.</p>
+        <p><strong>Частичный предел</strong> — предел какой-нибудь подпоследовательности.</p>
+        <p><strong>Предельная точка:</strong> число <span class="math">a</span>, в любой окрестности которого бесконечно много членов последовательности.</p>
+
+        <div class="theorem">
+            <span class="math">a</span> — частичный предел ⇔ <span class="math">a</span> — предельная точка.
+        </div>
+        <div class="proof">
+            <p>⇒: Если <span class="math">a<sub>n<sub>k</sub></sub> → a</span>, то <span class="math">∀ k > K : a<sub>n<sub>k</sub></sub> ∈ U<sub>ε</sub>(a)</span>. Таких членов бесконечно много.</p>
+            <p>⇐: Строим по шагам для <span class="math">ε<sub>k</sub> = 1/k</span>. В <span class="math">U<sub>1/k</sub>(a)</span> бесконечно много членов, выбираем <span class="math">n<sub>k</sub> > n<sub>k-1</sub></span>. Полученная подпоследовательность сходится к <span class="math">a</span>.</p>
+        </div>
+
+        <div class="theorem">
+            <strong>Теорема Больцано-Вейерштрасса:</strong> Ограниченная последовательность имеет сходящуюся подпоследовательность.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Делим отрезок <span class="math">[A, B]</span> пополам, выбираем половину с бесконечным числом членов, получаем вложенные отрезки <span class="math">[b<sub>k</sub>, c<sub>k</sub>]</span>. По теореме Вейерштрасса их концы сходятся к общему пределу <span class="math">b</span>, и существует подпоследовательность <span class="math">a<sub>n<sub>k</sub></sub> → b</span>.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№13 Фундаментальные последовательности и критерий Коши</h2>
+        <p><span class="math">(a<sub>n</sub>)</span> фундаментальна (Коши), если <span class="math">∀ ε > 0 ∃ N=N(ε) ∀ n,m > N : |a<sub>n</sub> - a<sub>m</sub>| < ε</span>.</p>
+
+        <div class="theorem">
+            <strong>Критерий Коши:</strong> <span class="math">(a<sub>n</sub>)</span> сходится ⇔ <span class="math">(a<sub>n</sub>)</span> фундаментальна.
+        </div>
+        <div class="proof">
+            <p>⇒: Пусть <span class="math">a<sub>n</sub> → a</span>. При <span class="math">n,m > N</span>: <span class="math">|a<sub>n</sub> - a<sub>m</sub>| ≤ |a<sub>n</sub>-a| + |a<sub>m</sub>-a| < ε/2 + ε/2 = ε</span>.</p>
+            <p>⇐: <br>1. Фундаментальная последовательность ограничена. <br>2. По теореме Больцано-Вейерштрасса <span class="math">∃ a<sub>n<sub>k</sub></sub> → a</span>. <br>3. Покажем, что <span class="math">a<sub>n</sub> → a</span>: <span class="math">|a<sub>n</sub> - a| ≤ |a<sub>n</sub> - a<sub>n<sub>k</sub></sub>| + |a<sub>n<sub>k</sub></sub> - a| < ε/2 + ε/2 = ε</span> (при соответствующих <span class="math">n, n<sub>k</sub> > N</span>).</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№14 Предел функции в точке</h2>
+        <ul>
+            <li><strong>По Коши:</strong> <span class="math">lim<sub>x→x<sub>0</sub></sub> f(x) = a ⇔ ∀ ε > 0 ∃ δ > 0 ∀ x : 0 < |x-x<sub>0</sub>| < δ ⇒ |f(x)-a| < ε</span>.</li>
+            <li><strong>По Гейне:</strong> <span class="math">lim<sub>x→x<sub>0</sub></sub> f(x) = a ⇔ ∀ (x<sub>n</sub>)</span>, если <span class="math">x<sub>n</sub> → x<sub>0</sub> (x<sub>n</sub> ≠ x<sub>0</sub>)</span>, то <span class="math">f(x<sub>n</sub>) → a</span>.</li>
+        </ul>
+
+        <div class="theorem">
+            Определения по Коши и по Гейне эквивалентны.
+        </div>
+        <div class="proof">
+            <p>Коши ⇒ Гейне: Для любого <span class="math">δ</span> из Коши, если <span class="math">x<sub>n</sub> → x<sub>0</sub></span>, то <span class="math">∃ N ∀ n > N : 0 < |x<sub>n</sub> - x<sub>0</sub>| < δ</span>, откуда <span class="math">|f(x<sub>n</sub>)-a| < ε</span>.</p>
+            <p>Гейне ⇒ Коши: От противного. Пусть по Коши неверно: <span class="math">∃ ε<sub>0</sub> > 0 ∀ δ > 0 ∃ x : 0 < |x-x<sub>0</sub>| < δ</span> и <span class="math">|f(x)-a| ≥ ε<sub>0</sub></span>. Возьмем <span class="math">δ = 1/k</span>. Найдется последовательность <span class="math">x<sub>k</sub> → x<sub>0</sub></span>, для которой <span class="math">|f(x<sub>k</sub>)-a| ≥ ε<sub>0</sub></span>, что противоречит определению по Гейне.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№15 Арифметика предела функции и теорема о двух милиционерах</h2>
+        <div class="theorem">
+            Пусть <span class="math">f(x) → a</span>, <span class="math">g(x) → b</span>. Тогда <span class="math">f(x) ± g(x) → a ± b</span>, <span class="math">f(x)g(x) → ab</span>, <span class="math">f(x) / g(x) → a / b</span> (<span class="math">b ≠ 0</span>).
+        </div>
+        <div class="proof">
+            <p>Доказывается сведением к пределам последовательностей по определению Гейне: если <span class="math">x<sub>n</sub> → x<sub>0</sub></span>, то <span class="math">f(x<sub>n</sub>) → a</span> и <span class="math">g(x<sub>n</sub>) → b</span>, и их арифметические комбинации сходятся по свойствам пределов последовательностей.</p>
+        </div>
+        
+        <p><strong>Предельный переход в неравенствах:</strong> Если <span class="math">f(x) ≥ g(x)</span> в проколотой окрестности <span class="math">x<sub>0</sub></span>, то <span class="math">lim f(x) ≥ lim g(x)</span>.</p>
+        <p><strong>О двух милиционерах:</strong> Если <span class="math">f(x) ≥ g(x) ≥ h(x)</span> и <span class="math">lim f(x) = lim h(x) = a</span>, то <span class="math">lim g(x) = a</span>.</p>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№16 Предел сложной функции</h2>
+        <div class="theorem">
+            Пусть <span class="math">f(x) → a</span> при <span class="math">x → x<sub>0</sub></span>, и <span class="math">g(y) → b</span> при <span class="math">y → a</span>. Тогда <span class="math">g(f(x)) → b</span>, если выполнено одно из условий:
+            <ul>
+                <li><span class="math">f(x) ≠ a</span> в проколотой окрестности <span class="math">x<sub>0</sub></span>.</li>
+                <li><span class="math">g(a) = b</span> (непрерывность функции <span class="math">g</span>).</li>
+            </ul>
+        </div>
+        <div class="proof">
+            <p>Через определение по Гейне: если <span class="math">x<sub>n</sub> → x<sub>0</sub></span>, то <span class="math">y<sub>n</sub> = f(x<sub>n</sub>) → a</span>. Если <span class="math">y<sub>n</sub> ≠ a</span> или <span class="math">g(a) = b</span>, то мы имеем право утверждать, что <span class="math">g(y<sub>n</sub>) → b</span>.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>№17 Первый замечательный предел</h2>
+        <div class="theorem">
+            <span class="math">lim<sub>x→0</sub> <span class="frac"><span>sin x</span><span class="bottom">x</span></span> = 1</span>.
+        </div>
+        <div class="proof">
+            <p>Доказательство (геометрическое, для <span class="math">0 < x < π/2</span>):</p>
+            <ul>
+                <li>Сравним площади: <span class="math">S<sub>△OAB</sub> < S<sub>сектора OAB</sub> < S<sub>△OAC</sub></span>.</li>
+                <li><span class="math">(sin x) / 2 < x / 2 < (sin x) / (2cos x)</span>.</li>
+                <li>Делим на <span class="math">(sin x) / 2</span>: <span class="math">1 < x / sin x < 1 / cos x</span>.</li>
+                <li>Переворачиваем: <span class="math">cos x < (sin x) / x < 1</span>.</li>
+                <li>Так как <span class="math">cos x → 1</span> при <span class="math">x → 0</span> (доказывается через <span class="math">0 ≤ 1 - cos x = 2sin<sup>2</sup>(x/2) ≤ x<sup>2</sup>/2 → 0</span>), по теореме о двух милиционерах предел равен <span class="math">1</span>.</li>
+            </ul>
+        </div>
+    </section>
+
+</body>
+</html>
