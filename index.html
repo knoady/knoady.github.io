@@ -3,29 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Первый коллоквиум по математическому анализу</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0 auto; max-width: 900px; padding: 20px; }
-        h1, h2, h3 { color: #333; }
-        .theorem { background: #f4f4f4; padding: 15px; border-left: 5px solid #007bff; margin: 15px 0; }
-        .proof { margin-left: 20px; font-style: italic; border-left: 2px solid #ccc; padding-left: 10px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; font-size: 18px; margin: 0 auto; max-width: 900px; padding: 20px; color: #333; }
+        h1, h2, h3 { color: #222; }
+        .theorem { background: #f4f4f4; padding: 15px; border-left: 5px solid #007bff; margin: 15px 0; font-size: 19px; }
+        .proof { margin-left: 20px; font-style: italic; border-left: 2px solid #ccc; padding-left: 10px; font-size: 18px; }
         table { border-collapse: collapse; width: 60%; margin: 20px 0; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
         ul { margin-top: 5px; }
+        /* Стили для математических формул без скриптов */
+        .math { font-family: "Times New Roman", Times, serif; white-space: nowrap; }
+        .i { font-style: italic; }
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.2em;
+            text-align: center;
+            font-size: 0.9em;
+            line-height: 1.2;
+        }
+        .frac > span { display: block; padding: 0 0.2em; }
+        .frac .bottom { border-top: 1px solid #333; }
     </style>
 </head>
 <body>
-    <h1>Первый коллоквиум[span_0](start_span)[span_0](end_span)</h1>
+    <h1>Первый коллоквиум</h1>
 
     <section>
-        <h2>№1 Высказывания, предикаты и логические операции[span_1](start_span)[span_1](end_span)</h2>
+        <h2>№1 Высказывания, предикаты и логические операции</h2>
         <ul>
-            <li>Высказывание - выражение, про которое можно сказать, истинно оно или ложно[span_2](start_span)[span_2](end_span).</li>
-            <li>n-местный предикат - утверждение, зависящее от переменных, которое становится высказыванием при подстановке любых значений переменных[span_3](start_span)[span_3](end_span).</li>
+            <li>Высказывание - выражение, про которое можно сказать, истинно оно или ложно.</li>
+            <li><i>n</i>-местный предикат - утверждение, зависящее от переменных, которое становится высказыванием при подстановке любых значений переменных.</li>
         </ul>
         
-        <h3>Логические операции[span_4](start_span)[span_4](end_span)</h3>
+        <h3>Логические операции</h3>
         <table>
             <tr><th>A</th><th>B</th><th>A ∧ B</th><th>A ∨ B</th><th>A ⇒ B</th></tr>
             <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
@@ -34,33 +45,33 @@
             <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
         </table>
         
-        <p>Кванторы: \(\forall\) - для любого, \(\exists\) - существует[span_5](start_span)[span_5](end_span).</p>
-        <p>Построение отрицания к высказыванию с кванторами[span_6](start_span)[span_6](end_span):</p>
+        <p>Кванторы: ∀ - для любого, ∃ - существует.</p>
+        <p>Построение отрицания к высказыванию с кванторами:</p>
         <ul>
-            <li>\(\neg(\forall x P(x)) \iff \exists x \neg P(x)\)[span_7](start_span)[span_7](end_span).</li>
-            <li>\(\neg(\exists x P(x)) \iff \forall x \neg P(x)\)[span_8](start_span)[span_8](end_span).</li>
-            <li>\(\neg(A \land B) \iff \neg A \lor \neg B\)[span_9](start_span)[span_9](end_span).</li>
-            <li>\(\neg(A \lor B) \iff \neg A \land \neg B\)[span_10](start_span)[span_10](end_span).</li>
-            <li>\(\neg(A \implies B) \iff A \land \neg B\)[span_11](start_span)[span_11](end_span).</li>
+            <li class="math">¬(∀ x P(x)) ⇔ ∃ x ¬ P(x)</li>
+            <li class="math">¬(∃ x P(x)) ⇔ ∀ x ¬ P(x)</li>
+            <li class="math">¬(A ∧ B) ⇔ ¬ A ∨ ¬ B</li>
+            <li class="math">¬(A ∨ B) ⇔ ¬ A ∧ ¬ B</li>
+            <li class="math">¬(A ⇒ B) ⇔ A ∧ ¬ B</li>
         </ul>
     </section>
 
     <hr>
 
     <section>
-        <h2>№2 Метод математической индукции (ММИ)[span_12](start_span)[span_12](end_span)</h2>
-        <p>Пусть \(P(n)\) - предикат, где \(n \in \mathbb{N}\)[span_13](start_span)[span_13](end_span). Если истинны: (1) база \(P(1)\) и (2) переход \(P(k) \implies P(k+1)\), то \(\forall n \in \mathbb{N} P(n)\) истинно[span_14](start_span)[span_14](end_span).</p>
+        <h2>№2 Метод математической индукции (ММИ)</h2>
+        <p>Пусть <span class="math">P(n)</span> - предикат, где <span class="math">n ∈ ℕ</span>. Если истинны: (1) база <span class="math">P(1)</span> и (2) переход <span class="math">P(k) ⇒ P(k+1)</span>, то <span class="math">∀ n ∈ ℕ P(n)</span> истинно.</p>
         
         <div class="theorem">
-            <strong>Неравенство Бернулли:</strong> \(\forall n \in \mathbb{N}, \forall x \ge -1: (1+x)^n \ge 1+nx\)[span_15](start_span)[span_15](end_span).
+            <strong>Неравенство Бернулли:</strong> <span class="math">∀ n ∈ ℕ, ∀ x ≥ -1: (1+x)<sup>n</sup> ≥ 1+nx</span>.
         </div>
         <div class="proof">
-            <p>Доказательство по ПМИ[span_16](start_span)[span_16](end_span):</p>
+            <p>Доказательство по ПМИ:</p>
             <ul>
-                <li><strong>База:</strong> При \(n=1\), \(\forall x \ge -1: (1+x)^1 \ge 1+1\cdot x\) - верно[span_17](start_span)[span_17](end_span).</li>
-                <li><strong>Переход:</strong> Предположим, что \(P(k)\) истинно, то есть \((1+x)^k \ge 1+kx\)[span_18](start_span)[span_18](end_span). Хотим доказать \(P(k+1)\): \((1+x)^{k+1} \ge 1+(k+1)x\)[span_19](start_span)[span_19](end_span).</li>
-                <li>\((1+x)^{k+1} = (1+x)^k \cdot (1+x) \ge (1+kx)(1+x) = 1+(k+1)x+kx^2\)[span_20](start_span)[span_20](end_span).</li>
-                <li>Поскольку \(kx^2 \ge 0\), получаем \((1+x)^{k+1} \ge 1+(k+1)x\). Переход верен[span_21](start_span)[span_21](end_span).</li>
+                <li><strong>База:</strong> При <span class="math">n=1</span>, <span class="math">∀ x ≥ -1: (1+x)<sup>1</sup> ≥ 1+1·x</span> - верно.</li>
+                <li><strong>Переход:</strong> Предположим, что <span class="math">P(k)</span> истинно, то есть <span class="math">(1+x)<sup>k</sup> ≥ 1+kx</span>. Хотим доказать <span class="math">P(k+1)</span>: <span class="math">(1+x)<sup>k+1</sup> ≥ 1+(k+1)x</span>.</li>
+                <li><span class="math">(1+x)<sup>k+1</sup> = (1+x)<sup>k</sup> · (1+x) ≥ (1+kx)(1+x) = 1+(k+1)x+kx<sup>2</sup></span>.</li>
+                <li>Поскольку <span class="math">kx<sup>2</sup> ≥ 0</span>, получаем <span class="math">(1+x)<sup>k+1</sup> ≥ 1+(k+1)x</span>. Переход верен.</li>
             </ul>
         </div>
     </section>
@@ -68,266 +79,266 @@
     <hr>
 
     <section>
-        <h2>№3 и №4 Перестановки, размещения и сочетания[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span)</h2>
-        <p><strong>Правило произведения:</strong> если первый объект выбирается \(m\) способами, а после этого второй \(k\) способами, то пару можно выбрать \(m \cdot k\) способами[span_24](start_span)[span_24](end_span).</p>
+        <h2>№3 и №4 Перестановки, размещения и сочетания</h2>
+        <p><strong>Правило произведения:</strong> если первый объект выбирается <span class="math">m</span> способами, а после этого второй <span class="math">k</span> способами, то пару можно выбрать <span class="math">m · k</span> способами.</p>
         
         <ul>
-            <li><strong>Перестановка</strong> - упорядоченный набор из \(n\) различных элементов[span_25](start_span)[span_25](end_span). Формула: \(P_n = n(n-1)\dots 2 \cdot 1 = n!\)[span_26](start_span)[span_26](end_span).</li>
-            <li><strong>Размещение</strong> из \(n\) по \(k\) (\(k \le n\)) - упорядоченный набор \(k\) различных элементов из \(n\)-элементного множества[span_27](start_span)[span_27](end_span). Формула: \(A_n^k = \frac{n!}{(n-k)!}\)[span_28](start_span)[span_28](end_span).</li>
-            <li><strong>Сочетание</strong> из \(n\) по \(k\) - неупорядоченный выбор \(k\) элементов (\(k\)-элементное подмножество)[span_29](start_span)[span_29](end_span). Формула: \(C_n^k = \frac{A_n^k}{k!} = \frac{n!}{k!(n-k)!}\)[span_30](start_span)[span_30](end_span).</li>
+            <li><strong>Перестановка</strong> - упорядоченный набор из <span class="math">n</span> различных элементов. Формула: <span class="math">P<sub>n</sub> = n(n-1)… 2 · 1 = n!</span>.</li>
+            <li><strong>Размещение</strong> из <span class="math">n</span> по <span class="math">k</span> (<span class="math">k ≤ n</span>) - упорядоченный набор <span class="math">k</span> различных элементов из <span class="math">n</span>-элементного множества. Формула: <span class="math">A<sub>n</sub><sup>k</sup> = <span class="frac"><span>n!</span><span class="bottom">(n-k)!</span></span></span>.</li>
+            <li><strong>Сочетание</strong> из <span class="math">n</span> по <span class="math">k</span> - неупорядоченный выбор <span class="math">k</span> элементов (<span class="math">k</span>-элементное подмножество). Формула: <span class="math">C<sub>n</sub><sup>k</sup> = <span class="frac"><span>A<sub>n</sub><sup>k</sup></span><span class="bottom">k!</span></span> = <span class="frac"><span>n!</span><span class="bottom">k!(n-k)!</span></span></span>.</li>
         </ul>
         
-        <p>Полезные свойства[span_31](start_span)[span_31](end_span):</p>
+        <p>Полезные свойства:</p>
         <ul>
-            <li>\(C_n^k = C_n^{n-k}\)[span_32](start_span)[span_32](end_span).</li>
-            <li>\(C_n^k + C_n^{k-1} = C_{n+1}^k\) (правило Паскаля)[span_33](start_span)[span_33](end_span).</li>
+            <li class="math">C<sub>n</sub><sup>k</sup> = C<sub>n</sub><sup>n-k</sup></li>
+            <li class="math">C<sub>n</sub><sup>k</sup> + C<sub>n</sub><sup>k-1</sup> = C<sub>n+1</sub><sup>k</sup> (правило Паскаля)</li>
         </ul>
         
         <div class="theorem">
-            <strong>Бином Ньютона:</strong> \((a+b)^n = \sum_{k=0}^n C_n^k a^k b^{n-k}\)[span_34](start_span)[span_34](end_span).
+            <strong>Бином Ньютона:</strong> <span class="math">(a+b)<sup>n</sup> = ∑<sub>k=0</sub><sup>n</sup> C<sub>n</sub><sup>k</sup> a<sup>k</sup> b<sup>n-k</sup></span>.
         </div>
         <div class="proof">
-            <p>Доказательство (в общем виде): \((a+b)^n = (a+b)(a+b)\dots(a+b) = a^n + C_n^1 a^{n-1}b + \dots + C_n^k a^{n-k}b^k + \dots + C_n^n b^n\)[span_35](start_span)[span_35](end_span).</p>
-            <p>Замечание: \(C_n^n = C_n^0 = 1\), так как \(0! = 1\)[span_36](start_span)[span_36](end_span).</p>
+            <p>Доказательство (в общем виде): <span class="math">(a+b)<sup>n</sup> = (a+b)(a+b)…(a+b) = a<sup>n</sup> + C<sub>n</sub><sup>1</sup> a<sup>n-1</sup>b + … + C<sub>n</sub><sup>k</sup> a<sup>n-k</sup>b<sup>k</sup> + … + C<sub>n</sub><sup>n</sup> b<sup>n</sup></span>.</p>
+            <p>Замечание: <span class="math">C<sub>n</sub><sup>n</sup> = C<sub>n</sub><sup>0</sup> = 1</span>, так как <span class="math">0! = 1</span>.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№4 Понятие последовательности и предела[span_37](start_span)[span_37](end_span)[span_38](start_span)[span_38](end_span)</h2>
-        <p><strong>Последовательность</strong> - набор вещественных чисел, пронумерованный натуральными индексами[span_39](start_span)[span_39](end_span).</p>
-        <p>\(\varepsilon\)-окрестность точки \(a \in \mathbb{R}\) при \(\varepsilon > 0\): \(U_\varepsilon(a) = (a-\varepsilon, a+\varepsilon)\)[span_40](start_span)[span_40](end_span).</p>
+        <h2>№4 Понятие последовательности и предела</h2>
+        <p><strong>Последовательность</strong> - набор вещественных чисел, пронумерованный натуральными индексами.</p>
+        <p><span class="math">ε</span>-окрестность точки <span class="math">a ∈ ℝ</span> при <span class="math">ε > 0</span>: <span class="math">U<sub>ε</sub>(a) = (a-ε, a+ε)</span>.</p>
         
         <div class="theorem">
-            <strong>Предел последовательности:</strong> \(a\) - предел последовательности \((a_n)\), если \(\forall \varepsilon > 0 \exists N=N(\varepsilon) \forall n > N : |a_n - a| < \varepsilon\)[span_41](start_span)[span_41](end_span).
+            <strong>Предел последовательности:</strong> <span class="math">a</span> - предел последовательности <span class="math">(a<sub>n</sub>)</span>, если <span class="math">∀ ε > 0 ∃ N=N(ε) ∀ n > N : |a<sub>n</sub> - a| < ε</span>.
         </div>
-        <p>Это равносильно \(a-\varepsilon < a_n < a+\varepsilon\)[span_42](start_span)[span_42](end_span).</p>
+        <p>Это равносильно <span class="math">a-ε < a<sub>n</sub> < a+ε</span>.</p>
 
         <div class="theorem">
-            <strong>Единственность предела:</strong> Сходящаяся последовательность имеет только один предел[span_43](start_span)[span_43](end_span).
+            <strong>Единственность предела:</strong> Сходящаяся последовательность имеет только один предел.
         </div>
         <div class="proof">
-            <p>Доказательство: Пусть \(a_n \to a\) и \(a_n \to b\)[span_44](start_span)[span_44](end_span). Возьмем \(\varepsilon = \frac{|a-b|}{3} > 0\)[span_45](start_span)[span_45](end_span). Найдутся \(N_1\) и \(N_2\), при \(n > \max(N_1, N_2)\) имеем \(|a_n-a|<\varepsilon\) и \(|a_n-b|<\varepsilon\)[span_46](start_span)[span_46](end_span). По неравенству треугольника: \(|a-b| \le |a-a_n| + |a_n-b| < 2\varepsilon = \frac{2}{3}|a-b|\)[span_47](start_span)[span_47](end_span). Противоречие, так как \(|a-b| > 0\)[span_48](start_span)[span_48](end_span).</p>
+            <p>Доказательство: Пусть <span class="math">a<sub>n</sub> → a</span> и <span class="math">a<sub>n</sub> → b</span>. Возьмем <span class="math">ε = |a-b| / 3 > 0</span>. Найдутся <span class="math">N<sub>1</sub></span> и <span class="math">N<sub>2</sub></span>, при <span class="math">n > max(N<sub>1</sub>, N<sub>2</sub>)</span> имеем <span class="math">|a<sub>n</sub>-a| < ε</span> и <span class="math">|a<sub>n</sub>-b| < ε</span>. По неравенству треугольника: <span class="math">|a-b| ≤ |a-a<sub>n</sub>| + |a<sub>n</sub>-b| < 2ε = (2/3)|a-b|</span>. Противоречие, так как <span class="math">|a-b| > 0</span>.</p>
         </div>
         
         <div class="theorem">
-            Сходящаяся последовательность ограничена[span_49](start_span)[span_49](end_span).
+            Сходящаяся последовательность ограничена.
         </div>
         <div class="proof">
-            <p>Доказательство: Пусть \(a_n \to a\). Для \(\varepsilon = 1\) найдется \(N\): \(\forall n > N : |a_n - a| < 1\), откуда \(|a_n| < |a| + 1\)[span_50](start_span)[span_50](end_span). Положим \(C = \max\{|a_1|, \dots, |a_N|, |a|+1\}\)[span_51](start_span)[span_51](end_span). Тогда \(|a_n| \le C\) при всех \(n\)[span_52](start_span)[span_52](end_span).</p>
-            <p>Обратное неверно: \((-1)^n\) ограничена, но не сходится[span_53](start_span)[span_53](end_span).</p>
+            <p>Доказательство: Пусть <span class="math">a<sub>n</sub> → a</span>. Для <span class="math">ε = 1</span> найдется <span class="math">N</span>: <span class="math">∀ n > N : |a<sub>n</sub> - a| < 1</span>, откуда <span class="math">|a<sub>n</sub>| < |a| + 1</span>. Положим <span class="math">C = max{|a<sub>1</sub>|, …, |a<sub>N</sub>|, |a|+1}</span>. Тогда <span class="math">|a<sub>n</sub>| ≤ C</span> при всех <span class="math">n</span>.</p>
+            <p>Обратное неверно: <span class="math">(-1)<sup>n</sup></span> ограничена, но не сходится.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№5 и №6 Бесконечно малые, бесконечно большие и отделимые от нуля[span_54](start_span)[span_54](end_span)[span_55](start_span)[span_55](end_span)</h2>
+        <h2>№5 и №6 Бесконечно малые, бесконечно большие и отделимые от нуля</h2>
         <ul>
-            <li><strong>Бесконечно малая (б.м.):</strong> \(a_n \to 0 \iff \forall \varepsilon > 0 \exists N \forall n > N : |a_n| < \varepsilon\)[span_56](start_span)[span_56](end_span).</li>
-            <li><strong>Бесконечно большая (б.б.):</strong> \(a_n \to \infty \iff \forall M > 0 \exists N \forall n > N : |a_n| > M\)[span_57](start_span)[span_57](end_span).</li>
-            <li><strong>Ограниченная:</strong> \(\exists C > 0 \forall n : |c_n| \le C\)[span_58](start_span)[span_58](end_span).</li>
-            <li><strong>Отделимая от нуля:</strong> \(\exists \delta > 0 \forall n : |c_n| \ge \delta\)[span_59](start_span)[span_59](end_span).</li>
+            <li><strong>Бесконечно малая (б.м.):</strong> <span class="math">a<sub>n</sub> → 0 ⇔ ∀ ε > 0 ∃ N ∀ n > N : |a<sub>n</sub>| < ε</span>.</li>
+            <li><strong>Бесконечно большая (б.б.):</strong> <span class="math">a<sub>n</sub> → ∞ ⇔ ∀ M > 0 ∃ N ∀ n > N : |a<sub>n</sub>| > M</span>.</li>
+            <li><strong>Ограниченная:</strong> <span class="math">∃ C > 0 ∀ n : |c<sub>n</sub>| ≤ C</span>.</li>
+            <li><strong>Отделимая от нуля:</strong> <span class="math">∃ δ > 0 ∀ n : |c<sub>n</sub>| ≥ δ</span>.</li>
         </ul>
-        <p>Свойства: \(\frac{1}{\text{б.м.}} = \text{б.б.}\) и \(\frac{1}{\text{б.б.}} = \text{б.м.}\)[span_60](start_span)[span_60](end_span).</p>
+        <p>Свойства: <span class="math">1 / (б.м.) = б.б.</span> и <span class="math">1 / (б.б.) = б.м.</span></p>
         
         <div class="theorem">
-            Последовательность \((c_n)\) ограничена \(\iff (\frac{1}{c_n})\) отделима от нуля[span_61](start_span)[span_61](end_span).
+            Последовательность <span class="math">(c<sub>n</sub>)</span> ограничена ⇔ <span class="math">(1/c<sub>n</sub>)</span> отделима от нуля.
         </div>
         <div class="proof">
-            <p>Доказательство: Пусть \(c_n \ne 0\). Для положительных чисел \(|c_n| \le C \iff \left|\frac{1}{c_n}\right| \ge \frac{1}{C}\)[span_62](start_span)[span_62](end_span). Если \(|c_n| \le C\) при всех \(n\), то \(\delta = \frac{1}{C}\) подходит[span_63](start_span)[span_63](end_span). Если \(\left|\frac{1}{c_n}\right| \ge \delta\) при всех \(n\), то \(C = \frac{1}{\delta}\) подходит[span_64](start_span)[span_64](end_span).</p>
+            <p>Доказательство: Пусть <span class="math">c<sub>n</sub> ≠ 0</span>. Для положительных чисел <span class="math">|c<sub>n</sub>| ≤ C ⇔ |1/c<sub>n</sub>| ≥ 1/C</span>. Если <span class="math">|c<sub>n</sub>| ≤ C</span> при всех <span class="math">n</span>, то <span class="math">δ = 1/C</span> подходит. Если <span class="math">|1/c<sub>n</sub>| ≥ δ</span> при всех <span class="math">n</span>, то <span class="math">C = 1/δ</span> подходит.</p>
         </div>
 
         <div class="theorem">
-            Если \(a_n \to a \ne 0\), то \(\exists N \forall n > N : |a_n| > \frac{|a|}{2}\)[span_65](start_span)[span_65](end_span). Если к тому же все \(a_n \ne 0\), то \((a_n)\) отделима от нуля[span_66](start_span)[span_66](end_span).
+            Если <span class="math">a<sub>n</sub> → a ≠ 0</span>, то <span class="math">∃ N ∀ n > N : |a<sub>n</sub>| > |a|/2</span>. Если к тому же все <span class="math">a<sub>n</sub> ≠ 0</span>, то <span class="math">(a<sub>n</sub>)</span> отделима от нуля.
         </div>
         <div class="proof">
-            <p>Доказательство: Возьмем \(\varepsilon = \frac{|a|}{2} > 0\). \(\exists N \forall n > N : |a_n - a| < \frac{|a|}{2}\)[span_67](start_span)[span_67](end_span). Тогда \(|a_n| \ge |a| - |a - a_n| > \frac{|a|}{2}\)[span_68](start_span)[span_68](end_span). Для всех членов \(\delta = \min\{|a_1|, \dots, |a_N|, \frac{|a|}{2}\} > 0\)[span_69](start_span)[span_69](end_span).</p>
+            <p>Доказательство: Возьмем <span class="math">ε = |a|/2 > 0</span>. <span class="math">∃ N ∀ n > N : |a<sub>n</sub> - a| < |a|/2</span>. Тогда <span class="math">|a<sub>n</sub>| ≥ |a| - |a - a<sub>n</sub>| > |a|/2</span>. Для всех членов <span class="math">δ = min{|a<sub>1</sub>|, …, |a<sub>N</sub>|, |a|/2} > 0</span>.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>Арифметические свойства предела[span_70](start_span)[span_70](end_span)</h2>
-        <p>Пусть \(a_n \to a\), \(b_n \to b\). Тогда:</p>
+        <h2>Арифметические свойства предела</h2>
+        <p>Пусть <span class="math">a<sub>n</sub> → a</span>, <span class="math">b<sub>n</sub> → b</span>. Тогда:</p>
         <ol>
-            <li>\(a_n \pm b_n \to a \pm b\)[span_71](start_span)[span_71](end_span).</li>
-            <li>\(a_n \cdot b_n \to a \cdot b\)[span_72](start_span)[span_72](end_span).</li>
-            <li>\(\frac{a_n}{b_n} \to \frac{a}{b}\) (при \(b_n \ne 0, b \ne 0\))[span_73](start_span)[span_73](end_span).</li>
+            <li class="math">a<sub>n</sub> ± b<sub>n</sub> → a ± b</li>
+            <li class="math">a<sub>n</sub> · b<sub>n</sub> → a · b</li>
+            <li class="math">a<sub>n</sub> / b<sub>n</sub> → a / b (при b<sub>n</sub> ≠ 0, b ≠ 0)</li>
         </ol>
         <div class="proof">
-            <p>Доказательство: Пусть \(a_n = a + \alpha_n\), \(b_n = b + \beta_n\), где \(\alpha_n, \beta_n\) - бесконечно малые[span_74](start_span)[span_74](end_span).</p>
-            <p>Для суммы: \(|(a_n+b_n) - (a+b)| \le |a_n-a| + |b_n-b|\). Сумма двух б.м. есть б.м[span_75](start_span)[span_75](end_span).</p>
-            <p>Для произведения: \(a_nb_n - ab = (a+\alpha_n)(b+\beta_n) - ab = a\beta_n + b\alpha_n + \alpha_n\beta_n\). Каждое слагаемое - б.м., их сумма - б.м[span_76](start_span)[span_76](end_span).</p>
-            <p>Для частного: \(\frac{a_n}{b_n} - \frac{a}{b} = \frac{1}{b} \cdot \frac{1}{b_n} \cdot (b\alpha_n - a\beta_n)\). Скобка - б.м., \(\frac{1}{b_n}\) ограничена (так как \((b_n)\) отделима от нуля), ограниченная на б.м. = б.м[span_77](start_span)[span_77](end_span).</p>
+            <p>Доказательство: Пусть <span class="math">a<sub>n</sub> = a + α<sub>n</sub></span>, <span class="math">b<sub>n</sub> = b + β<sub>n</sub></span>, где <span class="math">α<sub>n</sub>, β<sub>n</sub></span> - бесконечно малые.</p>
+            <p>Для суммы: <span class="math">|(a<sub>n</sub>+b<sub>n</sub>) - (a+b)| ≤ |a<sub>n</sub>-a| + |b<sub>n</sub>-b|</span>. Сумма двух б.м. есть б.м.</p>
+            <p>Для произведения: <span class="math">a<sub>n</sub>b<sub>n</sub> - ab = (a+α<sub>n</sub>)(b+β<sub>n</sub>) - ab = aβ<sub>n</sub> + bα<sub>n</sub> + α<sub>n</sub>β<sub>n</sub></span>. Каждое слагаемое - б.м., их сумма - б.м.</p>
+            <p>Для частного: <span class="math">a<sub>n</sub>/b<sub>n</sub> - a/b = (1/b) · (1/b<sub>n</sub>) · (bα<sub>n</sub> - aβ<sub>n</sub>)</span>. Скобка - б.м., <span class="math">1/b<sub>n</sub></span> ограничена (так как <span class="math">(b<sub>n</sub>)</span> отделима от нуля), ограниченная на б.м. = б.м.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№7 Предельный переход в неравенствах и теорема о двух милиционерах[span_78](start_span)[span_78](end_span)</h2>
+        <h2>№7 Предельный переход в неравенствах и теорема о двух милиционерах</h2>
         <div class="theorem">
-            <strong>Предельный переход:</strong> Если \(a_n \to a, b_n \to b\) и \(\forall n : a_n \ge b_n\), то \(a \ge b\)[span_79](start_span)[span_79](end_span).
+            <strong>Предельный переход:</strong> Если <span class="math">a<sub>n</sub> → a</span>, <span class="math">b<sub>n</sub> → b</span> и <span class="math">∀ n : a<sub>n</sub> ≥ b<sub>n</sub></span>, то <span class="math">a ≥ b</span>.
         </div>
         <div class="proof">
-            <p>Доказательство: Предположим, что \(a < b\). Возьмем \(\varepsilon_0 = \frac{b-a}{3} > 0\)[span_80](start_span)[span_80](end_span). Окрестности \(U_{\varepsilon_0}(a)\) и \(U_{\varepsilon_0}(b)\) не пересекаются, \(U_{\varepsilon_0}(a)\) строго левее \(U_{\varepsilon_0}(b)\), следовательно \(a_n < b_n\). Противоречие[span_81](start_span)[span_81](end_span).</p>
+            <p>Доказательство: Предположим, что <span class="math">a < b</span>. Возьмем <span class="math">ε<sub>0</sub> = (b-a)/3 > 0</span>. Окрестности <span class="math">U<sub>ε<sub>0</sub></sub>(a)</span> и <span class="math">U<sub>ε<sub>0</sub></sub>(b)</span> не пересекаются, <span class="math">U<sub>ε<sub>0</sub></sub>(a)</span> строго левее <span class="math">U<sub>ε<sub>0</sub></sub>(b)</span>, следовательно <span class="math">a<sub>n</sub> < b<sub>n</sub></span>. Противоречие.</p>
         </div>
 
         <div class="theorem">
-            <strong>О двух милиционерах:</strong> Если \(a_n \le b_n \le c_n\) при \(n \ge N_0\) и \(a_n \to a, c_n \to a\), то \(b_n \to a\)[span_82](start_span)[span_82](end_span).
+            <strong>О двух милиционерах:</strong> Если <span class="math">a<sub>n</sub> ≤ b<sub>n</sub> ≤ c<sub>n</sub></span> при <span class="math">n ≥ N<sub>0</sub></span> и <span class="math">a<sub>n</sub> → a, c<sub>n</sub> → a</span>, то <span class="math">b<sub>n</sub> → a</span>.
         </div>
         <div class="proof">
-            <p>Доказательство: Для \(\varepsilon > 0\) найдутся \(N_1, N_2\): \(a-\varepsilon < a_n\) и \(c_n < a+\varepsilon\)[span_83](start_span)[span_83](end_span). При \(n > \max(N_0, N_1, N_2)\) имеем \(a-\varepsilon < a_n \le b_n \le c_n < a+\varepsilon\), то есть \(|b_n - a| < \varepsilon\)[span_84](start_span)[span_84](end_span).</p>
+            <p>Доказательство: Для <span class="math">ε > 0</span> найдутся <span class="math">N<sub>1</sub>, N<sub>2</sub></span>: <span class="math">a-ε < a<sub>n</sub></span> и <span class="math">c<sub>n</sub> < a+ε</span>. При <span class="math">n > max(N<sub>0</sub>, N<sub>1</sub>, N<sub>2</sub>)</span> имеем <span class="math">a-ε < a<sub>n</sub> ≤ b<sub>n</sub> ≤ c<sub>n</sub> < a+ε</span>, то есть <span class="math">|b<sub>n</sub> - a| < ε</span>.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№8 Ограниченные подмножества и аксиома непрерывности[span_85](start_span)[span_85](end_span)[span_86](start_span)[span_86](end_span)</h2>
-        <p>\(A \subset \mathbb{R}\) ограничено сверху, если \(\exists c \in \mathbb{R} \forall a \in A : a \le c\)[span_87](start_span)[span_87](end_span).</p>
-        <p>\(A \subset \mathbb{R}\) ограничено снизу, если \(\exists c \in \mathbb{R} \forall a \in A : a \ge c\)[span_88](start_span)[span_88](end_span).</p>
+        <h2>№8 Ограниченные подмножества и аксиома непрерывности</h2>
+        <p><span class="math">A ⊂ ℝ</span> ограничено сверху, если <span class="math">∃ c ∈ ℝ ∀ a ∈ A : a ≤ c</span>.</p>
+        <p><span class="math">A ⊂ ℝ</span> ограничено снизу, если <span class="math">∃ c ∈ ℝ ∀ a ∈ A : a ≥ c</span>.</p>
         
         <div class="theorem">
-            <strong>Аксиома непрерывности (полноты):</strong> Если \(A, B \subset \mathbb{R}\) (\(A \ne \emptyset, B \ne \emptyset\)) и \(\forall a \in A, \forall b \in B : a \le b\), то \(\exists c \in \mathbb{R} \forall a \in A \forall b \in B : a \le c \le b\)[span_89](start_span)[span_89](end_span).
+            <strong>Аксиома непрерывности (полноты):</strong> Если <span class="math">A, B ⊂ ℝ</span> (<span class="math">A ≠ ∅, B ≠ ∅</span>) и <span class="math">∀ a ∈ A, ∀ b ∈ B : a ≤ b</span>, то <span class="math">∃ c ∈ ℝ ∀ a ∈ A ∀ b ∈ B : a ≤ c ≤ b</span>.
         </div>
 
-        <p><strong>Верхняя грань</strong> множества \(A\) - любое \(c\), для которого \(\forall a \in A : a \le c\)[span_90](start_span)[span_90](end_span). <strong>Точная верхняя грань (sup A)</strong> - наименьшая из верхних граней[span_91](start_span)[span_91](end_span).</p>
-
-        <div class="theorem">
-            Непустое ограниченное сверху множество имеет супремум[span_92](start_span)[span_92](end_span).
-        </div>
-        <div class="proof">
-            <p>Доказательство: Пусть \(B\) - множество всех верхних граней \(A\) (\(B \ne \emptyset\), так как \(A\) ограничено сверху)[span_93](start_span)[span_93](end_span). По аксиоме непрерывности \(\exists c: a \le c \le b\). Так как \(a \le c\), \(c\) - верхняя грань[span_94](start_span)[span_94](end_span). Так как \(c \le b\) \(\forall b \in B\), \(c\) - наименьшая верхняя грань. Значит \(c = \sup A\)[span_95](start_span)[span_95](end_span).</p>
-        </div>
+        <p><strong>Верхняя грань</strong> множества <span class="math">A</span> - любое <span class="math">c</span>, для которого <span class="math">∀ a ∈ A : a ≤ c</span>. <strong>Точная верхняя грань (sup A)</strong> - наименьшая из верхних граней.</p>
 
         <div class="theorem">
-            <strong>Теорема Вейерштрасса:</strong> Если \((a_n)\) возрастает и ограничена сверху, то она сходится[span_96](start_span)[span_96](end_span).
+            Непустое ограниченное сверху множество имеет супремум.
         </div>
         <div class="proof">
-            <p>Доказательство: Пусть \(A = \{a_1, a_2, \dots\}\) ограничено сверху. \(\exists a = \sup A\)[span_97](start_span)[span_97](end_span). Проверим, что \(a_n \to a\). \(a\) - верхняя грань, \(a_n \le a\)[span_98](start_span)[span_98](end_span). Для \(\varepsilon > 0\), число \(a-\varepsilon\) не является верхней гранью, значит \(\exists N : a_N > a-\varepsilon\)[span_99](start_span)[span_99](end_span). Так как последовательность не убывает, при \(n > N : a-\varepsilon < a_N \le a_n \le a < a+\varepsilon\), следовательно \(|a_n - a| < \varepsilon\)[span_100](start_span)[span_100](end_span).</p>
+            <p>Доказательство: Пусть <span class="math">B</span> - множество всех верхних граней <span class="math">A</span> (<span class="math">B ≠ ∅</span>, так как <span class="math">A</span> ограничено сверху). По аксиоме непрерывности <span class="math">∃ c: a ≤ c ≤ b</span>. Так как <span class="math">a ≤ c</span>, <span class="math">c</span> - верхняя грань. Так как <span class="math">c ≤ b</span> для <span class="math">∀ b ∈ B</span>, <span class="math">c</span> - наименьшая верхняя грань. Значит <span class="math">c = sup A</span>.</p>
+        </div>
+
+        <div class="theorem">
+            <strong>Теорема Вейерштрасса:</strong> Если <span class="math">(a<sub>n</sub>)</span> возрастает и ограничена сверху, то она сходится.
+        </div>
+        <div class="proof">
+            <p>Доказательство: Пусть <span class="math">A = {a<sub>1</sub>, a<sub>2</sub>, …}</span> ограничено сверху. <span class="math">∃ a = sup A</span>. Проверим, что <span class="math">a<sub>n</sub> → a</span>. <span class="math">a</span> - верхняя грань, <span class="math">a<sub>n</sub> ≤ a</span>. Для <span class="math">ε > 0</span>, число <span class="math">a-ε</span> не является верхней гранью, значит <span class="math">∃ N : a<sub>N</sub> > a-ε</span>. Так как последовательность не убывает, при <span class="math">n > N : a-ε < a<sub>N</sub> ≤ a<sub>n</sub> ≤ a < a+ε</span>, следовательно <span class="math">|a<sub>n</sub> - a| < ε</span>.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№10 Сходимость последовательности \((1+\frac{1}{n})^n\)[span_101](start_span)[span_101](end_span)</h2>
+        <h2>№10 Сходимость последовательности <span class="math">(1 + 1/n)<sup>n</sup></span></h2>
         <div class="theorem">
-            \(\lim_{n \to \infty} (1+\frac{1}{n})^n = e \approx 2.71\)[span_102](start_span)[span_102](end_span).
+            <span class="math">lim<sub>n→∞</sub> (1 + 1/n)<sup>n</sup> = e ≈ 2.71</span>.
         </div>
         <div class="proof">
-            <p>(1) Докажем возрастание: Сравним \(a_{n+1}\) и \(a_n\)[span_103](start_span)[span_103](end_span). \(\frac{a_{n+1}}{a_n} = \dots = \frac{(n+2)(n^2+n+1)}{(n+1)^3} = \frac{n^3+3n^2+3n+2}{n^3+3n^2+3n+1} > 1\)[span_104](start_span)[span_104](end_span).</p>
-            <p>(2) Докажем ограниченность сверху: По биному Ньютона \((1+\frac{1}{n})^n \le 1 + 1 + \frac{1}{2!} + \dots + \frac{1}{n!} \le 1 + 1 + \frac{1}{1\cdot 2} + \dots + \frac{1}{(n-1)n} = 3 - \frac{1}{n} < 3\)[span_105](start_span)[span_105](end_span).</p>
+            <p>(1) Докажем возрастание: Сравним <span class="math">a<sub>n+1</sub></span> и <span class="math">a<sub>n</sub></span>. <span class="math">a<sub>n+1</sub> / a<sub>n</sub> = … = (n+2)(n<sup>2</sup>+n+1) / (n+1)<sup>3</sup> = (n<sup>3</sup>+3n<sup>2</sup>+3n+2) / (n<sup>3</sup>+3n<sup>2</sup>+3n+1) > 1</span>.</p>
+            <p>(2) Докажем ограниченность сверху: По биному Ньютона <span class="math">(1 + 1/n)<sup>n</sup> ≤ 1 + 1 + 1/2! + … + 1/n! ≤ 1 + 1 + 1/(1·2) + … + 1/((n-1)n) = 3 - 1/n < 3</span>.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>Подпоследовательности и теорема Больцано-Вейерштрасса[span_106](start_span)[span_106](end_span)[span_107](start_span)[span_107](end_span)[span_108](start_span)[span_108](end_span)</h2>
-        <p><strong>Подпоследовательность:</strong> \(b_k = a_{n_k}\), где \(n_1 < n_2 < \dots\)[span_109](start_span)[span_109](end_span). Если \(a_n \to a\), то любая \(a_{n_k} \to a\)[span_110](start_span)[span_110](end_span).</p>
-        <p><strong>Частичный предел</strong> - предел какой-нибудь подпоследовательности[span_111](start_span)[span_111](end_span).</p>
-        <p><strong>Предельная точка:</strong> число \(a\), в любой окрестности которого бесконечно много членов последовательности[span_112](start_span)[span_112](end_span).</p>
+        <h2>Подпоследовательности и теорема Больцано-Вейерштрасса</h2>
+        <p><strong>Подпоследовательность:</strong> <span class="math">b<sub>k</sub> = a<sub>n<sub>k</sub></sub></span>, где <span class="math">n<sub>1</sub> < n<sub>2</sub> < …</span>. Если <span class="math">a<sub>n</sub> → a</span>, то любая <span class="math">a<sub>n<sub>k</sub></sub> → a</span>.</p>
+        <p><strong>Частичный предел</strong> - предел какой-нибудь подпоследовательности.</p>
+        <p><strong>Предельная точка:</strong> число <span class="math">a</span>, в любой окрестности которого бесконечно много членов последовательности.</p>
 
         <div class="theorem">
-            \(a\) - частичный предел \(\iff\) \(a\) - предельная точка[span_113](start_span)[span_113](end_span).
+            <span class="math">a</span> - частичный предел ⇔ <span class="math">a</span> - предельная точка.
         </div>
         <div class="proof">
-            <p>\(\implies\): Если \(a_{n_k} \to a\), то \(\forall k > K : a_{n_k} \in U_\varepsilon(a)\). Таких членов бесконечно много[span_114](start_span)[span_114](end_span).</p>
-            <p>\(\impliedby\): Строим по шагам для \(\varepsilon_k = 1/k\). В \(U_{1/k}(a)\) бесконечно много членов, выбираем \(n_k > n_{k-1}\). Полученная подпоследовательность сходится к \(a\)[span_115](start_span)[span_115](end_span).</p>
+            <p>⇒: Если <span class="math">a<sub>n<sub>k</sub></sub> → a</span>, то <span class="math">∀ k > K : a<sub>n<sub>k</sub></sub> ∈ U<sub>ε</sub>(a)</span>. Таких членов бесконечно много.</p>
+            <p>⇐: Строим по шагам для <span class="math">ε<sub>k</sub> = 1/k</span>. В <span class="math">U<sub>1/k</sub>(a)</span> бесконечно много членов, выбираем <span class="math">n<sub>k</sub> > n<sub>k-1</sub></span>. Полученная подпоследовательность сходится к <span class="math">a</span>.</p>
         </div>
 
         <div class="theorem">
-            <strong>Теорема Больцано-Вейерштрасса:</strong> Ограниченная последовательность имеет сходящуюся подпоследовательность[span_116](start_span)[span_116](end_span).
+            <strong>Теорема Больцано-Вейерштрасса:</strong> Ограниченная последовательность имеет сходящуюся подпоследовательность.
         </div>
         <div class="proof">
-            <p>Доказательство: Делим отрезок \([A, B]\) пополам, выбираем половину с бесконечным числом членов, получаем вложенные отрезки \([b_k, c_k]\)[span_117](start_span)[span_117](end_span)[span_118](start_span)[span_118](end_span). По теореме Вейерштрасса их концы сходятся к общему пределу \(b\), и существует подпоследовательность \(a_{n_k} \to b\)[span_119](start_span)[span_119](end_span).</p>
+            <p>Доказательство: Делим отрезок <span class="math">[A, B]</span> пополам, выбираем половину с бесконечным числом членов, получаем вложенные отрезки <span class="math">[b<sub>k</sub>, c<sub>k</sub>]</span>. По теореме Вейерштрасса их концы сходятся к общему пределу <span class="math">b</span>, и существует подпоследовательность <span class="math">a<sub>n<sub>k</sub></sub> → b</span>.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№13 Фундаментальные последовательности и критерий Коши[span_120](start_span)[span_120](end_span)[span_121](start_span)[span_121](end_span)</h2>
-        <p>\((a_n)\) фундаментальна (Коши), если \(\forall \varepsilon > 0 \exists N=N(\varepsilon) \forall n,m > N : |a_n - a_m| < \varepsilon\)[span_122](start_span)[span_122](end_span).</p>
+        <h2>№13 Фундаментальные последовательности и критерий Коши</h2>
+        <p><span class="math">(a<sub>n</sub>)</span> фундаментальна (Коши), если <span class="math">∀ ε > 0 ∃ N=N(ε) ∀ n,m > N : |a<sub>n</sub> - a<sub>m</sub>| < ε</span>.</p>
 
         <div class="theorem">
-            <strong>Критерий Коши:</strong> \((a_n)\) сходится \(\iff\) \((a_n)\) фундаментальна[span_123](start_span)[span_123](end_span).
+            <strong>Критерий Коши:</strong> <span class="math">(a<sub>n</sub>)</span> сходится ⇔ <span class="math">(a<sub>n</sub>)</span> фундаментальна.
         </div>
         <div class="proof">
-            <p>\(\implies\): Пусть \(a_n \to a\). При \(n,m > N\): \(|a_n - a_m| \le |a_n-a| + |a_m-a| < \varepsilon/2 + \varepsilon/2 = \varepsilon\)[span_124](start_span)[span_124](end_span).</p>
-            <p>\(\impliedby\): 1. Фундаментальная последовательность ограничена[span_125](start_span)[span_125](end_span). 2. По теореме Больцано-Вейерштрасса \(\exists a_{n_k} \to a\)[span_126](start_span)[span_126](end_span). 3. Покажем, что \(a_n \to a\): \(|a_n - a| \le |a_n - a_{n_k}| + |a_{n_k} - a| < \varepsilon/2 + \varepsilon/2 = \varepsilon\) (при соответствующих \(n, n_k > N\))[span_127](start_span)[span_127](end_span).</p>
+            <p>⇒: Пусть <span class="math">a<sub>n</sub> → a</span>. При <span class="math">n,m > N</span>: <span class="math">|a<sub>n</sub> - a<sub>m</sub>| ≤ |a<sub>n</sub>-a| + |a<sub>m</sub>-a| < ε/2 + ε/2 = ε</span>.</p>
+            <p>⇐: 1. Фундаментальная последовательность ограничена. 2. По теореме Больцано-Вейерштрасса <span class="math">∃ a<sub>n<sub>k</sub></sub> → a</span>. 3. Покажем, что <span class="math">a<sub>n</sub> → a</span>: <span class="math">|a<sub>n</sub> - a| ≤ |a<sub>n</sub> - a<sub>n<sub>k</sub></sub>| + |a<sub>n<sub>k</sub></sub> - a| < ε/2 + ε/2 = ε</span> (при соответствующих <span class="math">n, n<sub>k</sub> > N</span>).</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№14 Предел функции в точке[span_128](start_span)[span_128](end_span)[span_129](start_span)[span_129](end_span)</h2>
+        <h2>№14 Предел функции в точке</h2>
         <ul>
-            <li><strong>По Коши:</strong> \(\lim_{x \to x_0} f(x) = a \iff \forall \varepsilon > 0 \exists \delta > 0 \forall x : 0 < |x-x_0| < \delta \implies |f(x)-a| < \varepsilon\)[span_130](start_span)[span_130](end_span).</li>
-            <li><strong>По Гейне:</strong> \(\lim_{x \to x_0} f(x) = a \iff \forall (x_n)\), если \(x_n \to x_0 (x_n \ne x_0)\), то \(f(x_n) \to a\)[span_131](start_span)[span_131](end_span).</li>
+            <li><strong>По Коши:</strong> <span class="math">lim<sub>x→x<sub>0</sub></sub> f(x) = a ⇔ ∀ ε > 0 ∃ δ > 0 ∀ x : 0 < |x-x<sub>0</sub>| < δ ⇒ |f(x)-a| < ε</span>.</li>
+            <li><strong>По Гейне:</strong> <span class="math">lim<sub>x→x<sub>0</sub></sub> f(x) = a ⇔ ∀ (x<sub>n</sub>)</span>, если <span class="math">x<sub>n</sub> → x<sub>0</sub> (x<sub>n</sub> ≠ x<sub>0</sub>)</span>, то <span class="math">f(x<sub>n</sub>) → a</span>.</li>
         </ul>
 
         <div class="theorem">
-            Определения по Коши и по Гейне эквивалентны[span_132](start_span)[span_132](end_span).
+            Определения по Коши и по Гейне эквивалентны.
         </div>
         <div class="proof">
-            <p>Коши \(\implies\) Гейне: Для любого \(\delta\) из Коши, если \(x_n \to x_0\), то \(\exists N \forall n > N : 0 < |x_n - x_0| < \delta\), откуда \(|f(x_n)-a|<\varepsilon\)[span_133](start_span)[span_133](end_span)[span_134](start_span)[span_134](end_span).</p>
-            <p>Гейне \(\implies\) Коши: От противного. Пусть по Коши неверно: \(\exists \varepsilon_0 > 0 \forall \delta > 0 \exists x : 0 < |x-x_0| < \delta\) и \(|f(x)-a| \ge \varepsilon_0\)[span_135](start_span)[span_135](end_span). Возьмем \(\delta = 1/k\). Найдется последовательность \(x_k \to x_0\), для которой \(|f(x_k)-a| \ge \varepsilon_0\), что противоречит определению по Гейне[span_136](start_span)[span_136](end_span).</p>
+            <p>Коши ⇒ Гейне: Для любого <span class="math">δ</span> из Коши, если <span class="math">x<sub>n</sub> → x<sub>0</sub></span>, то <span class="math">∃ N ∀ n > N : 0 < |x<sub>n</sub> - x<sub>0</sub>| < δ</span>, откуда <span class="math">|f(x<sub>n</sub>)-a| < ε</span>.</p>
+            <p>Гейне ⇒ Коши: От противного. Пусть по Коши неверно: <span class="math">∃ ε<sub>0</sub> > 0 ∀ δ > 0 ∃ x : 0 < |x-x<sub>0</sub>| < δ</span> и <span class="math">|f(x)-a| ≥ ε<sub>0</sub></span>. Возьмем <span class="math">δ = 1/k</span>. Найдется последовательность <span class="math">x<sub>k</sub> → x<sub>0</sub></span>, для которой <span class="math">|f(x<sub>k</sub>)-a| ≥ ε<sub>0</sub></span>, что противоречит определению по Гейне.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№15 Арифметика предела функции и теорема о двух милиционерах[span_137](start_span)[span_137](end_span)</h2>
+        <h2>№15 Арифметика предела функции и теорема о двух милиционерах</h2>
         <div class="theorem">
-            Пусть \(f(x) \to a\), \(g(x) \to b\). Тогда \(f(x) \pm g(x) \to a \pm b\), \(f(x)g(x) \to ab\), \(\frac{f(x)}{g(x)} \to \frac{a}{b}\) (\(b \ne 0\))[span_138](start_span)[span_138](end_span).
+            Пусть <span class="math">f(x) → a</span>, <span class="math">g(x) → b</span>. Тогда <span class="math">f(x) ± g(x) → a ± b</span>, <span class="math">f(x)g(x) → ab</span>, <span class="math">f(x) / g(x) → a / b</span> (<span class="math">b ≠ 0</span>).
         </div>
         <div class="proof">
-            <p>Доказывается сведением к пределам последовательностей по определению Гейне: если \(x_n \to x_0\), то \(f(x_n) \to a\) и \(g(x_n) \to b\), и их арифметические комбинации сходятся по свойствам пределов последовательностей[span_139](start_span)[span_139](end_span).</p>
+            <p>Доказывается сведением к пределам последовательностей по определению Гейне: если <span class="math">x<sub>n</sub> → x<sub>0</sub></span>, то <span class="math">f(x<sub>n</sub>) → a</span> и <span class="math">g(x<sub>n</sub>) → b</span>, и их арифметические комбинации сходятся по свойствам пределов последовательностей.</p>
         </div>
         
-        <p><strong>Предельный переход в неравенствах:</strong> Если \(f(x) \ge g(x)\) в проколотой окрестности \(x_0\), то \(\lim f(x) \ge \lim g(x)\)[span_140](start_span)[span_140](end_span).</p>
-        <p><strong>О двух милиционерах:</strong> Если \(f(x) \ge g(x) \ge h(x)\) и \(\lim f(x) = \lim h(x) = a\), то \(\lim g(x) = a\)[span_141](start_span)[span_141](end_span).</p>
+        <p><strong>Предельный переход в неравенствах:</strong> Если <span class="math">f(x) ≥ g(x)</span> в проколотой окрестности <span class="math">x<sub>0</sub></span>, то <span class="math">lim f(x) ≥ lim g(x)</span>.</p>
+        <p><strong>О двух милиционерах:</strong> Если <span class="math">f(x) ≥ g(x) ≥ h(x)</span> и <span class="math">lim f(x) = lim h(x) = a</span>, то <span class="math">lim g(x) = a</span>.</p>
     </section>
 
     <hr>
 
     <section>
-        <h2>№16 Предел сложной функции[span_142](start_span)[span_142](end_span)</h2>
+        <h2>№16 Предел сложной функции</h2>
         <div class="theorem">
-            Пусть \(f(x) \to a\) при \(x \to x_0\), и \(g(y) \to b\) при \(y \to a\). Тогда \(g(f(x)) \to b\), если выполнено одно из условий[span_143](start_span)[span_143](end_span):
+            Пусть <span class="math">f(x) → a</span> при <span class="math">x → x<sub>0</sub></span>, и <span class="math">g(y) → b</span> при <span class="math">y → a</span>. Тогда <span class="math">g(f(x)) → b</span>, если выполнено одно из условий:
             <ul>
-                <li>\(f(x) \ne a\) в проколотой окрестности \(x_0\)[span_144](start_span)[span_144](end_span).</li>
-                <li>\(g(a) = b\) (непрерывность функции \(g\))[span_145](start_span)[span_145](end_span).</li>
+                <li><span class="math">f(x) ≠ a</span> в проколотой окрестности <span class="math">x<sub>0</sub></span>.</li>
+                <li><span class="math">g(a) = b</span> (непрерывность функции <span class="math">g</span>).</li>
             </ul>
         </div>
         <div class="proof">
-            <p>Через определение по Гейне: если \(x_n \to x_0\), то \(y_n = f(x_n) \to a\)[span_146](start_span)[span_146](end_span). Если \(y_n \ne a\) или \(g(a) = b\), то мы имеем право утверждать, что \(g(y_n) \to b\)[span_147](start_span)[span_147](end_span).</p>
+            <p>Через определение по Гейне: если <span class="math">x<sub>n</sub> → x<sub>0</sub></span>, то <span class="math">y<sub>n</sub> = f(x<sub>n</sub>) → a</span>. Если <span class="math">y<sub>n</sub> ≠ a</span> или <span class="math">g(a) = b</span>, то мы имеем право утверждать, что <span class="math">g(y<sub>n</sub>) → b</span>.</p>
         </div>
     </section>
 
     <hr>
 
     <section>
-        <h2>№17 Первый замечательный предел[span_148](start_span)[span_148](end_span)</h2>
+        <h2>№17 Первый замечательный предел</h2>
         <div class="theorem">
-            \(\lim_{x \to 0} \frac{\sin x}{x} = 1\)[span_149](start_span)[span_149](end_span).
+            <span class="math">lim<sub>x→0</sub> <span class="frac"><span>sin x</span><span class="bottom">x</span></span> = 1</span>.
         </div>
         <div class="proof">
-            <p>Доказательство (геометрическое, для \(0 < x < \pi/2\)):</p>
+            <p>Доказательство (геометрическое, для <span class="math">0 < x < π/2</span>):</p>
             <ul>
-                <li>Сравним площади: \(S_{\triangle OAB} < S_{\text{сектора } OAB} < S_{\triangle OAC}\)[span_150](start_span)[span_150](end_span).</li>
-                <li>\(\frac{\sin x}{2} < \frac{x}{2} < \frac{\sin x}{2\cos x}\)[span_151](start_span)[span_151](end_span).</li>
-                <li>Делим на \(\frac{\sin x}{2}\): \(1 < \frac{x}{\sin x} < \frac{1}{\cos x}\)[span_152](start_span)[span_152](end_span).</li>
-                <li>Переворачиваем: \(\cos x < \frac{\sin x}{x} < 1\)[span_153](start_span)[span_153](end_span).</li>
-                <li>Так как \(\cos x \to 1\) при \(x \to 0\) (доказывается через \(0 \le 1 - \cos x = 2\sin^2(x/2) \le x^2/2 \to 0\)), по теореме о двух милиционерах предел равен \(1\)[span_154](start_span)[span_154](end_span).</li>
+                <li>Сравним площади: <span class="math">S<sub>△OAB</sub> < S<sub>сектора OAB</sub> < S<sub>△OAC</sub></span>.</li>
+                <li><span class="math">(sin x) / 2 < x / 2 < (sin x) / (2cos x)</span>.</li>
+                <li>Делим на <span class="math">(sin x) / 2</span>: <span class="math">1 < x / sin x < 1 / cos x</span>.</li>
+                <li>Переворачиваем: <span class="math">cos x < (sin x) / x < 1</span>.</li>
+                <li>Так как <span class="math">cos x → 1</span> при <span class="math">x → 0</span> (доказывается через <span class="math">0 ≤ 1 - cos x = 2sin<sup>2</sup>(x/2) ≤ x<sup>2</sup>/2 → 0</span>), по теореме о двух милиционерах предел равен <span class="math">1</span>.</li>
             </ul>
         </div>
     </section>
