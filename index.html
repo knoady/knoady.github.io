@@ -2,188 +2,173 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>МатАнализ КР</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Коллоквиум 1</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    html, body {
+    body {
       background: #ffffff;
       color: #000000;
-      font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-      font-size: 12px;
-      line-height: 1.22;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
       margin: 0;
-      padding: 2px 4px;
+      padding: 8px;
       word-wrap: break-word;
-      overflow-wrap: break-word;
-      -webkit-text-size-adjust: 100%;
     }
-    .sec {
-      border-bottom: 1px solid #000000;
-      padding: 3px 0;
+    h1 {
+      font-size: 17px;
+      margin: 0 0 10px 0;
+      border-bottom: 1px solid #000;
+      padding-bottom: 4px;
     }
-    .sec:last-child {
-      border-bottom: none;
+    h2 {
+      font-size: 15px;
+      margin: 14px 0 4px 0;
+      border-top: 1px solid #000;
+      padding-top: 6px;
     }
-    .h {
-      font-weight: 700;
-      font-size: 12.5px;
-      margin: 0 0 2px 0;
-      text-decoration: underline;
+    p {
+      margin: 4px 0;
     }
-    .p {
-      margin: 0 0 2px 0;
-    }
-    b {
-      font-weight: 700;
-    }
-    sup, sub {
-      font-size: 0.75em;
-      line-height: 0;
-      position: relative;
-      vertical-align: baseline;
-    }
-    sup {
-      top: -0.4em;
-    }
-    sub {
-      bottom: -0.25em;
-    }
-    /* Компактная инлайн-дробь */
     .f {
-      display: inline-block;
-      vertical-align: middle;
-      text-align: center;
-      font-size: 0.88em;
-      line-height: 1.05;
-      margin: 0 1px;
-    }
-    .f > span {
-      display: block;
-      padding: 0 1px;
-    }
-    .f > span:first-child {
-      border-bottom: 1px solid #000000;
+      font-family: monospace;
+      font-size: 14px;
+      margin: 4px 0;
+      padding-left: 4px;
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. ТЕОРИЯ -->
-  <div class="sec">
-    <div class="h">0. ТЕОРИЯ ПРЕДЕЛОВ</div>
-    <div class="p"><b>Предел посл-ти:</b> lim x<sub>n</sub> = a ⇔ ∀ε&gt;0 ∃N∈ℕ ∀n&gt;N: |x<sub>n</sub> − a| &lt; ε.</div>
-    <div class="p"><b>Сходимость:</b> сходится, если ∃ конечный lim x<sub>n</sub> = a ∈ ℝ (всякая сходящаяся ограничена). Иначе (lim = ±∞ или не ∃) — <b>расходится</b>.</div>
-    <div class="p"><b>Б.М. посл-ть:</b> lim α<sub>n</sub> = 0 ⇔ ∀ε&gt;0 ∃N∈ℕ ∀n&gt;N: |α<sub>n</sub>| &lt; ε. (Б.м. × огранич. = б.м.).</div>
-    <div class="p"><b>Б.Б. посл-ть:</b> lim x<sub>n</sub> = ∞ ⇔ ∀E&gt;0 ∃N∈ℕ ∀n&gt;N: |x<sub>n</sub>| &gt; E. (Связь: x<sub>n</sub> — б.б. ⇔ <span class="f"><span>1</span><span>x<sub>n</sub></span></span> — б.м.).</div>
-    <div class="p"><b>Т. Вейерштрасса:</b> всякая монотонная и ограниченная посл-ть сходится (не убывает + огр. сверху → sup; не возрастает + огр. снизу → inf).</div>
-  </div>
+<h1>Матан: Коллоквиум 1</h1>
 
-  <!-- 2. №1. МАТ. ИНДУКЦИЯ И БЕРНУЛЛИ -->
-  <div class="sec">
-    <div class="h">№1. ИНДУКЦИЯ (ММИ) И БЕРНУЛЛИ</div>
-    <div class="p"><b>Неравенство Бернулли:</b> (1 + x)<sup>n</sup> ≥ 1 + nx (при x &gt; −1, n ∈ ℕ).</div>
-    <div class="p"><b>Шаги ММИ:</b> 1) <b>База (n=1):</b> проверить равенство/нер-во. 2) <b>Предположение (n=k):</b> пусть верно для k. 3) <b>Шаг (n=k+1):</b> доказать для k+1, сведя к предположению.</div>
-    <div class="p"><b>Задача 1 (КР):</b> 1·1 + 3·3 + 5·3<sup>2</sup> + … + (2n−1)3<sup>n−1</sup> = (n−1)3<sup>n</sup> + 1.<br>
-    • База n=1: 1 = (1−1)3<sup>1</sup> + 1 ⇒ 1 = 1 (верно).<br>
-    • Пусть верно при n=k.<br>
-    • Шаг k→k+1: ((k−1)3<sup>k</sup> + 1) + (2k+1)3<sup>k</sup> = 3<sup>k</sup>(k − 1 + 2k + 1) + 1 = 3k·3<sup>k</sup> + 1 = k·3<sup>k+1</sup> + 1. ЧТД.</div>
-  </div>
+<h2>1. Логика и кванторы</h2>
+<p><b>Высказывание</b> — утверждение, которое истинно (1) или ложно (0)[span_24](start_span)[span_24](end_span).</p>
+<p><b>n-местный предикат</b> — утверждение P(x₁, ..., xₙ), становящееся высказыванием при подстановке значений[span_25](start_span)[span_25](end_span).</p>
+<p><b>Отрицания:</b></p>
+<div class="f">
+  ¬(∀x P(x)) ⇔ ∃x ¬P(x)<br>
+  ¬(∃x P(x)) ⇔ ∀x ¬P(x)<br>
+  ¬(A ∧ B) ⇔ ¬A ∨ ¬B<br>
+  ¬(A ∨ B) ⇔ ¬A ∧ ¬B<br>
+  ¬(A ⇒ B) ⇔ A ∧ ¬B[span_26](start_span)[span_26](end_span)
+</div>
 
-  <!-- 3. №2. БИНОМ НЬЮТОНА И C_n^k -->
-  <div class="sec">
-    <div class="h">№2. БИНОМ НЬЮТОНА И C<sub>n</sub><sup>k</sup></div>
-    <div class="p"><b>Сочетания:</b> C<sub>n</sub><sup>k</sup> = <span class="f"><span>n!</span><span>k!(n−k)!</span></span>. Св-ва: C<sub>n</sub><sup>0</sup> = C<sub>n</sub><sup>n</sup> = 1, C<sub>n</sub><sup>k</sup> = C<sub>n</sub><sup>n−k</sup>, C<sub>n</sub><sup>k</sup> + C<sub>n</sub><sup>k+1</sup> = C<sub>n+1</sub><sup>k+1</sup>.</div>
-    <div class="p"><b>Бином:</b> (a + b)<sup>n</sup> = ∑<sub>k=0..n</sub> C<sub>n</sub><sup>k</sup> a<sup>n−k</sup> b<sup>k</sup>.</div>
-    <div class="p"><b>Общий (k+1)-й член:</b> T<sub>k+1</sub> = C<sub>n</sub><sup>k</sup> a<sup>n−k</sup> b<sup>k</sup>.</div>
-    <div class="p"><b>Задача 2 (КР):</b> Член с x<sup>4</sup> в (√x + ∛x)<sup>9</sup>.<br>
-    T<sub>k+1</sub> = C<sub>9</sub><sup>k</sup> x<sup>(9−k)/2 + k/3</sup> = C<sub>9</sub><sup>k</sup> x<sup>(27−k)/6</sup>.<br>
-    <span class="f"><span>27−k</span><span>6</span></span> = 4 ⇒ 27−k = 24 ⇒ k = 3.<br>
-    Коэфф: C<sub>9</sub><sup>3</sup> = <span class="f"><span>9·8·7</span><span>1·2·3</span></span> = 84. <b>Ответ:</b> 84x<sup>4</sup>.</div>
-  </div>
+<h2>2. Индукция и нер-во Бернулли</h2>
+<p><b>ПМИ:</b> если P(1) истинно и ∀k (P(k) ⇒ P(k+1)), то ∀n∈ℕ P(n) истинно[span_27](start_span)[span_27](end_span).</p>
+<p><b>Нер-во Бернулли:</b> ∀n∈ℕ ∀x ≥ -1: (1 + x)ⁿ ≥ 1 + nx[span_28](start_span)[span_28](end_span).</p>
+<p><b>Док-во:</b> База n=1: (1+x)¹ ≥ 1+x (верно)[span_29](start_span)[span_29](end_span). Переход k → k+1: (1+x)ᵏ⁺¹ = (1+x)ᵏ(1+x) ≥ (1+kx)(1+x) = 1 + (k+1)x + kx² ≥ 1 + (k+1)x, т.к. kx² ≥ 0[span_30](start_span)[span_30](end_span).</p>
 
-  <!-- 4. №3. АСИМПТОТИКА / КОРНИ -->
-  <div class="sec">
-    <div class="h">№3. АСИМПТОТИКА И СОПРЯЖЕННОЕ</div>
-    <div class="p"><b>Формулы сопряженного:</b><br>
-    • a − b = <span class="f"><span>a<sup>2</sup> − b<sup>2</sup></span><span>a + b</span></span> (при a≈b знам. ≈ 2a)<br>
-    • a − b = <span class="f"><span>a<sup>3</sup> − b<sup>3</sup></span><span>a<sup>2</sup> + ab + b<sup>2</sup></span></span> (знам. ≈ 3a<sup>2</sup>)<br>
-    • a − b = <span class="f"><span>a<sup>4</sup> − b<sup>4</sup></span><span>a<sup>3</sup> + a<sup>2</sup>b + ab<sup>2</sup> + b<sup>3</sup></span></span> (знам. ≈ 4a<sup>3</sup>)</div>
-    <div class="p"><b>Задача 3 (КР):</b> lim (∜(n<sup>4</sup> + 5n<sup>2</sup> − 2 + cos(n!)) − n) = lim <span class="f"><span>n<sup>4</sup> + 5n<sup>2</sup> − 2 + cos(n!) − n<sup>4</sup></span><span>4n<sup>3</sup></span></span> = lim <span class="f"><span>5n<sup>2</sup> − 2 + cos(n!)</span><span>4n<sup>3</sup></span></span> = <b>0</b> (главная часть: <span class="f"><span>5</span><span>4n</span></span>).</div>
-  </div>
+<h2>3. Комбинаторика и Бином Ньютона</h2>
+<p><b>Перестановки:</b> Pₙ = n! (упорядоченный набор всех n элементов)[span_31](start_span)[span_31](end_span).</p>
+<p><b>Размещения:</b> Aₙᵏ = n! / (n-k)! (упорядоченный выбор k из n)[span_32](start_span)[span_32](end_span).</p>
+<p><b>Сочетания:</b> Cₙᵏ = Aₙᵏ / k! = n! / (k!(n-k)!) (неупорядоченный выбор)[span_33](start_span)[span_33](end_span).</p>
+<p><b>Свойства:</b> Cₙᵏ = Cₙⁿ⁻ᵏ; Cₙᵏ + Cₙᵏ⁻¹ = Cₙ₊₁ᵏ[span_34](start_span)[span_34](end_span).</p>
+<p><b>Бином Ньютона:</b> (a + b)ⁿ = ∑ₖ₌₀ⁿ Cₙᵏ aⁿ⁻ᵏ bᵏ (вывод через выбор a из n-k скобок и b из k скобок)[span_35](start_span)[span_35](end_span).</p>
 
-  <!-- 5. №4-5. ПРЕДЕЛЫ ДРОБЕЙ И КОРНЕЙ -->
-  <div class="sec">
-    <div class="h">№4–5. ВЫЧИСЛЕНИЕ ПРЕДЕЛОВ</div>
-    <div class="p"><b>Многочлены P<sub>m</sub>(n)/Q<sub>k</sub>(n) при n→∞:</b> m=k → отн. старших коэфф.; m&lt;k → 0; m&gt;k → ∞.</div>
-    <div class="p"><b>Задача 4 (КР):</b> lim <span class="f"><span>2n<sup>3</sup>+3n</span><span>4n<sup>3</sup>−n<sup>2</sup>+5</span></span> = <span class="f"><span>2</span><span>4</span></span> = <b>1/2</b>.</div>
-    <div class="p"><b>Задача 5а (КР):</b> lim (<span class="f"><span>2n<sup>3</sup>+1</span><span>n<sup>2</sup>+1</span></span> − <span class="f"><span>2n<sup>3</sup>+n<sup>2</sup></span><span>n<sup>2</sup>+n</span></span>).<br>
-    Сократим n во 2-й дроби: <span class="f"><span>2n<sup>2</sup>+n</span><span>n+1</span></span>. Общий знам. (n<sup>2</sup>+1)(n+1):<br>
-    lim <span class="f"><span>(2n<sup>4</sup>+2n<sup>3</sup>+n+1) − (2n<sup>4</sup>+n<sup>3</sup>+2n<sup>2</sup>+n)</span><span>n<sup>3</sup>+n<sup>2</sup>+n+1</span></span> = lim <span class="f"><span>n<sup>3</sup>−2n<sup>2</sup>+1</span><span>n<sup>3</sup>+n<sup>2</sup>+n+1</span></span> = <b>1</b>.<br>
-    <i>(Если во 2-й дроби было (2n<sup>3</sup>+2n<sup>2</sup>)/(n<sup>2</sup>+n) = 2n: lim (1−2n)/(n<sup>2</sup>+1) = <b>0</b>).</i></div>
-    <div class="p"><b>Задача 5б (КР):</b> lim <span class="f"><span>√(n<sup>2</sup>+6n) − n</span><span>√(n<sup>2</sup>+10n) − n</span></span>. Т.к. √(n<sup>2</sup>+kn) − n = <span class="f"><span>kn</span><span>√(n<sup>2</sup>+kn)+n</span></span> ~ <span class="f"><span>k</span><span>2</span></span>, предел = <span class="f"><span>6</span><span>10</span></span> = <b>3/5</b>.</div>
-    <div class="p"><b>Задача 5в (КР):</b> lim ((<span class="f"><span>5n−3</span><span>5n</span></span>)<sup>5n−2</sup> + <sup>n</sup>√3) = lim (1 − <span class="f"><span>3</span><span>5n</span></span>)<sup>5n−2</sup> + 1 = <b>e<sup>−3</sup> + 1</b>.</div>
-  </div>
+<h2>4. Предел последовательности</h2>
+<p><b>Предел:</b> lim aₙ = a ⇔ ∀ε > 0 ∃N = N(ε) ∀n > N: |aₙ - a| < ε[span_36](start_span)[span_36](end_span).</p>
+<p><b>Единственность предела:</b> Пусть aₙ → a и aₙ → b (a ≠ b)[span_37](start_span)[span_37](end_span). Берем ε = |a - b|/3 > 0[span_38](start_span)[span_38](end_span). При n > max(N₁, N₂): |a - b| ≤ |a - aₙ| + |aₙ - b| < 2ε = (2/3)|a - b| — противоречие[span_39](start_span)[span_39](end_span).</p>
+<p><b>Ограниченность сходящейся:</b> aₙ → a ⇒ для ε=1 ∃N ∀n > N: |aₙ| ≤ |aₙ - a| + |a| < |a| + 1[span_40](start_span)[span_40](end_span). Положим C = max{|a₁|, ..., |aₙ|, |a| + 1}. Тогда ∀n |aₙ| ≤ C[span_41](start_span)[span_41](end_span).</p>
 
-  <!-- 6. №6 + ФОТО 6. ТАБЛИЧНЫЕ ПРЕДЕЛЫ И РЯД -->
-  <div class="sec">
-    <div class="h">№6 + ФОТО 6. ТАБЛИЦА ПРЕДЕЛОВ И РЯД</div>
-    <div class="p"><b>(a) a<sub>n</sub> = q<sup>n</sup> (q∈ℝ):</b> 0 (при |q|&lt;1); 1 (при q=1); +∞ (при q&gt;1); расх. (при q≤−1).</div>
-    <div class="p"><b>(b)</b> lim <sup>n</sup>√a = 1 (a&gt;0). &nbsp; <b>(c)</b> lim <sup>n</sup>√n = 1.</div>
-    <div class="p"><b>(d)</b> lim <span class="f"><span>n<sup>2</sup></span><span>2<sup>n</sup></span></span> = 0. <b>Обобщение:</b> lim <span class="f"><span>n<sup>k</sup></span><span>q<sup>n</sup></span></span> = 0 (∀k, |q|&gt;1) — показат. растет быстрее степенной.</div>
-    <div class="p"><b>(e)</b> lim <span class="f"><span>2<sup>n</sup></span><span>n!</span></span> = 0. <b>Обобщение:</b> lim <span class="f"><span>q<sup>n</sup></span><span>n!</span></span> = 0 (∀q∈ℝ) — факториал быстрее показательной.</div>
-    <div class="p"><b>Шкала роста (n→∞):</b> ln(n) ≪ n<sup>k</sup> ≪ q<sup>n</sup> (q&gt;1) ≪ n! ≪ n<sup>n</sup>.</div>
-    <div class="p"><b>Задача 6 (КР):</b> a<sub>n</sub> = √(<span class="f"><span>5<sup>n</sup> + 2<sup>n</sup> + 3n</span><span>3n<sup>3</sup> − 2n</span></span>) ~ √(<span class="f"><span>5<sup>n</sup></span><span>3n<sup>3</sup></span></span>) = <span class="f"><span>(√5)<sup>n</sup></span><span>√3·n<sup>3/2</sup></span></span> → ∞ (т.к. (√5)<sup>n</sup> ≫ n<sup>3/2</sup>). Общий член a<sub>n</sub> ↛ 0 ⇒ <b>ряд расходится</b>.</div>
-  </div>
+<h2>5. Б.м., б.б., ограниченные и отделимые от нуля</h2>
+<p><b>Б.м.:</b> aₙ → 0 ⇔ ∀ε > 0 ∃N ∀n > N: |aₙ| < ε[span_42](start_span)[span_42](end_span).</p>
+<p><b>Б.б.:</b> aₙ → ∞ ⇔ ∀M > 0 ∃N ∀n > N: |aₙ| > M[span_43](start_span)[span_43](end_span).</p>
+<p><b>Ограниченная:</b> ∃C > 0 ∀n: |cₙ| ≤ C[span_44](start_span)[span_44](end_span).</p>
+<p><b>Отделимая от нуля:</b> ∃δ > 0 ∀n: |cₙ| ≥ δ[span_45](start_span)[span_45](end_span).</p>
+<p><b>Связи (при членах ≠ 0):</b></p>
+<div class="f">
+  |aₙ| > M ⇔ |1/aₙ| < 1/M = ε (б.б. ⇔ 1/aₙ б.м.)[span_46](start_span)[span_46](end_span)<br>
+  |cₙ| ≤ C ⇔ |1/cₙ| ≥ 1/C = δ (огр. ⇔ 1/cₙ отд. от 0)[span_47](start_span)[span_47](end_span)
+</div>
 
-  <!-- 7. №7 + ФОТО 3, 4, 5. РЕКУРРЕНТНЫЙ ПРЕДЕЛ -->
-  <div class="sec">
-    <div class="h">№7 + ФОТО 3–5. РЕКУРРЕНТНЫЙ ПРЕДЕЛ</div>
-    <div class="p"><b>Алгоритм:</b><br>
-    <b>1) Черновик (кандидат c):</b> решаем x<sub>n+1</sub> = x<sub>n</sub> ⇔ f(c) = c. Смотрим на x<sub>1</sub> и выбираем интервал [x<sub>1</sub>; c] или [c; x<sub>1</sub>].<br>
-    <b>2) Ограниченность (по ММИ):</b> доказываем x<sub>n</sub> ∈ [min; max]. База: n=1 верно. Шаг: пусть верно для x<sub>n</sub>, оцениваем x<sub>n+1</sub> = f(x<sub>n</sub>) и получаем те же границы.<br>
-    <b>3) Монотонность (2 способа):</b><br>
-    • Способ 1: знак разности x<sub>n+1</sub> − x<sub>n</sub> ≥ 0 (возр.) или ≤ 0 (убыв.) с учетом границ x<sub>n</sub>.<br>
-    • Способ 2: отношение <span class="f"><span>x<sub>n+1</sub></span><span>x<sub>n</sub></span></span> ≥ 1 (возр.) или ≤ 1 (убыв.) (при x<sub>n</sub>&gt;0).<br>
-    <b>4) Предел:</b> монотонна + ограничена ⇒ по т. Вейерштрасса ∃ lim x<sub>n</sub> = a. Переходим к пределу в x<sub>n+1</sub> = f(x<sub>n</sub>) ⇒ a = f(a), отбираем корень по границам.</div>
+<h2>6. Отделимость от 0 и арифметика пределов</h2>
+<p><b>Теорема:</b> aₙ → a ≠ 0 и ∀n aₙ ≠ 0 ⇒ (aₙ) отделима от 0[span_48](start_span)[span_48](end_span).</p>
+<p><b>Док-во:</b> Берем ε = |a|/2 > 0[span_49](start_span)[span_49](end_span). ∃N ∀n > N: |aₙ - a| < |a|/2[span_50](start_span)[span_50](end_span). Тогда |aₙ| ≥ |a| - |a - aₙ| > |a|/2[span_51](start_span)[span_51](end_span). Положим δ = min{|a₁|, ..., |aₙ|, |a|/2} > 0[span_52](start_span)[span_52](end_span).</p>
+<p><b>Арифметика (aₙ → a, bₙ → b):</b></p>
+<p>Запишем aₙ = a + αₙ, bₙ = b + βₙ (αₙ, βₙ — б.м.)[span_53](start_span)[span_53](end_span).</p>
+<div class="f">
+  1) |(aₙ ± bₙ) - (a ± b)| ≤ |αₙ| + |βₙ| < ε/2 + ε/2 = ε[span_54](start_span)[span_54](end_span)<br>
+  2) aₙbₙ - ab = aβₙ + bαₙ + αₙβₙ (сумма б.м. есть б.м.)[span_55](start_span)[span_55](end_span)<br>
+  3) aₙ/bₙ - a/b = (1/b)·(1/bₙ)·(bαₙ - aβₙ) → 0, т.к. 1/bₙ ограничена[span_56](start_span)[span_56](end_span)
+</div>
 
-    <div class="p"><b>Демка 1 (Фото 3–4):</b> x<sub>1</sub> = 3, x<sub>n+1</sub> = √(2+3x<sub>n</sub>).<br>
-    • Черновик: c<sup>2</sup>−3c−2=0 ⇒ c = <span class="f"><span>3+√17</span><span>2</span></span>.<br>
-    • ММИ: 3 ≤ x<sub>n</sub> ≤ <span class="f"><span>3+√17</span><span>2</span></span> ⇒ √11 ≤ √(2+3x<sub>n</sub>) ≤ <span class="f"><span>3+√17</span><span>2</span></span> (т.к. (<span class="f"><span>3+√17</span><span>2</span></span>)<sup>2</sup> = <span class="f"><span>13+3√17</span><span>2</span></span>).<br>
-    • Монот.: x<sub>n+1</sub>−x<sub>n</sub> = <span class="f"><span>−x<sub>n</sub><sup>2</sup>+3x<sub>n</sub>+2</span><span>√(2+3x<sub>n</sub>)+x<sub>n</sub></span></span> ≥ 0 на [3; <span class="f"><span>3+√17</span><span>2</span></span>] ⇒ возрастает.<br>
-    • По т. Вейерштрасса <b>lim x<sub>n</sub> = (3+√17)/2</b>.</div>
+<h2>7. Переход в неравенствах и два милиционера</h2>
+<p><b>Переход в нер-вах:</b> aₙ ≤ bₙ, aₙ → a, bₙ → b ⇒ a ≤ b[span_57](start_span)[span_57](end_span).</p>
+<p><b>Док-во (от противного):</b> Пусть a > b[span_58](start_span)[span_58](end_span). Берем ε = (a - b)/3[span_59](start_span)[span_59](end_span). Тогда окрестности Uε(b) и Uε(a) не пересекаются (Uε(b) левее Uε(a)) ⇒ при n > max(N₁, N₂) имеем bₙ < aₙ — противоречие[span_60](start_span)[span_60](end_span).</p>
+<p><b>Два милиционера:</b> aₙ ≤ bₙ ≤ cₙ и aₙ → a, cₙ → a ⇒ bₙ → a[span_61](start_span)[span_61](end_span).</p>
+<p><b>Док-во:</b> Для ε > 0 при n > max(N₀, N₁, N₂): a - ε < aₙ ≤ bₙ ≤ cₙ < a + ε ⇒ |bₙ - a| < ε[span_62](start_span)[span_62](end_span).</p>
 
-    <div class="p"><b>Демка 2 (Фото 4–5):</b> a<sub>1</sub> = 1/2, a<sub>n+1</sub> = <span class="f"><span>1</span><span>2−a<sub>n</sub></span></span>.<br>
-    • Кандидат: c = <span class="f"><span>1</span><span>2−c</span></span> ⇒ (c−1)<sup>2</sup>=0 ⇒ c=1.<br>
-    • ММИ: a<sub>n</sub> ∈ [1/2; 1] ⇒ 2−a<sub>n</sub> ∈ [1; 3/2] ⇒ <span class="f"><span>1</span><span>2−a<sub>n</sub></span></span> ∈ [2/3; 1] ⊂ [1/2; 1].<br>
-    • Монот.: a<sub>n+1</sub>−a<sub>n</sub> = <span class="f"><span>1</span><span>2−a<sub>n</sub></span></span> − a<sub>n</sub> = <span class="f"><span>(1−a<sub>n</sub>)<sup>2</sup></span><span>2−a<sub>n</sub></span></span> ≥ 0 ⇒ возрастает.<br>
-    • По т. Вейерштрасса <b>lim a<sub>n</sub> = 1</b>.</div>
+<h2>8. Супремум, инфинум, аксиома полноты</h2>
+<p><b>Аксиома полноты:</b> Для непустых A, B ⊂ ℝ, если ∀a∈A ∀b∈B a ≤ b, то ∃c∈ℝ: ∀a∈A ∀b∈B a ≤ c ≤ b[span_63](start_span)[span_63](end_span).</p>
+<p><b>sup A</b> — наименьшая из верхних граней. <b>inf A</b> — наибольшая из нижних граней[span_64](start_span)[span_64](end_span).</p>
+<p><b>Теорема о существовании sup:</b> Непустое огр. сверху множество A имеет sup A[span_65](start_span)[span_65](end_span).</p>
+<p><b>Док-во:</b> Пусть B — множество всех верхних граней A (B ≠ ∅)[span_66](start_span)[span_66](end_span). ∀a∈A ∀b∈B a ≤ b[span_67](start_span)[span_67](end_span). По аксиоме полноты ∃c: a ≤ c ≤ b[span_68](start_span)[span_68](end_span). Т.к. a ≤ c, c — верхняя грань; т.к. c ≤ b, c — наименьшая из них ⇒ c = sup A[span_69](start_span)[span_69](end_span).</p>
 
-    <div class="p"><b>Задача 7 (КР):</b> x<sub>1</sub> = 4, x<sub>n+1</sub> = <span class="f"><span>3x<sub>n</sub>+2</span><span>x<sub>n</sub>+2</span></span> = 3 − <span class="f"><span>4</span><span>x<sub>n</sub>+2</span></span>.<br>
-    • Кандидат: c = <span class="f"><span>3c+2</span><span>c+2</span></span> ⇒ c<sup>2</sup>−c−2=0 ⇒ c=2 (т.к. x<sub>n</sub>&gt;0).<br>
-    • ММИ: 2 ≤ x<sub>n</sub> ≤ 4 ⇒ 4 ≤ x<sub>n</sub>+2 ≤ 6 ⇒ 2 ≤ 3 − <span class="f"><span>4</span><span>x<sub>n</sub>+2</span></span> ≤ 7/3 ≤ 4.<br>
-    • Монот.: x<sub>n+1</sub>−x<sub>n</sub> = <span class="f"><span>2+x<sub>n</sub>−x<sub>n</sub><sup>2</sup></span><span>x<sub>n</sub>+2</span></span> = <span class="f"><span>−(x<sub>n</sub>−2)(x<sub>n</sub>+1)</span><span>x<sub>n</sub>+2</span></span> ≤ 0 ⇒ убывает.<br>
-    • По т. Вейерштрасса <b>lim x<sub>n</sub> = 2</b>.</div>
-  </div>
+<h2>9. Теорема Вейерштрасса</h2>
+<p><b>Формулировка:</b> Монотонная ограниченная последовательность сходится[span_70](start_span)[span_70](end_span).</p>
+<p><b>Док-во (для неубывающей):</b> Множество {aₙ} непусто и огр. сверху ⇒ ∃a = sup{aₙ}[span_71](start_span)[span_71](end_span). Покажем lim aₙ = a[span_72](start_span)[span_72](end_span). Дано ε > 0[span_73](start_span)[span_73](end_span). Число a - ε не верхняя грань ⇒ ∃N: aₙ > a - ε[span_74](start_span)[span_74](end_span). Т.к. (aₙ) не убывает, при n > N: a - ε < aₙ ≤ aₙ ≤ a < a + ε ⇒ |aₙ - a| < ε[span_75](start_span)[span_75](end_span).</p>
 
-  <!-- 8. №8 + ФОТО 7. ЗАМЕЧАТЕЛЬНЫЕ ПРЕДЕЛЫ -->
-  <div class="sec">
-    <div class="h">№8 + ФОТО 7. ЗАМЕЧАТЕЛЬНЫЕ ПРЕДЕЛЫ</div>
-    <div class="p"><b>1-й зам.:</b> lim<sub>x→0</sub> <span class="f"><span>sin x</span><span>x</span></span> = 1. &nbsp; <b>2-й зам.:</b> lim<sub>n→∞</sub> (1 + <span class="f"><span>1</span><span>n</span></span>)<sup>n</sup> = e.</div>
-    <div class="p"><b>Формулы с Фото 7 (при n→∞):</b><br>
-    • lim (1 − <span class="f"><span>1</span><span>n</span></span>)<sup>n</sup> = <span class="f"><span>1</span><span>e</span></span> = e<sup>−1</sup><br>
-    • lim (1 + <span class="f"><span>1</span><span>kn</span></span>)<sup>n</sup> = e<sup>1/k</sup>, &nbsp; lim (1 − <span class="f"><span>1</span><span>kn</span></span>)<sup>n</sup> = e<sup>−1/k</sup><br>
-    • lim (1 + <span class="f"><span>k</span><span>n</span></span>)<sup>n</sup> = e<sup>k</sup>, &nbsp; lim (1 − <span class="f"><span>k</span><span>n</span></span>)<sup>n</sup> = e<sup>−k</sup><br>
-    • lim (1 + <span class="f"><span>p</span><span>n</span></span>)<sup>n</sup> = e<sup>p</sup> (p ∈ ℚ)</div>
-    <div class="p"><b>Правило для 1<sup>∞</sup>:</b> если α<sub>n</sub> → 0, то lim (1 + α<sub>n</sub>)<sup>β<sub>n</sub></sup> = e<sup>lim (α<sub>n</sub>·β<sub>n</sub>)</sup>. (Для степени n<sup>2</sup>: ln(1+t) = t − t<sup>2</sup>/2 + o(t<sup>2</sup>)).</div>
-    <div class="p"><b>Задача 8 (КР):</b> lim <span class="f"><span>(1 + 3/n)<sup>n<sup>2</sup></sup></span><span>(1 + 3/(n+1))<sup>n<sup>2</sup></sup></span></span>.<br>
-    • <b>Способ 1 (под одну степень n<sup>2</sup>):</b><br>
-    <span class="f"><span>1 + 3/n</span><span>1 + 3/(n+1)</span></span> = <span class="f"><span>(n+3)(n+1)</span><span>n(n+4)</span></span> = <span class="f"><span>n<sup>2</sup>+4n+3</span><span>n<sup>2</sup>+4n</span></span> = 1 + <span class="f"><span>3</span><span>n<sup>2</sup>+4n</span></span>.<br>
-    Возводим в степень n<sup>2</sup>: lim (1 + <span class="f"><span>3</span><span>n<sup>2</sup>+4n</span></span>)<sup>n<sup>2</sup></sup> = e<sup>lim 3n<sup>2</sup>/(n<sup>2</sup>+4n)</sup> = <b>e<sup>3</sup></b>.<br>
-    • <b>Способ 2 (через Тейлора):</b> n<sup>2</sup>[ln(1+<span class="f"><span>3</span><span>n</span></span>) − ln(1+<span class="f"><span>3</span><span>n+1</span></span>)] = n<sup>2</sup>[(<span class="f"><span>3</span><span>n</span></span> − <span class="f"><span>9</span><span>2n<sup>2</sup></span></span>) − (<span class="f"><span>3</span><span>n+1</span></span> − <span class="f"><span>9</span><span>2(n+1)<sup>2</sup></span></span>) + o(<span class="f"><span>1</span><span>n<sup>2</sup></span></span>)] = n<sup>2</sup>·<span class="f"><span>3</span><span>n(n+1)</span></span> + o(1) → 3 ⇒ <b>e<sup>3</sup></b>.</div>
-  </div>
+<h2>10. Число e</h2>
+<p><b>Последовательность:</b> xₙ = (1 + 1/n)ⁿ возрастает и ограничена сверху (2 ≤ xₙ < 3)[span_76](start_span)[span_76](end_span).</p>
+<p><b>Док-во огр. сверху:</b> По биному Ньютона xₙ = 1 + 1 + ∑ₖ₌₂ⁿ [n(n-1)...(n-k+1) / (k! nᵏ)] ≤ 1 + 1 + ∑ₖ₌₂ⁿ (1/k!) ≤ 2 + ∑ₖ₌₂ⁿ 1/((k-1)k) = 2 + (1 - 1/2) + ... + (1/(n-1) - 1/n) = 3 - 1/n < 3[span_77](start_span)[span_77](end_span).</p>
+<p><b>Возрастание:</b> xₙ₊₁ / xₙ = ((n+2)/(n+1)) · (1 - 1/(n+1)²)ⁿ ≥ (по Бернулли) ((n+2)/(n+1)) · (1 - n/(n+1)²) = (n³ + 3n² + 3n + 2) / (n³ + 3n² + 3n + 1) > 1[span_78](start_span)[span_78](end_span).</p>
+<p>По т. Вейерштрасса предел существует и обозначается <b>e</b>[span_79](start_span)[span_79](end_span).</p>
+
+<h2>11. Подпоследовательности и частичные пределы</h2>
+<p><b>Подпоследовательность:</b> aₙₖ, где n₁ < n₂ < ... (nₖ ≥ k)[span_80](start_span)[span_80](end_span). Если aₙ → a, то любая aₙₖ → a[span_81](start_span)[span_81](end_span).</p>
+<p><b>Частичный предел</b> — предел некоторой подпоследовательности[span_82](start_span)[span_82](end_span).</p>
+<p><b>Предельная точка</b> — число a, в любой Uε(a) которого бесконечно много членов (aₙ)[span_83](start_span)[span_83](end_span).</p>
+<p><b>Эквивалентность:</b></p>
+<p>(⇒) Если aₙₖ → a, то ∀ε > 0 ∃K ∀k > K aₙₖ ∈ Uε(a) — индексов nₖ бесконечно много[span_84](start_span)[span_84](end_span).</p>
+<p>(⇐) Строим по индукции: берем εₖ = 1/k[span_85](start_span)[span_85](end_span). В U₁/ₖ(a) бесконечно много членов, а номеров ≤ nₖ₋₁ конечное число ⇒ выберем nₖ > nₖ₋₁ с aₙₖ ∈ U₁/ₖ(a)[span_86](start_span)[span_86](end_span). По т. о двух милиционерах aₙₖ → a[span_87](start_span)[span_87](end_span).</p>
+
+<h2>12. Теорема Больцано — Вейерштрасса</h2>
+<p><b>Формулировка:</b> Из любой ограниченной последовательности можно выделить сходящуюся подпоследовательность[span_88](start_span)[span_88](end_span).</p>
+<p><b>Док-во:</b> Пусть aₙ ∈ [b₁, c₁][span_89](start_span)[span_89](end_span). Делим отрезок пополам и выбираем половину [b₂, c₂], содержащую бесконечно много членов (aₙ), и так далее[span_90](start_span)[span_90](end_span)[span_91](start_span)[span_91](end_span). Получаем систему вложенных отрезков [bₖ, cₖ], длина cₖ - bₖ = (c₁ - b₁)/2ᵏ⁻¹ → 0[span_92](start_span)[span_92](end_span). По т. Вейерштрасса bₖ → b и cₖ → c, причем c - b = 0 ⇒ b = c[span_93](start_span)[span_93](end_span). На каждом [bₖ, cₖ] выбираем член aₙₖ с nₖ > nₖ₋₁[span_94](start_span)[span_94](end_span). По т. о двух милиционерах aₙₖ → c[span_95](start_span)[span_95](end_span).</p>
+
+<h2>13. Критерий Коши</h2>
+<p><b>Фундаментальная:</b> ∀ε > 0 ∃N ∀n, m > N: |aₙ - aₘ| < ε[span_96](start_span)[span_96](end_span).</p>
+<p><b>Критерий Коши:</b> (aₙ) сходится ⇔ (aₙ) фундаментальна[span_97](start_span)[span_97](end_span).</p>
+<p><b>Док-во:</b></p>
+<p>(⇒) aₙ → a ⇒ при n, m > N(ε/2): |aₙ - aₘ| ≤ |aₙ - a| + |a - aₘ| < ε/2 + ε/2 = ε[span_98](start_span)[span_98](end_span).</p>
+<p>(⇐) 1. Ограниченность: для ε=1 при n > N: |aₙ - aₙ₊₁| < 1 ⇒ (aₙ) ограничена[span_99](start_span)[span_99](end_span). 2. По т. Больцано-Вейерштрасса ∃aₙₖ → a[span_100](start_span)[span_100](end_span). 3. Выберем k > K(ε/2) так, чтобы nₖ > N(ε/2)[span_101](start_span)[span_101](end_span). Тогда при n > N(ε/2): |aₙ - a| ≤ |aₙ - aₙₖ| + |aₙₖ - a| < ε/2 + ε/2 = ε[span_102](start_span)[span_102](end_span).</p>
+
+<h2>14. Предел функции: Коши и Гейне</h2>
+<p><b>По Коши:</b> ∀ε > 0 ∃δ > 0 ∀x (0 < |x - x₀| < δ ⇒ |f(x) - a| < ε)[span_103](start_span)[span_103](end_span).</p>
+<p><b>По Гейне:</b> ∀(xₙ): (xₙ → x₀, xₙ ≠ x₀) ⇒ f(xₙ) → a[span_104](start_span)[span_104](end_span)[span_105](start_span)[span_105](end_span).</p>
+<p><b>Эквивалентность:</b></p>
+<p>(Коши ⇒ Гейне): Для ε > 0 берем δ из Коши[span_106](start_span)[span_106](end_span)[span_107](start_span)[span_107](end_span). Т.к. xₙ → x₀ (xₙ ≠ x₀), ∃N ∀n > N: 0 < |xₙ - x₀| < δ ⇒ |f(xₙ) - a| < ε[span_108](start_span)[span_108](end_span).</p>
+<p>(Гейне ⇒ Коши, от противного): Отрицание Коши: ∃ε₀ > 0 ∀δ > 0 ∃x: 0 < |x - x₀| < δ и |f(x) - a| ≥ ε₀[span_109](start_span)[span_109](end_span). Подставляя δ = 1/k, найдем xₖ → x₀ (xₖ ≠ x₀), но |f(xₖ) - a| ≥ ε₀ — противоречие с Гейне[span_110](start_span)[span_110](end_span).</p>
+
+<h2>15. Арифметика и неравенства для функций</h2>
+<p><b>Арифметика:</b> Если lim f(x) = a, lim g(x) = b при x → x₀, то lim(f ± g) = a ± b, lim(f·g) = a·b, lim(f/g) = a/b (b ≠ 0)[span_111](start_span)[span_111](end_span).</p>
+<p><b>Док-во:</b> Берем произвольную xₙ → x₀ (xₙ ≠ x₀), применяем определение по Гейне и сводим к теореме об арифметике пределов последовательностей[span_112](start_span)[span_112](end_span).</p>
+<p><b>Переход в нер-вах и два милиционера:</b> f(x) ≤ g(x) в U̇δ(x₀) ⇒ lim f ≤ lim g[span_113](start_span)[span_113](end_span). Если f(x) ≤ g(x) ≤ h(x) и lim f = lim h = a, то lim g = a[span_114](start_span)[span_114](end_span). Доказывается переходом к последовательностям по Гейне[span_115](start_span)[span_115](end_span).</p>
+
+<h2>16. Предел сложной функции</h2>
+<p><b>Теорема:</b> Пусть limₓ→ₓ₀ f(x) = a и limᵧ→ₐ g(y) = b[span_116](start_span)[span_116](end_span). Тогда limₓ→ₓ₀ g(f(x)) = b, если выполнено хотя бы одно из условий: (i) f(x) ≠ a в некоторой U̇δ(x₀); (ii) g(a) = b (непрерывность в точке a)[span_117](start_span)[span_117](end_span).</p>
+<p><b>Док-во (по Гейне):</b> Пусть xₙ → x₀ (xₙ ≠ x₀), обозначим yₙ = f(xₙ) → a[span_118](start_span)[span_118](end_span). В случае (i) при больших n имеем yₙ ≠ a ⇒ по Гейне g(yₙ) → b[span_119](start_span)[span_119](end_span). В случае (ii) разбиваем (yₙ) на две подпоследовательности: где yₙₖ ≠ a (идет к b по Гейне) и где yₙ' = a (там g(a) = b) ⇒ вся g(yₙ) → b[span_120](start_span)[span_120](end_span).</p>
+
+<h2>17. Первый замечательный предел</h2>
+<p><b>Формулировка:</b> limₓ→₀ (sin x / x) = 1[span_121](start_span)[span_121](end_span).</p>
+<p><b>Док-во:</b> Для x ∈ (0, π/2) на единичной окружности сравниваем площади: S(△OAB) < S(сектора OAB) < S(△OAC)[span_122](start_span)[span_122](end_span).</p>
+<div class="f">
+  (1/2)sin x < (1/2)x < (1/2)tg x<br>
+  sin x < x < sin x / cos x<br>
+  cos x < sin x / x < 1[span_123](start_span)[span_123](end_span)
+</div>
+<p>Для x ∈ (-π/2, 0) неравенство сохраняется из-за четности cos x и (sin x)/x. Т.к. 0 ≤ 1 - cos x = 2sin²(x/2) ≤ x²/2 → 0, то cos x → 1[span_124](start_span)[span_124](end_span). По т. о двух милиционерах sin x / x → 1.</p>
+
+<h2>18. Пределы на бесконечности и второй замечательный</h2>
+<p><b>Предел при x → +∞:</b> limₓ→₊∞ f(x) = a ⇔ ∀ε > 0 ∃M > 0 ∀x > M: |f(x) - a| < ε (аналогично для -∞ и ∞).</p>
+<p><b>Бесконечный предел:</b> limₓ→ₓ₀ f(x) = ∞ ⇔ ∀M > 0 ∃δ > 0 ∀x (0 < |x - x₀| < δ ⇒ |f(x)| > M).</p>
+<p><b>Второй замечательный предел:</b> limₓ→∞ (1 + 1/x)ˣ = e.</p>
+<p><b>Док-во (для x → +∞):</b> Обозначим n = [x] (целая часть), n ≤ x < n + 1. При x ≥ 1:</p>
+<div class="f">
+  (1 + 1/(n+1))ⁿ < (1 + 1/x)ˣ < (1 + 1/n)ⁿ⁺¹
+</div>
+<p>Левая часть: (1 + 1/(n+1))ⁿ⁺¹ / (1 + 1/(n+1)) → e / 1 = e. Правая часть: (1 + 1/n)ⁿ · (1 + 1/n) → e · 1 = e. По т. о двух милиционерах предел равен e. Для x → -∞ сводится заменой t = -(x + 1) → +∞.</p>
 
 </body>
 </html>
